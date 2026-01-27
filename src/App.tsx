@@ -500,7 +500,7 @@ function App() {
                                 onMouseLeave={handleMouseLeave}
                                 onMouseMove={handleMouseMove}
                             >
-                                <h1 className="mt-0 md:mt-0 text-[22vw] sm:text-[20vw] md:text-[130px] lg:text-[180px] xl:text-[240px] font-black leading-[0.85] tracking-tighter select-none webcods-interactive-text">
+                                <h1 className="mt-0 md:mt-0 text-[22vw] sm:text-[20vw] md:text-[90px] lg:text-[110px] xl:text-[140px] font-black leading-[0.85] tracking-tighter select-none webcods-interactive-text">
                                     {'WEB'.split('').map((letter, index) => (
                                         <span
                                             key={`web-${index}`}
