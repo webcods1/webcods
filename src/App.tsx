@@ -758,7 +758,7 @@ function App() {
                                 ">
                                     <div className="relative overflow-hidden h-20 md:h-24 bg-white">
                                         <img
-                                            src="/logo.png"
+                                            src="/zcafe.png"
                                             alt="ZCafe Logo"
                                             className="w-full h-full object-contain p-3"
                                         />
@@ -1082,3 +1082,4 @@ function App() {
 }
 
 export default App
+
