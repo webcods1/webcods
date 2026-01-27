@@ -589,12 +589,12 @@ function App() {
             <section ref={aboutRef} id="about" className="scroll-snap-section pt-20 sm:pt-24 md:pt-28 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center bg-gradient-to-b from-white to-blue-950 relative overflow-hidden min-h-[100dvh] md:min-h-screen">
                 <div className="container px-3 sm:px-4 md:px-0 relative flex flex-col items-center justify-start md:justify-center">
                     {/* About Heading - Fades in first */}
-                    <div key={`about-heading-${aboutAnimationKey}`} className="about-heading-fade mt-8 sm:mt-12 md:-mt-4 mb-6 sm:mb-8">
+                    <div key={`about-heading-${aboutAnimationKey}`} className="about-heading-fade mt-8 sm:mt-12 md:mt-10 mb-6 sm:mb-8">
                         <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-blue-950 text-center">ABOUT</h2>
                     </div>
 
                     {/* Stage 1 & 2: Falling and Organizing Letters */}
-                    <div key={aboutAnimationKey} className="relative h-24 sm:h-28 md:h-32 mt-16 sm:mt-20 md:mt-4 mb-8 sm:mb-10 md:mb-8 text-center flex items-center justify-center w-full">
+                    <div key={aboutAnimationKey} className="relative h-24 sm:h-28 md:h-32 mt-16 sm:mt-20 md:mt-12 mb-8 sm:mb-10 md:mb-12 text-center flex items-center justify-center w-full">
                         {'WEBCODS'.split('').map((letter, index) => {
                             // Stage 1: Random scattered positions
                             const randomDelay = index * 0.1 + Math.random() * 0.3;
@@ -622,7 +622,7 @@ function App() {
                     </div>
 
                     {/* Stage 3: About Content - Fades in after letters organize */}
-                    <div key={`about-content-${aboutAnimationKey}`} className="about-content-reveal mt-6 sm:mt-8 md:mt-4">
+                    <div key={`about-content-${aboutAnimationKey}`} className="about-content-reveal mt-6 sm:mt-8 md:mt-12">
                         <p className="text-center text-blue-950 mb-6 sm:mb-8 text-[11px] sm:text-xs md:text-base lg:text-lg px-2 sm:px-4 md:px-2 leading-relaxed">
                             Founded in 2025, WebCods has been at the forefront of web development and app development innovation. We are passionate about creating exceptional digital experiences that empower businesses to thrive in the modern landscape. Our team combines cutting-edge technology with creative excellence to deliver solutions that exceed expectations.
                         </p>
@@ -758,7 +758,7 @@ function App() {
                                 ">
                                     <div className="relative overflow-hidden h-20 md:h-24 bg-white">
                                         <img
-                                            src="/zcafe.png"
+                                            src="/logo.png"
                                             alt="ZCafe Logo"
                                             className="w-full h-full object-contain p-3"
                                         />
@@ -854,10 +854,10 @@ function App() {
             </section>
 
             {/* Contact Section */}
-            <section ref={contactRef} id="contact" className="scroll-snap-section min-h-[100dvh] md:min-h-0 py-[clamp(2rem,8vh,3rem)] md:py-16 lg:py-20 flex items-center relative bg-gradient-to-b from-black to-slate-900">
-                <div className="container px-[clamp(0.625rem,3vw,1rem)] md:px-0">
+            <section ref={contactRef} id="contact" className="scroll-snap-section min-h-[100dvh] md:min-h-0 py-8 sm:py-10 md:py-16 lg:py-20 flex items-center relative bg-gradient-to-b from-black to-slate-900">
+                <div className="container px-2.5 sm:px-3 md:px-0">
                     <div key={`contact-heading-${contactAnimationKey}`} className="section-heading-fade mt-0 sm:mt-2 md:mt-4 lg:mt-6">
-                        <h2 className={`${RESPONSIVE_CLASSES.sectionTitle} text-center mb-[clamp(0.625rem,2vh,1rem)] md:mb-6 text-white font-bold`}>
+                        <h2 className={`${RESPONSIVE_CLASSES.sectionTitle} text-center mb-2.5 sm:mb-3 md:mb-6 text-white font-bold`}>
                             LET'S WORK TOGETHER
                         </h2>
                     </div>
@@ -865,19 +865,19 @@ function App() {
                     <div key={`contact-form-${contactAnimationKey}`} className="section-content-fade">
                         <div className="max-w-6xl mx-auto">
                             {/* Desktop: Two Column Layout | Mobile: Single Column */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-[clamp(1.25rem,4vh,2rem)] md:gap-12 items-start">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-12 items-start">
 
                                 {/* Left Side - Contact Form */}
                                 <div className="order-1 md:mt-16">
-                                    <form className="space-y-[clamp(0.5rem,1.5vh,0.75rem)] md:space-y-4">
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-[clamp(0.5rem,1.5vh,0.75rem)] md:gap-4">
+                                    <form className="space-y-2 sm:space-y-2.5 md:space-y-4">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-2.5 md:gap-4">
                                             <input
                                                 type="text"
                                                 placeholder="Name"
                                                 className="
-                                                w-full px-[clamp(0.625rem,2vw,0.875rem)] md:px-4 py-[clamp(0.5rem,1.5vh,0.625rem)] md:py-3
+                                                w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 md:py-3
                                                 bg-white/10 border border-white/20 rounded-lg md:rounded-xl
-                                                text-[clamp(0.75rem,3.5vw,0.875rem)] md:text-base text-white placeholder-gray-400
+                                                text-xs sm:text-sm md:text-base text-white placeholder-gray-400
                                                 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
                                                 backdrop-blur-sm transition-all duration-300
                                                 "
@@ -886,22 +886,22 @@ function App() {
                                                 type="tel"
                                                 placeholder="Phone Number"
                                                 className="
-                                                w-full px-[clamp(0.625rem,2vw,0.875rem)] md:px-4 py-[clamp(0.5rem,1.5vh,0.625rem)] md:py-3
+                                                w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 md:py-3
                                                 bg-white/10 border border-white/20 rounded-lg md:rounded-xl
-                                                text-[clamp(0.75rem,3.5vw,0.875rem)] md:text-base text-white placeholder-gray-400
+                                                text-xs sm:text-sm md:text-base text-white placeholder-gray-400
                                                 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
                                                 backdrop-blur-sm transition-all duration-300
                                                 "
                                             />
                                         </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-[clamp(0.5rem,1.5vh,0.75rem)] md:gap-4">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3 md:gap-4">
                                             <input
                                                 type="email"
                                                 placeholder="Email Address"
                                                 className="
-                                                w-full px-[clamp(0.625rem,2vw,0.875rem)] md:px-4 py-[clamp(0.5rem,1.5vh,0.625rem)] md:py-3
+                                                w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 md:py-3
                                                 bg-white/10 border border-white/20 rounded-lg md:rounded-xl
-                                                text-[clamp(0.75rem,3.5vw,0.875rem)] md:text-base text-white placeholder-gray-400
+                                                text-xs sm:text-sm md:text-base text-white placeholder-gray-400
                                                 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
                                                 backdrop-blur-sm transition-all duration-300
                                                 "
@@ -909,9 +909,9 @@ function App() {
                                             <div className="relative">
                                                 <select
                                                     className="
-                                                    w-full px-[clamp(0.625rem,2vw,0.875rem)] md:px-4 py-[clamp(0.5rem,1.5vh,0.625rem)] md:py-3
+                                                    w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 md:py-3
                                                     bg-white/10 border border-white/20 rounded-lg md:rounded-xl
-                                                    text-[clamp(0.75rem,3.5vw,0.875rem)] md:text-base text-white placeholder-gray-400
+                                                    text-xs sm:text-sm md:text-base text-white placeholder-gray-400
                                                     focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
                                                     backdrop-blur-sm transition-all duration-300
                                                     appearance-none cursor-pointer
@@ -924,7 +924,7 @@ function App() {
                                                     <option value="seo" className="text-gray-800">SEO Optimization</option>
                                                     <option value="maintenance" className="text-gray-800">Maintenance</option>
                                                 </select>
-                                                <svg className="w-[clamp(1rem,4vw,1.25rem)] h-[clamp(1rem,4vw,1.25rem)] absolute right-[clamp(0.75rem,2vw,1rem)] top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <svg className="w-4 h-4 sm:w-5 sm:h-5 absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                                 </svg>
                                             </div>
@@ -933,9 +933,9 @@ function App() {
                                             placeholder="Tell us about your project..."
                                             rows={4}
                                             className="
-                                            w-full px-[clamp(0.625rem,2vw,0.875rem)] md:px-4 py-[clamp(0.5rem,1.5vh,0.625rem)] md:py-3
+                                            w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 md:py-3
                                             bg-white/10 border border-white/20 rounded-lg md:rounded-xl
-                                            text-[clamp(0.75rem,3.5vw,0.875rem)] md:text-base text-white placeholder-gray-400
+                                            text-xs sm:text-sm md:text-base text-white placeholder-gray-400
                                             focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
                                             backdrop-blur-sm transition-all duration-300
                                             resize-none
@@ -945,8 +945,8 @@ function App() {
                                             type="submit"
                                             className="
                                             w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white
-                                            px-[clamp(1rem,3vw,1.5rem)] md:px-8 py-[clamp(0.5rem,1.5vh,0.625rem)] md:py-4 rounded-lg md:rounded-xl
-                                            font-bold text-[clamp(0.875rem,4vw,1rem)] md:text-lg
+                                            px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-4 rounded-lg md:rounded-xl
+                                            font-bold text-sm sm:text-base md:text-lg
                                             transition-all duration-300
                                             hover:shadow-[0_0_20px_rgba(124,58,237,0.5)] hover:scale-[1.02]
                                             cursor-pointer active:scale-95
@@ -958,10 +958,10 @@ function App() {
                                 </div>
 
                                 {/* Right Side - Handshake SVG and Text (order-2 on mobile, shown after form) */}
-                                <div className="order-2 flex flex-col items-center justify-start p-[clamp(0.5rem,2vh,1rem)] md:p-0 md:pt-0 md:-mt-8 relative">
+                                <div className="order-2 flex flex-col items-center justify-start p-2 sm:p-4 md:p-0 md:pt-0 md:-mt-8 relative">
                                     <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-blue-500/20 rounded-3xl blur-3xl animate-pulse"></div>
 
-                                    <svg viewBox="0 0 500 400" className="w-full h-auto max-w-[clamp(140px,40vw,200px)] md:max-w-lg drop-shadow-[0_10px_40px_rgba(124,58,237,0.4)] relative z-10">
+                                    <svg viewBox="0 0 500 400" className="w-full h-auto max-w-[160px] sm:max-w-[200px] md:max-w-lg drop-shadow-[0_10px_40px_rgba(124,58,237,0.4)] relative z-10">
                                         <defs>
                                             <linearGradient id="cyberGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
                                                 <stop offset="0%" stopColor="#A78BFA" />
@@ -1082,4 +1082,3 @@ function App() {
 }
 
 export default App
-
