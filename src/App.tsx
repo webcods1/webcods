@@ -628,7 +628,7 @@ function App() {
                                 </h2>
                             </div>
 
-                            <HeroCube />
+                            <HeroCube className="hidden lg:block mt-16 mx-auto" />
 
                             {/* Next Arrow Button */}
 
@@ -638,7 +638,8 @@ function App() {
                 </div>
 
                 {/* Co-Founders Button - Bottom Centered */}
-                <div className="absolute bottom-48 sm:bottom-40 md:bottom-10 left-1/2 transform -translate-x-1/2 z-30 w-[85%] sm:w-[75%] md:w-auto">
+                <div className="absolute bottom-48 sm:bottom-40 md:bottom-10 left-1/2 transform -translate-x-1/2 z-30 w-[85%] sm:w-[75%] md:w-auto flex flex-col items-center gap-8">
+                    <HeroCube className="lg:hidden" />
                     <button
                         onClick={() => setCurrentView('cofounders')}
                         className="
