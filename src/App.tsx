@@ -589,7 +589,7 @@ function App() {
             <section ref={aboutRef} id="about" className="scroll-snap-section pt-20 sm:pt-24 md:pt-28 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center bg-gradient-to-b from-white to-blue-950 relative overflow-hidden min-h-[100dvh] md:min-h-screen">
                 <div className="container px-3 sm:px-4 md:px-0 relative flex flex-col items-center justify-start md:justify-center">
                     {/* About Heading - Fades in first */}
-                    <div key={`about-heading-${aboutAnimationKey}`} className="about-heading-fade mt-8 sm:mt-12 md:mt-10 mb-6 sm:mb-8">
+                    <div key={`about-heading-${aboutAnimationKey}`} className="about-heading-fade mt-8 sm:mt-12 md:mt-0 mb-6 sm:mb-8">
                         <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-blue-950 text-center">ABOUT</h2>
                     </div>
 
