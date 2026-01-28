@@ -71,7 +71,7 @@ const CoFounders: React.FC<CoFoundersProps> = ({ onBack }) => {
                             <div className="w-full h-full bg-slate-800 flex items-center justify-center relative">
                                 <img
                                     src="/founder.png?t=1"
-                                    alt="Anishif"
+                                    alt="Anshif"
                                     className={`w-full h-full object-cover transition-transform duration-700
                                         ${activeCard === 0 ? 'scale-110' : 'group-hover:scale-110'}`}
                                 />
