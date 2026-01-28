@@ -614,6 +614,9 @@ function App() {
 
                         {/* Right Side - Tagline & Description Carousel */}
                         <div className="relative flex flex-col justify-center space-y-4 sm:space-y-6 mt-6 sm:mt-8 lg:mt-16 md:mt-0">
+
+                            <HeroCube variant="sky" className="hidden lg:block mb-12 mx-auto" />
+
                             {/* Small Tagline */}
                             <div key={`tagline-${currentTextIndex}`} className="hero-tagline-fade">
                                 <p className="text-[10px] sm:text-xs md:text-sm text-gray-500 uppercase tracking-widest font-medium mb-2">
@@ -627,8 +630,6 @@ function App() {
                                     {heroDescriptions[currentTextIndex].title}
                                 </h2>
                             </div>
-
-                            <HeroCube variant="sky" className="hidden lg:block mt-16 mx-auto" />
 
                             {/* Next Arrow Button */}
 
