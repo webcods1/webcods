@@ -550,7 +550,7 @@ function App() {
                 className="scroll-snap-section relative w-full h-[100vh] flex justify-center items-center overflow-hidden bg-gradient-to-b from-sky-400 to-white"
             >
                 {/* Main Content Container */}
-                <div className="w-full h-full px-4 sm:px-6 md:px-16 lg:px-24 flex items-start pt-32 sm:pt-40 md:pt-0 md:items-center">
+                <div className="w-full h-full px-4 sm:px-6 md:px-16 lg:px-24 flex items-start pt-24 sm:pt-40 md:pt-0 md:items-center">
                     <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-16 items-center">
 
                         {/* Left Side - Large WEBCODS Text */}
@@ -622,7 +622,7 @@ function App() {
                 </div>
 
                 {/* Co-Founders Button - Bottom Centered */}
-                <div className="absolute bottom-24 sm:bottom-32 md:bottom-10 left-1/2 transform -translate-x-1/2 z-30 w-[85%] sm:w-[75%] md:w-auto">
+                <div className="absolute bottom-36 sm:bottom-32 md:bottom-10 left-1/2 transform -translate-x-1/2 z-30 w-[85%] sm:w-[75%] md:w-auto">
                     <button
                         onClick={() => setCurrentView('cofounders')}
                         className="
