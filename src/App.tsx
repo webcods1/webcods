@@ -622,7 +622,7 @@ function App() {
                     </div>
 
                     {/* Stage 3: About Content - Fades in after letters organize */}
-                    <div key={`about-content-${aboutAnimationKey}`} className="about-content-reveal mt-6 sm:mt-8 md:mt-2">
+                    <div key={`about-content-${aboutAnimationKey}`} className="about-content-reveal mt-6 sm:mt-8 md:mt-0">
                         <p className="text-center text-blue-950 mb-6 sm:mb-8 text-[11px] sm:text-xs md:text-base lg:text-lg px-2 sm:px-4 md:px-2 leading-relaxed">
                             Founded in 2025, WebCods has been at the forefront of web development and app development innovation. We are passionate about creating exceptional digital experiences that empower businesses to thrive in the modern landscape. Our team combines cutting-edge technology with creative excellence to deliver solutions that exceed expectations.
                         </p>
