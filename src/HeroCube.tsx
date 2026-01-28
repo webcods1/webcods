@@ -16,9 +16,28 @@ const HeroCube: React.FC<HeroCubeProps> = ({ className = "" }) => {
     // When open, faces become slightly more transparent to focus on content
     const faceTrans = (isOpen: boolean) => isOpen ? 'opacity-40' : 'opacity-90 hover:opacity-100';
 
-    // Staggered delays for "Page by Page" opening effect
-    // Closed: No delay (close together or staggered reverse). Open: Staggered (0, 100, 200...)
-    const getDelay = (index: number) => isOpen ? `${index * 100}ms` : `${(5 - index) * 50}ms`;
+    // Staggered delays for precise "Top -> Side -> Bottom" sequence
+    const getDelay = (index: number) => {
+        if (isOpen) {
+            // Opening Sequence
+            switch (index) {
+                case 4: return '0ms';   // Top opens first
+                case 2: return '300ms'; // Then Right
+                case 3: return '600ms'; // Then Left
+                case 5: return '900ms'; // Then Bottom
+                default: return '100ms'; // Front/Back move early
+            }
+        } else {
+            // Closing Sequence (Reverse)
+            switch (index) {
+                case 5: return '0ms';   // Bottom closes first
+                case 3: return '300ms'; // Then Left
+                case 2: return '600ms'; // Then Right
+                case 4: return '900ms'; // Top closes last
+                default: return '700ms'; // Front/Back return
+            }
+        }
+    };
 
     return (
         <>
@@ -105,7 +124,7 @@ const HeroCube: React.FC<HeroCubeProps> = ({ className = "" }) => {
                         absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
                         w-[280px] p-6 bg-white/95 backdrop-blur-3xl rounded-3xl 
                         border border-sky-100 shadow-[0_0_60px_rgba(56,189,248,0.4)] 
-                        transition-all duration-1000 delay-300 text-center flex flex-col items-center
+                        transition-all duration-1000 delay-[1000ms] text-center flex flex-col items-center
                         overflow-hidden
                         ${isOpen ? 'opacity-100 scale-100 z-50 pointer-events-auto' : 'opacity-0 scale-0 -z-10 pointer-events-none'}
                     `}>
