@@ -871,10 +871,12 @@ function App() {
 
                                 {/* Left Side - Contact Form */}
                                 <div className="order-1 md:mt-16">
-                                    <form className="space-y-2 sm:space-y-2.5 md:space-y-4">
+                                    <form action="https://formsubmit.co/webcods1@gmail.com" method="POST" className="space-y-2 sm:space-y-2.5 md:space-y-4">
+                                        <input type="hidden" name="_captcha" value="false" />
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-2.5 md:gap-4">
                                             <input
                                                 type="text"
+                                                name="name"
                                                 placeholder="Name"
                                                 className="
                                                 w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 md:py-3
@@ -883,9 +885,11 @@ function App() {
                                                 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
                                                 backdrop-blur-sm transition-all duration-300
                                                 "
+                                                required
                                             />
                                             <input
                                                 type="tel"
+                                                name="phone"
                                                 placeholder="Phone Number"
                                                 className="
                                                 w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 md:py-3
@@ -894,11 +898,13 @@ function App() {
                                                 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
                                                 backdrop-blur-sm transition-all duration-300
                                                 "
+                                                required
                                             />
                                         </div>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3 md:gap-4">
                                             <input
                                                 type="email"
+                                                name="email"
                                                 placeholder="Email Address"
                                                 className="
                                                 w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 md:py-3
@@ -907,9 +913,11 @@ function App() {
                                                 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
                                                 backdrop-blur-sm transition-all duration-300
                                                 "
+                                                required
                                             />
                                             <div className="relative">
                                                 <select
+                                                    name="service"
                                                     className="
                                                     w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 md:py-3
                                                     bg-white/10 border border-white/20 rounded-lg md:rounded-xl
@@ -918,6 +926,7 @@ function App() {
                                                     backdrop-blur-sm transition-all duration-300
                                                     appearance-none cursor-pointer
                                                     "
+                                                    required
                                                 >
                                                     <option value="" disabled selected className="text-gray-800">Select Service</option>
                                                     <option value="web-design" className="text-gray-800">Web Design</option>
@@ -932,6 +941,7 @@ function App() {
                                             </div>
                                         </div>
                                         <textarea
+                                            name="message"
                                             placeholder="Tell us about your project..."
                                             rows={4}
                                             className="
@@ -942,6 +952,7 @@ function App() {
                                             backdrop-blur-sm transition-all duration-300
                                             resize-none
                                             "
+                                            required
                                         />
                                         <button
                                             type="submit"
