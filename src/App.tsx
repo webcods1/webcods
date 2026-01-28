@@ -594,7 +594,7 @@ function App() {
                     </div>
 
                     {/* Stage 1 & 2: Falling and Organizing Letters */}
-                    <div key={aboutAnimationKey} className="relative h-24 sm:h-28 md:h-32 mt-16 sm:mt-20 md:mt-12 mb-8 sm:mb-10 md:mb-12 text-center flex items-center justify-center w-full">
+                    <div key={aboutAnimationKey} className="relative h-24 sm:h-28 md:h-32 mt-16 sm:mt-20 md:mt-4 mb-8 sm:mb-10 md:mb-12 text-center flex items-center justify-center w-full">
                         {'WEBCODS'.split('').map((letter, index) => {
                             // Stage 1: Random scattered positions
                             const randomDelay = index * 0.1 + Math.random() * 0.3;
@@ -622,7 +622,7 @@ function App() {
                     </div>
 
                     {/* Stage 3: About Content - Fades in after letters organize */}
-                    <div key={`about-content-${aboutAnimationKey}`} className="about-content-reveal mt-6 sm:mt-8 md:mt-12">
+                    <div key={`about-content-${aboutAnimationKey}`} className="about-content-reveal mt-6 sm:mt-8 md:mt-6">
                         <p className="text-center text-blue-950 mb-6 sm:mb-8 text-[11px] sm:text-xs md:text-base lg:text-lg px-2 sm:px-4 md:px-2 leading-relaxed">
                             Founded in 2025, WebCods has been at the forefront of web development and app development innovation. We are passionate about creating exceptional digital experiences that empower businesses to thrive in the modern landscape. Our team combines cutting-edge technology with creative excellence to deliver solutions that exceed expectations.
                         </p>
