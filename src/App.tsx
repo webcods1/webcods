@@ -808,7 +808,7 @@ function App() {
             </section>
 
             {/* Portfolio Section */}
-            <section ref={portfolioRef} id="portfolio" className="scroll-snap-section min-h-[100dvh] md:min-h-0 pt-24 sm:pt-28 md:pt-24 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center bg-gradient-to-b from-stone-50 to-black relative">
+            <section ref={portfolioRef} id="portfolio" className="scroll-snap-section min-h-[100dvh] md:min-h-0 pt-16 sm:pt-20 md:pt-16 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center bg-gradient-to-b from-stone-50 to-black relative">
                 <div className="container relative px-4 md:px-0">
                     <div key={`portfolio-heading-${portfolioAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-0">
                         <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-center mb-6 sm:mb-8 text-gray-800">
