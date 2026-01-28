@@ -628,7 +628,7 @@ function App() {
                                 </h2>
                             </div>
 
-                            <HeroCube />
+                            <HeroCube variant="sky" className="hidden lg:block mt-16 mx-auto" />
 
                             {/* Next Arrow Button */}
 
@@ -638,7 +638,10 @@ function App() {
                 </div>
 
                 {/* Co-Founders Button - Bottom Centered */}
-                <div className="absolute bottom-48 sm:bottom-40 md:bottom-10 left-1/2 transform -translate-x-1/2 z-30 w-[85%] sm:w-[75%] md:w-auto">
+                <div className="absolute bottom-48 sm:bottom-40 md:bottom-10 left-1/2 transform -translate-x-1/2 z-30 w-[85%] sm:w-[75%] md:w-auto flex flex-col items-center">
+                    {/* Mobile 3D Cube */}
+                    <HeroCube variant="sky" className="block md:hidden mb-8" />
+
                     <button
                         onClick={() => setCurrentView('cofounders')}
                         className="
