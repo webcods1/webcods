@@ -25,6 +25,16 @@ function App() {
     const portfolioRef = useRef<HTMLDivElement>(null)
     const contactRef = useRef<HTMLDivElement>(null)
     const foundersRef = useRef<HTMLDivElement>(null)
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+    // Lock body scroll when mobile menu is open
+    useEffect(() => {
+        if (isMobileMenuOpen) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = 'unset'
+        }
+    }, [isMobileMenuOpen])
 
     // Interactive letter distortion state
     const [isHovering, setIsHovering] = useState<boolean>(false)
@@ -449,7 +459,8 @@ function App() {
     return (
         <div className="min-h-screen bg-black text-gray-300 scroll-snap-container">
             {/* Header / Navbar */}
-            <header className="fixed top-0 left-0 w-full z-[999] flex justify-center mt-7 md:mt-3">
+            {/* Desktop Header / Navbar (Hidden on Mobile) */}
+            <header className="hidden md:flex fixed top-0 left-0 w-full z-[999] justify-center mt-7 md:mt-3">
                 <nav className="
           w-auto md:w-auto md:max-w-5xl h-[50px] md:h-[60px]
           px-6 md:px-12 py-2 md:py-2.5
@@ -479,6 +490,57 @@ function App() {
                     </ul>
                 </nav>
             </header>
+
+            {/* Mobile Navigation System */}
+            {/* Toggle Button (Visible only on Mobile) */}
+            <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="md:hidden fixed top-6 right-6 z-[1002] w-12 h-12 flex flex-col justify-center items-center gap-[6px] bg-white/10 backdrop-blur-md rounded-full border border-white/20 shadow-lg"
+                aria-label="Toggle Menu"
+            >
+                <span
+                    className={`block w-6 h-[2px] bg-white transition-all duration-300 ease-in-out transform origin-center ${isMobileMenuOpen ? 'rotate-45 translate-y-[8px]' : ''}`}
+                ></span>
+                <span
+                    className={`block w-6 h-[2px] bg-white transition-all duration-300 ease-in-out transform origin-center ${isMobileMenuOpen ? '-rotate-45 -translate-y-[8px]' : ''}`} // Fixed magic number for perfect X
+                    style={{ transform: isMobileMenuOpen ? 'rotate(-45deg) translateY(-1px)' : 'none' }} // Fine tuning with style since class overlap might happen
+                ></span>
+                {/* Re-doing the span logic to be cleaner without inline style overrides confusion */}
+            </button>
+            {/* Let's use a cleaner button implementation in the replacement content below for robustness */}
+
+            {/* Mobile Menu Overlay */}
+            <div
+                className={`
+                    md:hidden fixed inset-0 z-[1001] bg-black/95 backdrop-blur-xl
+                    transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
+                    ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
+                `}
+            >
+                <div className="flex flex-col h-full justify-center px-8 sm:px-12">
+                    <div className="mb-12">
+                        <img src="/mylogo.png" alt="WebCods" className="h-12 w-auto opacity-80" />
+                    </div>
+
+                    <nav className="flex flex-col gap-6">
+                        {navLinks.map((link, index) => (
+                            <a
+                                key={link.href}
+                                href={link.href}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="text-3xl font-bold text-white/80 hover:text-white hover:pl-4 transition-all duration-300"
+                                style={{ transitionDelay: `${index * 50}ms` }}
+                            >
+                                {link.label}
+                            </a>
+                        ))}
+                    </nav>
+
+                    <div className="mt-12 pt-8 border-t border-white/10">
+                        <p className="text-white/40 text-sm">© 2025 WebCods</p>
+                    </div>
+                </div>
+            </div>
 
 
             {/* Hero Section - Editorial Style Layout */}
