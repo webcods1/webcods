@@ -644,25 +644,26 @@ function App() {
             {/* Services Section */}
             <section ref={servicesRef} id="services" className={`scroll-snap-section min-h-[100dvh] md:min-h-0 ${RESPONSIVE_CLASSES.sectionPadding} pt-20 sm:pt-24 md:pt-24 flex items-start md:items-center bg-gradient-to-b from-blue-950 to-stone-50 relative`}>
                 <div className="container">
-                    <div key={`services-heading-${servicesAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-20">
+                    <div key={`services-heading-${servicesAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-0">
                         <h2 className={`${RESPONSIVE_CLASSES.sectionTitle} font-bold text-center mb-6 sm:mb-8 md:mb-10`}>
                             SERVICES
                         </h2>
                     </div>
 
                     <div key={`services-content-${servicesAnimationKey}`} className="section-content-stagger" style={{ perspective: '1000px' }}>
-                        <div className="
-                grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-2 lg:gap-2.5 xl:gap-3
+                        <div className="md:max-w-4xl md:mx-auto">
+                            <div className="
+                grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-4 lg:gap-5
                 px-4 md:px-0
               ">
-                            {services.map((service, index) => (
-                                <div
-                                    key={index}
-                                    onClick={(e) => handleCardClick(e)}
-                                    className={`
+                                {services.map((service, index) => (
+                                    <div
+                                        key={index}
+                                        onClick={(e) => handleCardClick(e)}
+                                        className={`
                       bg-gradient-to-br from-blue-500 to-cyan-500
                       p-3 md:p-3 lg:p-4 rounded-xl md:rounded-2xl
-                      min-h-[220px] md:min-h-[180px] lg:min-h-[190px] flex flex-col justify-center
+                      min-h-[220px] md:min-h-[150px] lg:min-h-[160px] flex flex-col justify-center
                       shadow-[0_8px_24px_rgba(0,0,0,0.15)]
                       transition-all duration-500
                       hover:scale-105 hover:shadow-[0_12px_32px_rgba(0,0,0,0.25)] hover:rotate-1
@@ -674,57 +675,58 @@ function App() {
                       relative overflow-hidden
                       cursor-pointer
                     `}
-                                    style={{
-                                        animationDelay: `${index * 0.1}s`
-                                    } as React.CSSProperties}
-                                >
-                                    {/* Service Icons - Show on hover */}
-                                    {index === 0 && (
-                                        // Custom Web Development - Code icon
-                                        <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                                        </svg>
-                                    )}
-                                    {index === 1 && (
-                                        // App Development - Mobile icon
-                                        <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                                        </svg>
-                                    )}
-                                    {index === 2 && (
-                                        // E-commerce - Shopping Cart icon
-                                        <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                                        </svg>
-                                    )}
-                                    {index === 3 && (
-                                        // Responsive Design - Device icon
-                                        <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                        </svg>
-                                    )}
-                                    {index === 4 && (
-                                        // SEO - Search icon
-                                        <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                        </svg>
-                                    )}
-                                    {index === 5 && (
-                                        // Maintenance - Settings icon
-                                        <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
-                                    )}
+                                        style={{
+                                            animationDelay: `${index * 0.1}s`
+                                        } as React.CSSProperties}
+                                    >
+                                        {/* Service Icons - Show on hover */}
+                                        {index === 0 && (
+                                            // Custom Web Development - Code icon
+                                            <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                                            </svg>
+                                        )}
+                                        {index === 1 && (
+                                            // App Development - Mobile icon
+                                            <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                            </svg>
+                                        )}
+                                        {index === 2 && (
+                                            // E-commerce - Shopping Cart icon
+                                            <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                            </svg>
+                                        )}
+                                        {index === 3 && (
+                                            // Responsive Design - Device icon
+                                            <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                            </svg>
+                                        )}
+                                        {index === 4 && (
+                                            // SEO - Search icon
+                                            <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                            </svg>
+                                        )}
+                                        {index === 5 && (
+                                            // Maintenance - Settings icon
+                                            <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+                                        )}
 
-                                    <h3 className={`text-xs sm:text-sm md:text-xl lg:text-2xl xl:text-3xl font-bold mb-1 md:mb-4 text-white transition-colors duration-500 relative z-20`}>
-                                        {service.title}
-                                    </h3>
-                                    <p className={`text-[10px] sm:text-xs md:text-base lg:text-lg xl:text-xl text-blue-100 leading-tight md:leading-normal transition-colors duration-500`}>
-                                        {service.description}
-                                    </p>
-                                </div>
-                            ))}
+                                        <h3 className={`text-xs sm:text-sm md:text-xl lg:text-2xl xl:text-3xl font-bold mb-1 md:mb-4 text-white transition-colors duration-500 relative z-20`}>
+                                            {service.title}
+                                        </h3>
+                                        <p className={`text-[10px] sm:text-xs md:text-base lg:text-lg xl:text-xl text-blue-100 leading-tight md:leading-normal transition-colors duration-500`}>
+                                            {service.description}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
