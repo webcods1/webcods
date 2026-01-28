@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import CoFounders from './CoFounders'
+import HeroCube from './HeroCube'
 import { RESPONSIVE_CLASSES } from './responsive'
 
 interface NavLink {
@@ -612,7 +613,7 @@ function App() {
                         </div>
 
                         {/* Right Side - Tagline & Description Carousel */}
-                        <div className="relative flex flex-col justify-center space-y-4 sm:space-y-6 mt-6 sm:mt-8 md:mt-0">
+                        <div className="relative flex flex-col justify-center space-y-4 sm:space-y-6 mt-6 sm:mt-8 lg:mt-16 md:mt-0">
                             {/* Small Tagline */}
                             <div key={`tagline-${currentTextIndex}`} className="hero-tagline-fade">
                                 <p className="text-[10px] sm:text-xs md:text-sm text-gray-500 uppercase tracking-widest font-medium mb-2">
@@ -626,6 +627,8 @@ function App() {
                                     {heroDescriptions[currentTextIndex].title}
                                 </h2>
                             </div>
+
+                            <HeroCube />
 
                             {/* Next Arrow Button */}
 
