@@ -635,20 +635,7 @@ function App() {
                 </div>
 
                 {/* Co-Founders Button - Bottom Centered */}
-                <div className="absolute bottom-48 sm:bottom-40 md:bottom-10 left-1/2 transform -translate-x-1/2 z-30 w-[85%] sm:w-[75%] md:w-auto flex flex-col items-center gap-4">
-                    {/* ZCafe Promotion */}
-                    <a
-                        href="https://zcafe.in"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block w-24 sm:w-28 md:w-32 hover:scale-105 transition-transform duration-300 animate-fade-in-up"
-                    >
-                        <img
-                            src="/collage.png"
-                            alt="ZCafe"
-                            className="w-full h-auto rounded-lg shadow-lg border-2 border-white/50"
-                        />
-                    </a>
+                <div className="absolute bottom-48 sm:bottom-40 md:bottom-10 left-1/2 transform -translate-x-1/2 z-30 w-[85%] sm:w-[75%] md:w-auto">
                     <button
                         onClick={() => setCurrentView('cofounders')}
                         className="
