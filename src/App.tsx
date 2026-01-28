@@ -642,7 +642,7 @@ function App() {
             </section>
 
             {/* Services Section */}
-            <section ref={servicesRef} id="services" className={`scroll-snap-section min-h-[100dvh] md:min-h-0 ${RESPONSIVE_CLASSES.sectionPadding} pt-20 sm:pt-24 md:pt-16 flex items-start md:items-center bg-gradient-to-b from-blue-950 to-stone-50 relative`}>
+            <section ref={servicesRef} id="services" className={`scroll-snap-section min-h-[100dvh] md:min-h-0 ${RESPONSIVE_CLASSES.sectionPadding} pt-20 sm:pt-24 md:pt-4 flex items-start md:items-center bg-gradient-to-b from-blue-950 to-stone-50 relative`}>
                 <div className="container">
                     <div key={`services-heading-${servicesAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-0">
                         <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-center mb-6 sm:mb-8">
@@ -663,7 +663,7 @@ function App() {
                                         className={`
                       bg-gradient-to-br from-blue-500 to-cyan-500
                       p-3 md:p-3 lg:p-4 rounded-xl md:rounded-2xl
-                      h-[220px] md:h-[180px] lg:h-[200px] flex flex-col justify-center
+                      h-[220px] md:h-[140px] lg:h-[160px] flex flex-col justify-center
                       shadow-[0_8px_24px_rgba(0,0,0,0.15)]
                       transition-all duration-500
                       hover:scale-105 hover:shadow-[0_12px_32px_rgba(0,0,0,0.25)] hover:rotate-1
