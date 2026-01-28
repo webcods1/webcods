@@ -586,7 +586,7 @@ function App() {
 
 
             {/* About Section - Three Stage Animation */}
-            <section ref={aboutRef} id="about" className="scroll-snap-section pt-20 sm:pt-24 md:pt-16 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center bg-gradient-to-b from-white to-blue-950 relative overflow-hidden min-h-[100dvh] md:min-h-screen">
+            <section ref={aboutRef} id="about" className="scroll-snap-section pt-20 sm:pt-24 md:pt-24 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center bg-gradient-to-b from-white to-blue-950 relative overflow-hidden min-h-[100dvh] md:min-h-screen">
                 <div className="container px-3 sm:px-4 md:px-0 relative flex flex-col items-center justify-start md:justify-center">
                     {/* About Heading - Fades in first */}
                     <div key={`about-heading-${aboutAnimationKey}`} className="about-heading-fade mt-8 sm:mt-12 md:mt-0 mb-6 sm:mb-8">
@@ -594,7 +594,7 @@ function App() {
                     </div>
 
                     {/* Stage 1 & 2: Falling and Organizing Letters */}
-                    <div key={aboutAnimationKey} className="relative h-24 sm:h-28 md:h-32 mt-16 sm:mt-20 md:mt-4 mb-8 sm:mb-10 md:mb-12 text-center flex items-center justify-center w-full">
+                    <div key={aboutAnimationKey} className="relative h-24 sm:h-28 md:h-32 mt-16 sm:mt-20 md:mt-4 mb-8 sm:mb-10 md:mb-2 text-center flex items-center justify-center w-full">
                         {'WEBCODS'.split('').map((letter, index) => {
                             // Stage 1: Random scattered positions
                             const randomDelay = index * 0.1 + Math.random() * 0.3;
