@@ -547,7 +547,7 @@ function App() {
 
                             {/* Main Description */}
                             <div key={`description-${currentTextIndex}`} className="hero-description-fade">
-                                <h2 className="text-lg sm:text-xl md:text-4xl lg:text-5xl xl:text-6xl font-normal text-gray-800 leading-tight tracking-tight pr-0 md:pr-16">
+                                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-normal text-gray-800 leading-tight tracking-tight pr-0 md:pr-16">
                                     {heroDescriptions[currentTextIndex].title}
                                 </h2>
                             </div>
