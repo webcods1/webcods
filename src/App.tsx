@@ -733,10 +733,10 @@ function App() {
             </section>
 
             {/* Portfolio Section */}
-            <section ref={portfolioRef} id="portfolio" className="scroll-snap-section min-h-[100dvh] md:min-h-0 pt-24 sm:pt-28 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center bg-gradient-to-b from-stone-50 to-black relative">
+            <section ref={portfolioRef} id="portfolio" className="scroll-snap-section min-h-[100dvh] md:min-h-0 pt-24 sm:pt-28 md:pt-16 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center bg-gradient-to-b from-stone-50 to-black relative">
                 <div className="container relative px-4 md:px-0">
-                    <div key={`portfolio-heading-${portfolioAnimationKey}`} className="section-heading-fade mt-0 md:mt-4">
-                        <h2 className={`${RESPONSIVE_CLASSES.sectionTitle} font-bold text-center mb-4 text-gray-800`}>
+                    <div key={`portfolio-heading-${portfolioAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-0">
+                        <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-center mb-6 sm:mb-8 text-gray-800">
                             OUR PORTFOLIO
                         </h2>
                         <p className="text-center text-gray-600 mb-8 text-sm md:text-base">
@@ -856,10 +856,10 @@ function App() {
             </section>
 
             {/* Contact Section */}
-            <section ref={contactRef} id="contact" className="scroll-snap-section min-h-[100dvh] md:min-h-0 py-8 sm:py-10 md:py-16 lg:py-20 flex items-center relative bg-gradient-to-b from-black to-slate-900">
+            <section ref={contactRef} id="contact" className="scroll-snap-section min-h-[100dvh] md:min-h-0 pt-20 sm:pt-24 md:pt-16 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center relative bg-gradient-to-b from-black to-slate-900">
                 <div className="container px-2.5 sm:px-3 md:px-0">
-                    <div key={`contact-heading-${contactAnimationKey}`} className="section-heading-fade mt-0 sm:mt-2 md:mt-4 lg:mt-6">
-                        <h2 className={`${RESPONSIVE_CLASSES.sectionTitle} text-center mb-2.5 sm:mb-3 md:mb-6 text-white font-bold`}>
+                    <div key={`contact-heading-${contactAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-0">
+                        <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-center mb-6 sm:mb-8 text-white">
                             LET'S WORK TOGETHER
                         </h2>
                     </div>
