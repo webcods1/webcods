@@ -1,10 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface CoFoundersProps {
     onBack: () => void;
 }
 
 const CoFounders: React.FC<CoFoundersProps> = ({ onBack }) => {
+    const [activeCard, setActiveCard] = useState<number | null>(null);
+
+    const toggleCard = (index: number) => {
+        setActiveCard(activeCard === index ? null : index);
+    };
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -51,9 +56,15 @@ const CoFounders: React.FC<CoFoundersProps> = ({ onBack }) => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
 
                     {/* Founder 1: Alex */}
-                    <div className="group relative bg-white/5 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/10 hover:border-purple-500/50 transition-all duration-500 hover:shadow-[0_0_50px_rgba(168,85,247,0.2)]">
+                    {/* Founder 1: Alex */}
+                    <div
+                        onClick={() => toggleCard(0)}
+                        className={`group relative bg-white/5 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/10 transition-all duration-500 cursor-pointer
+                        ${activeCard === 0 ? 'border-purple-500/50 shadow-[0_0_50px_rgba(168,85,247,0.2)]' : 'hover:border-purple-500/50 hover:shadow-[0_0_50px_rgba(168,85,247,0.2)]'}`}
+                    >
                         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/90 z-10"></div>
-                        <div className="absolute top-0 right-0 p-8 w-64 h-64 bg-purple-500/20 rounded-full blur-[80px] group-hover:bg-purple-500/30 transition-all duration-500"></div>
+                        <div className={`absolute top-0 right-0 p-8 w-64 h-64 bg-purple-500/20 rounded-full blur-[80px] transition-all duration-500
+                            ${activeCard === 0 ? 'bg-purple-500/30' : 'group-hover:bg-purple-500/30'}`}></div>
 
                         <div className="h-[500px] overflow-hidden">
                             {/* Optimized Image Container */}
@@ -61,23 +72,27 @@ const CoFounders: React.FC<CoFoundersProps> = ({ onBack }) => {
                                 <img
                                     src="/founder.png?t=1"
                                     alt="Anishif"
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    className={`w-full h-full object-cover transition-transform duration-700
+                                        ${activeCard === 0 ? 'scale-110' : 'group-hover:scale-110'}`}
                                 />
                                 {/* Overlay if image fails or placeholder */}
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-60"></div>
                             </div>
                         </div>
 
-                        <div className="absolute bottom-0 left-0 w-full p-8 z-20 transform transition-transform duration-500 translate-y-4 group-hover:translate-y-0">
+                        <div className={`absolute bottom-0 left-0 w-full p-8 z-20 transform transition-transform duration-500
+                            ${activeCard === 0 ? 'translate-y-0' : 'translate-y-4 group-hover:translate-y-0'}`}>
                             <div className="mb-2 inline-block px-4 py-1 rounded-full bg-purple-500/20 border border-purple-500/30 text-purple-300 text-sm font-semibold tracking-wider backdrop-blur-sm">
                                 CEO & CO-FOUNDER
                             </div>
                             <h2 className="text-4xl font-bold text-white mb-3">Anishif</h2>
-                            <p className="text-gray-300 mb-6 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
+                            <p className={`text-gray-300 mb-6 transition-all duration-300
+                                ${activeCard === 0 ? 'line-clamp-none' : 'line-clamp-2 group-hover:line-clamp-none'}`}>
                                 With over a decade of experience in tech innovation, Anishif leads WebCods with a vision to bridge the gap between complex technology and intuitive user experiences.
                             </p>
 
-                            <div className="flex gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                            <div className={`flex gap-4 transition-opacity duration-500 delay-100
+                                ${activeCard === 0 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
                                 {/* Social Icons Placeholder */}
                                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 cursor-pointer transition-colors">
                                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" /></svg>
@@ -90,31 +105,40 @@ const CoFounders: React.FC<CoFoundersProps> = ({ onBack }) => {
                     </div>
 
                     {/* Founder 2: Sarah */}
-                    <div className="group relative bg-white/5 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/10 hover:border-blue-500/50 transition-all duration-500 hover:shadow-[0_0_50px_rgba(59,130,246,0.2)]">
+                    <div
+                        onClick={() => toggleCard(1)}
+                        className={`group relative bg-white/5 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/10 transition-all duration-500 cursor-pointer
+                        ${activeCard === 1 ? 'border-blue-500/50 shadow-[0_0_50px_rgba(59,130,246,0.2)]' : 'hover:border-blue-500/50 hover:shadow-[0_0_50px_rgba(59,130,246,0.2)]'}`}
+                    >
                         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/90 z-10"></div>
-                        <div className="absolute top-0 left-0 p-8 w-64 h-64 bg-blue-500/20 rounded-full blur-[80px] group-hover:bg-blue-500/30 transition-all duration-500"></div>
+                        <div className={`absolute top-0 left-0 p-8 w-64 h-64 bg-blue-500/20 rounded-full blur-[80px] transition-all duration-500
+                            ${activeCard === 1 ? 'bg-blue-500/30' : 'group-hover:bg-blue-500/30'}`}></div>
 
                         <div className="h-[500px] overflow-hidden">
                             <div className="w-full h-full bg-slate-800 flex items-center justify-center relative">
                                 <img
                                     src="/founder2.png?v=2"
                                     alt="Muzammil"
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    className={`w-full h-full object-cover transition-transform duration-700
+                                        ${activeCard === 1 ? 'scale-110' : 'group-hover:scale-110'}`}
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-60"></div>
                             </div>
                         </div>
 
-                        <div className="absolute bottom-0 left-0 w-full p-8 z-20 transform transition-transform duration-500 translate-y-4 group-hover:translate-y-0">
+                        <div className={`absolute bottom-0 left-0 w-full p-8 z-20 transform transition-transform duration-500
+                            ${activeCard === 1 ? 'translate-y-0' : 'translate-y-4 group-hover:translate-y-0'}`}>
                             <div className="mb-2 inline-block px-4 py-1 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-300 text-sm font-semibold tracking-wider backdrop-blur-sm">
                                 CTO & CO-FOUNDER
                             </div>
                             <h2 className="text-4xl font-bold text-white mb-3">Muzammil</h2>
-                            <p className="text-gray-300 mb-6 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
+                            <p className={`text-gray-300 mb-6 transition-all duration-300
+                                ${activeCard === 1 ? 'line-clamp-none' : 'line-clamp-2 group-hover:line-clamp-none'}`}>
                                 A passionate technologist who loves solving complex problems. Muzammil ensures WebCods stays at the forefront of modern web development standards and performance.
                             </p>
 
-                            <div className="flex gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                            <div className={`flex gap-4 transition-opacity duration-500 delay-100
+                                ${activeCard === 1 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
                                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 cursor-pointer transition-colors">
                                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" /></svg>
                                 </div>
