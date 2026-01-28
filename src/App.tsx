@@ -745,9 +745,9 @@ function App() {
                     </div>
 
                     <div key={`portfolio-content-${portfolioAnimationKey}`} className="section-content-stagger">
-                        {/* All Cards - Vertical on Mobile, Horizontal on Desktop */}
-                        <div className="md:overflow-x-auto pb-4 px-4 md:px-0 scrollbar-hide">
-                            <div className="flex flex-col md:flex-row items-center md:items-start gap-4 w-full md:w-max">
+                        {/* All Cards - Vertical on Mobile, Horizontal Centered on Desktop */}
+                        <div className="md:flex md:justify-center pb-4 px-4 md:px-0">
+                            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
                                 {/* ZCafe - Completed */}
                                 <div className="
                                     group relative bg-white/10 backdrop-blur-lg rounded-lg overflow-hidden
@@ -760,7 +760,7 @@ function App() {
                                 ">
                                     <div className="relative overflow-hidden h-20 md:h-24 bg-white">
                                         <img
-                                            src="/logo.png"
+                                            src="/zcafe.png"
                                             alt="ZCafe Logo"
                                             className="w-full h-full object-contain p-3"
                                         />
