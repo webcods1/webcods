@@ -82,11 +82,11 @@ const HeroCube: React.FC<HeroCubeProps> = ({ className = "" }) => {
 
                     {/* Faces */}
                     {/* Front (Z+48) - SWINGS OPEN DOWN like a hatch */}
-                    {/* RotateX -110deg moves it down and away */}
                     <div
                         className={`${faceBaseClass}`}
                         style={{
-                            transform: isOpen ? 'translateZ(48px) rotateX(-120deg) translateY(60px) opacity(0.2)' : 'translateZ(48px)',
+                            transform: isOpen ? 'translateZ(48px) rotateX(-120deg) translateY(60px)' : 'translateZ(48px)',
+                            opacity: isOpen ? 0.2 : 1, // Opacity moved here
                             transitionDelay: delay(100)
                         }}
                     >
@@ -97,7 +97,8 @@ const HeroCube: React.FC<HeroCubeProps> = ({ className = "" }) => {
                     <div
                         className={`${faceBaseClass}`}
                         style={{
-                            transform: isOpen ? 'rotateY(180deg) translateZ(100px) opacity(0)' : 'rotateY(180deg) translateZ(48px)',
+                            transform: isOpen ? 'rotateY(180deg) translateZ(100px)' : 'rotateY(180deg) translateZ(48px)',
+                            opacity: isOpen ? 0 : 1,
                             transitionDelay: delay(0)
                         }}
                     ></div>
@@ -106,7 +107,8 @@ const HeroCube: React.FC<HeroCubeProps> = ({ className = "" }) => {
                     <div
                         className={`${faceBaseClass}`}
                         style={{
-                            transform: isOpen ? 'rotateY(90deg) translateZ(48px) rotateY(110deg) translateX(40px) opacity(0.2)' : 'rotateY(90deg) translateZ(48px)',
+                            transform: isOpen ? 'rotateY(90deg) translateZ(48px) rotateY(110deg) translateX(40px)' : 'rotateY(90deg) translateZ(48px)',
+                            opacity: isOpen ? 0.2 : 1,
                             transitionDelay: delay(300)
                         }}
                     ></div>
@@ -115,7 +117,8 @@ const HeroCube: React.FC<HeroCubeProps> = ({ className = "" }) => {
                     <div
                         className={`${faceBaseClass}`}
                         style={{
-                            transform: isOpen ? 'rotateY(-90deg) translateZ(48px) rotateY(-110deg) translateX(-40px) opacity(0.2)' : 'rotateY(-90deg) translateZ(48px)',
+                            transform: isOpen ? 'rotateY(-90deg) translateZ(48px) rotateY(-110deg) translateX(-40px)' : 'rotateY(-90deg) translateZ(48px)',
+                            opacity: isOpen ? 0.2 : 1,
                             transitionDelay: delay(300)
                         }}
                     ></div>
@@ -124,7 +127,8 @@ const HeroCube: React.FC<HeroCubeProps> = ({ className = "" }) => {
                     <div
                         className={`${faceBaseClass}`}
                         style={{
-                            transform: isOpen ? 'rotateX(90deg) translateZ(48px) rotateX(110deg) translateY(-40px) opacity(0.2)' : 'rotateX(90deg) translateZ(48px)',
+                            transform: isOpen ? 'rotateX(90deg) translateZ(48px) rotateX(110deg) translateY(-40px)' : 'rotateX(90deg) translateZ(48px)',
+                            opacity: isOpen ? 0.2 : 1,
                             transitionDelay: delay(200)
                         }}
                     ></div>
@@ -133,7 +137,8 @@ const HeroCube: React.FC<HeroCubeProps> = ({ className = "" }) => {
                     <div
                         className={`${faceBaseClass}`}
                         style={{
-                            transform: isOpen ? 'rotateX(-90deg) translateZ(48px) rotateX(-110deg) translateY(40px) opacity(0.2)' : 'rotateX(-90deg) translateZ(48px)',
+                            transform: isOpen ? 'rotateX(-90deg) translateZ(48px) rotateX(-110deg) translateY(40px)' : 'rotateX(-90deg) translateZ(48px)',
+                            opacity: isOpen ? 0.2 : 1,
                             transitionDelay: delay(200)
                         }}
                     ></div>
