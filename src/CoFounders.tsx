@@ -150,7 +150,7 @@ const CoFounders: React.FC<CoFoundersProps> = ({ onBack }) => {
 
             {/* Floating WhatsApp Button */}
             <a
-                href="https://wa.me/"
+                href="https://wa.me/919400525063"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="fixed bottom-8 right-8 z-50 flex items-center group cursor-pointer"
