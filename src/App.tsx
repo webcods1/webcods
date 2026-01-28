@@ -595,6 +595,17 @@ function App() {
                                         </span>
                                     ))}
                                 </h1>
+                                {/* Interaction Hint - Animated Finger */}
+                                <div className={`absolute -bottom-6 -right-2 sm:right-0 md:-right-8 md:top-1/2 md:-translate-y-1/2 z-20 pointer-events-none transition-all duration-500 ${isHovering ? 'opacity-0' : 'opacity-100'}`}>
+                                    <div className="flex flex-col items-center animate-bounce">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600 filter drop-shadow-lg transform -rotate-12" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2a1 1 0 0 0-1 1v6.5a.5.5 0 0 1-1 0V3a1 1 0 0 0-2 0v10.5a.5.5 0 0 1-1 0V7a1 1 0 0 0-2 0v8a7 7 0 1 0 14 0V9a1 1 0 0 0-2 0v4.5a.5.5 0 0 1-1 0V2a1 1 0 0 0-1-1z" />
+                                        </svg>
+                                        <span className="text-[10px] sm:text-xs font-bold text-blue-600 bg-white/90 px-2 py-0.5 rounded-full shadow-sm whitespace-nowrap hidden sm:block">
+                                            Interact
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
