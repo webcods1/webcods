@@ -642,7 +642,7 @@ function App() {
             </section>
 
             {/* Services Section */}
-            <section ref={servicesRef} id="services" className={`scroll-snap-section min-h-[100dvh] md:min-h-0 ${RESPONSIVE_CLASSES.sectionPadding} pt-20 sm:pt-24 md:pt-16 flex items-start md:items-center bg-gradient-to-b from-blue-950 to-stone-50 relative`}>
+            <section ref={servicesRef} id="services" className={`scroll-snap-section min-h-[100dvh] md:min-h-0 ${RESPONSIVE_CLASSES.sectionPadding} pt-20 sm:pt-24 md:pt-24 flex items-start md:items-start bg-gradient-to-b from-blue-950 to-stone-50 relative`}>
                 <div className="container">
                     <div key={`services-heading-${servicesAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-0">
                         <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-center mb-6 sm:mb-8">
