@@ -555,6 +555,14 @@ function App() {
 
                         {/* Left Side - Large WEBCODS Text */}
                         <div className="relative">
+                            {/* Interactive Hint - Finger Pointer */}
+                            <div className="absolute -top-10 left-[20%] sm:left-[30%] md:left-[15%] z-20 animate-bounce pointer-events-none mix-blend-multiply opacity-80">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 fill-black stroke-white stroke-2" viewBox="0 0 24 24">
+                                    <path d="M12 2C10.89 2 10 2.89 10 4V11.5C10 11.78 9.78 12 9.5 12C9.22 12 9 11.78 9 11.5V6C9 4.89 8.11 4 7 4C5.89 4 5 4.89 5 6V13.8C5 17.65 8.13 20.77 12 20.77C15.87 20.77 19 17.65 19 13.8V9C19 7.89 18.11 7 17 7C16.85 7 16.7 7.02 16.57 7.05C16.37 5.86 15.3 4.96 14 5.01C13.92 3.32 12.53 2.01 10.83 2C11.23 2 11.62 2 12 2ZM12 4C12.55 4 13 4.45 13 5V11.5C13 11.78 13.22 12 13.5 12C13.78 12 14 11.78 14 11.5V7C14 6.45 14.45 6 15 6C15.55 6 16 6.45 16 7V11.5C16 11.78 16.22 12 16.5 12C16.78 12 17 11.78 17 11.5V9C17 8.45 17.45 8 18 8C18.55 8 19 8.45 19 9V13.8C19 16.89 16.14 19.29 12.8 19.29C12.5 19.29 12.22 19.27 11.94 19.24L12 19.27C9.25 19.27 7 17.27 7 14.28V6C7 5.45 7.45 5 8 5C8.55 5 9 5.45 9 6V11.5C9 12.88 10.12 14 11.5 14C12.88 14 14 12.88 14 11.5V4C14 2.89 13.11 2 12 2Z" fill="currentColor" />
+                                    <path d="M12 0L10.59 1.41L16.17 7H0V9H16.17L10.59 14.59L12 16L20 8L12 0Z" fill="none" opacity="0" /> {/* Removing hidden path */}
+                                    <path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.28-.06-.57 0-.81.18L5.2 18.26l4.41 4.42c.2.19.47.3.75.32h5.79c.8 0 1.45-.65 1.45-1.45v-4.7c0-.28 0-.58-.04-.86z" fill="current" />
+                                </svg>
+                            </div>
                             <div
                                 key={animationKey}
                                 className="hero-brand-text"
@@ -595,17 +603,6 @@ function App() {
                                         </span>
                                     ))}
                                 </h1>
-                                {/* Interaction Hint - Animated Finger */}
-                                <div className={`absolute -bottom-6 -right-2 sm:right-0 md:-right-8 md:top-1/2 md:-translate-y-1/2 z-20 pointer-events-none transition-all duration-500 ${isHovering ? 'opacity-0' : 'opacity-100'}`}>
-                                    <div className="flex flex-col items-center animate-bounce">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600 filter drop-shadow-lg transform -rotate-12" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M12 2a1 1 0 0 0-1 1v6.5a.5.5 0 0 1-1 0V3a1 1 0 0 0-2 0v10.5a.5.5 0 0 1-1 0V7a1 1 0 0 0-2 0v8a7 7 0 1 0 14 0V9a1 1 0 0 0-2 0v4.5a.5.5 0 0 1-1 0V2a1 1 0 0 0-1-1z" />
-                                        </svg>
-                                        <span className="text-[10px] sm:text-xs font-bold text-blue-600 bg-white/90 px-2 py-0.5 rounded-full shadow-sm whitespace-nowrap hidden sm:block">
-                                            Interact
-                                        </span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
