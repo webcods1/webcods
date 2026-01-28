@@ -85,7 +85,7 @@ const CoFounders: React.FC<CoFoundersProps> = ({ onBack }) => {
                             <div className="mb-2 inline-block px-4 py-1 rounded-full bg-purple-500/20 border border-purple-500/30 text-purple-300 text-sm font-semibold tracking-wider backdrop-blur-sm">
                                 CEO & CO-FOUNDER
                             </div>
-                            <h2 className="text-4xl font-bold text-white mb-3">Anishif</h2>
+                            <h2 className="text-4xl font-bold text-white mb-3">Anshif</h2>
                             <p className={`text-gray-300 mb-6 transition-all duration-300
                                 ${activeCard === 0 ? 'line-clamp-none' : 'line-clamp-2 group-hover:line-clamp-none'}`}>
                                 With over a decade of experience in tech innovation, Anishif leads WebCods with a vision to bridge the gap between complex technology and intuitive user experiences.
