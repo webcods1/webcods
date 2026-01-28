@@ -933,8 +933,23 @@ function App() {
 
                                 {/* Left Side - Contact Form */}
                                 <div className="order-1 md:mt-16">
-                                    <form action="https://formsubmit.co/webcods1@gmail.com" method="POST" className="space-y-2 sm:space-y-2.5 md:space-y-4">
-                                        <input type="hidden" name="_captcha" value="false" />
+                                    <form
+                                        onSubmit={(e) => {
+                                            e.preventDefault();
+                                            const formData = new FormData(e.currentTarget);
+                                            const name = formData.get('name');
+                                            const phone = formData.get('phone');
+                                            const email = formData.get('email');
+                                            const service = formData.get('service');
+                                            const message = formData.get('message');
+
+                                            const subject = `New Inquiry from ${name} - ${service}`;
+                                            const body = `Name: ${name}%0D%0APhone: ${phone}%0D%0AEmail: ${email}%0D%0AService: ${service}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+
+                                            window.location.href = `mailto:webcods1@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+                                        }}
+                                        className="space-y-2 sm:space-y-2.5 md:space-y-4"
+                                    >
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-2.5 md:gap-4">
                                             <input
                                                 type="text"
