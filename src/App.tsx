@@ -645,7 +645,7 @@ function App() {
             <section ref={servicesRef} id="services" className={`scroll-snap-section min-h-[100dvh] md:min-h-0 ${RESPONSIVE_CLASSES.sectionPadding} pt-20 sm:pt-24 md:pt-24 flex items-start md:items-center bg-gradient-to-b from-blue-950 to-stone-50 relative`}>
                 <div className="container">
                     <div key={`services-heading-${servicesAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-0">
-                        <h2 className={`${RESPONSIVE_CLASSES.sectionTitle} font-bold text-center mb-6 sm:mb-8 md:mb-10`}>
+                        <h2 className={`${RESPONSIVE_CLASSES.sectionTitle} font-bold text-center mb-6 sm:mb-8 md:mb-6`}>
                             SERVICES
                         </h2>
                     </div>
@@ -653,7 +653,7 @@ function App() {
                     <div key={`services-content-${servicesAnimationKey}`} className="section-content-stagger" style={{ perspective: '1000px' }}>
                         <div className="md:max-w-4xl md:mx-auto">
                             <div className="
-                grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-4 lg:gap-5
+                grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-7
                 px-4 md:px-0
               ">
                                 {services.map((service, index) => (
