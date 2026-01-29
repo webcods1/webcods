@@ -639,7 +639,7 @@ function App() {
                 </div>
 
                 {/* Co-Founders Button - Bottom Centered */}
-                <div className="absolute bottom-48 sm:bottom-40 md:bottom-10 left-1/2 transform -translate-x-1/2 z-30 w-[85%] sm:w-[75%] md:w-auto flex flex-col items-center">
+                <div className="absolute bottom-32 sm:bottom-40 md:bottom-10 left-1/2 transform -translate-x-1/2 z-30 w-[60%] sm:w-[75%] md:w-auto flex flex-col items-center">
                     {/* Mobile 3D Cube */}
                     <HeroCube variant="sky" className="block md:hidden mb-8" />
 
@@ -1162,6 +1162,7 @@ function App() {
                 className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8 z-50 flex items-center group cursor-pointer"
             >
                 <div className="
+                    hidden md:block
                     bg-white text-gray-800 
                     px-3 sm:px-4 py-1.5 sm:py-2 rounded-full 
                     shadow-lg mr-2 sm:mr-3 md:mr-4 
