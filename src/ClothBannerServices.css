@@ -1,0 +1,456 @@
+/* Cloth Banner Services Section */
+.cloth-banner-section {
+    position: relative;
+    min-height: 100vh;
+    padding: 120px 20px 80px;
+    background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+    overflow: hidden;
+}
+
+.cloth-banner-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* Section Headers */
+.section-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+    font-family: 'Poppins', sans-serif;
+}
+
+.section-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    text-align: center;
+    margin-bottom: 100px;
+    color: #6c757d;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Clothesline Rope */
+.clothesline-rope {
+    position: relative;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(180deg, #8b7355 0%, #6b5645 50%, #8b7355 100%);
+    border-radius: 2px;
+    margin: 0 auto 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    animation: ropeSwing 4s ease-in-out infinite;
+    transform-origin: center;
+}
+
+.clothesline-rope::before,
+.clothesline-rope::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #8b7355;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.clothesline-rope::before {
+    left: -10px;
+}
+
+.clothesline-rope::after {
+    right: -10px;
+}
+
+@keyframes ropeSwing {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-2px) rotate(0.3deg);
+    }
+
+    75% {
+        transform: translateY(2px) rotate(-0.3deg);
+    }
+}
+
+/* Cloth Banners Container */
+.cloth-banners {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+    padding: 0 20px;
+    margin-top: -2px;
+}
+
+/* Individual Cloth Banner */
+.cloth-banner {
+    position: relative;
+    width: 220px;
+    perspective: 1000px;
+    animation: bannerEntrance 1s ease-out backwards;
+}
+
+@keyframes bannerEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Clothespins */
+.clothespin {
+    position: absolute;
+    top: -8px;
+    width: 30px;
+    height: 16px;
+    background: linear-gradient(180deg, #d4a574 0%, #b8935f 100%);
+    border-radius: 3px;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    animation: clothespinSwing 3s ease-in-out infinite;
+}
+
+.clothespin::before {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 12px;
+    background: #8b7355;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 2px;
+}
+
+.clothespin-left {
+    left: 30px;
+    animation-delay: 0s;
+}
+
+.clothespin-right {
+    right: 30px;
+    animation-delay: 0.5s;
+}
+
+@keyframes clothespinSwing {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-2deg);
+    }
+
+    75% {
+        transform: rotate(2deg);
+    }
+}
+
+/* Cloth Fabric */
+.cloth-fabric {
+    position: relative;
+    width: 100%;
+    min-height: 320px;
+    background: linear-gradient(135deg, #fdfbf7 0%, #f5f1e8 100%);
+    border-radius: 8px;
+    padding: 40px 25px 30px;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+    transform-origin: top center;
+    animation: clothWave 3.5s ease-in-out infinite;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+/* Stagger the wave animation for each banner */
+.cloth-banner:nth-child(1) .cloth-fabric {
+    animation-delay: 0s;
+}
+
+.cloth-banner:nth-child(2) .cloth-fabric {
+    animation-delay: 0.3s;
+}
+
+.cloth-banner:nth-child(3) .cloth-fabric {
+    animation-delay: 0.6s;
+}
+
+.cloth-banner:nth-child(4) .cloth-fabric {
+    animation-delay: 0.9s;
+}
+
+.cloth-banner:nth-child(5) .cloth-fabric {
+    animation-delay: 1.2s;
+}
+
+@keyframes clothWave {
+
+    0%,
+    100% {
+        transform:
+            perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0);
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+
+    15% {
+        transform:
+            perspective(1000px) rotateX(-3deg) rotateY(4deg) translateZ(10px);
+        box-shadow:
+            -5px 15px 35px rgba(0, 0, 0, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    35% {
+        transform:
+            perspective(1000px) rotateX(2deg) rotateY(-3deg) translateZ(5px);
+        box-shadow:
+            5px 12px 32px rgba(0, 0, 0, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    }
+
+    50% {
+        transform:
+            perspective(1000px) rotateX(-1deg) rotateY(5deg) translateZ(8px);
+        box-shadow:
+            -3px 14px 34px rgba(0, 0, 0, 0.13),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    65% {
+        transform:
+            perspective(1000px) rotateX(3deg) rotateY(-2deg) translateZ(6px);
+        box-shadow:
+            4px 13px 33px rgba(0, 0, 0, 0.11),
+            inset 0 1px 0 rgba(255, 255, 255, 0.87);
+    }
+
+    85% {
+        transform:
+            perspective(1000px) rotateX(-2deg) rotateY(3deg) translateZ(4px);
+        box-shadow:
+            -2px 11px 31px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.83);
+    }
+}
+
+/* Hover effect - pause wind animation */
+.cloth-fabric:hover {
+    animation-play-state: paused;
+    transform:
+        perspective(1000px) rotateX(-5deg) translateZ(15px) scale(1.05);
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+/* Fabric Folds */
+.fabric-fold {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(0, 0, 0, 0.03) 20%,
+            rgba(0, 0, 0, 0.05) 50%,
+            rgba(0, 0, 0, 0.03) 80%,
+            transparent 100%);
+    left: 0;
+    animation: foldWave 3s ease-in-out infinite;
+}
+
+.fold-1 {
+    top: 25%;
+    animation-delay: 0s;
+}
+
+.fold-2 {
+    top: 50%;
+    animation-delay: 0.5s;
+}
+
+.fold-3 {
+    top: 75%;
+    animation-delay: 1s;
+}
+
+@keyframes foldWave {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scaleX(1) translateY(0);
+    }
+
+    50% {
+        opacity: 0.6;
+        transform: scaleX(0.95) translateY(2px);
+    }
+}
+
+/* Cloth Content */
+.cloth-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.service-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.service-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: -0.5px;
+}
+
+.service-description {
+    font-size: 0.95rem;
+    color: #6c757d;
+    line-height: 1.6;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Ambient Light Effect */
+.ambient-light {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 400px;
+    background: radial-gradient(ellipse at center,
+            rgba(255, 255, 255, 0.4) 0%,
+            transparent 70%);
+    pointer-events: none;
+    animation: lightPulse 6s ease-in-out infinite;
+}
+
+@keyframes lightPulse {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .cloth-banners {
+        gap: 40px;
+    }
+
+    .cloth-banner {
+        width: 200px;
+    }
+
+    .cloth-fabric {
+        min-height: 300px;
+        padding: 35px 20px 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cloth-banner-section {
+        padding: 80px 15px 60px;
+    }
+
+    .section-subtitle {
+        margin-bottom: 80px;
+    }
+
+    .cloth-banners {
+        gap: 50px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cloth-banner {
+        width: 280px;
+    }
+
+    .cloth-fabric {
+        min-height: 280px;
+    }
+
+    .service-icon {
+        font-size: 2.5rem;
+    }
+
+    .service-title {
+        font-size: 1.35rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .cloth-banner {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/* Add texture to fabric */
+.cloth-fabric::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.01) 2px,
+            rgba(0, 0, 0, 0.01) 4px),
+        repeating-linear-gradient(90deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.01) 2px,
+            rgba(0, 0, 0, 0.01) 4px);
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0.5;
+}
