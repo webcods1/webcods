@@ -130,7 +130,7 @@ const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' })
                 <div
                     className={`
                         absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-                        w-80 p-6 bg-white/95 backdrop-blur-3xl rounded-2xl 
+                        w-56 p-4 bg-white/95 backdrop-blur-3xl rounded-xl 
                         border-2 ${t.innerBorder} ${t.shadow} 
                         transition-all duration-700 delay-100 text-center flex flex-col items-center
                         ${isOpen ? 'opacity-100 scale-100 z-50 pointer-events-auto' : 'opacity-0 scale-50 -z-10 pointer-events-none'}
@@ -140,8 +140,8 @@ const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' })
                         transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
                     }}
                 >
-                    {/* Video Container */}
-                    <div className={`w-full aspect-video rounded-xl overflow-hidden mb-4 border-2 ${t.innerBorder} shadow-lg bg-black`}>
+                    {/* Video Container - Reduced Size */}
+                    <div className={`w-40 aspect-video rounded-lg overflow-hidden mb-3 border ${t.innerBorder} shadow-md bg-black`}>
                         <video
                             ref={videoRef}
                             src="/orex.mp4"
@@ -156,13 +156,13 @@ const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' })
                         />
                     </div>
 
-                    <div className={`text-[10px] font-bold ${t.badgeText} uppercase tracking-widest mb-2 ${t.badgeBg} px-3 py-1 rounded-full`}>
+                    <div className={`text-[8px] font-bold ${t.badgeText} uppercase tracking-widest mb-1.5 ${t.badgeBg} px-2 py-0.5 rounded-full`}>
                         Work in Progress
                     </div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-2 leading-tight">
+                    <h3 className="text-sm font-bold text-gray-800 mb-1.5 leading-tight">
                         Next Innovation
                     </h3>
-                    <p className="text-sm text-gray-600 leading-relaxed max-w-[260px]">
+                    <p className="text-[10px] text-gray-600 leading-relaxed max-w-[180px]">
                         We are building something extraordinary. Stay tuned for the reveal.
                     </p>
                 </div>
