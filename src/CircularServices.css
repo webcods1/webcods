@@ -1,0 +1,380 @@
+/* ============================================
+   CIRCULAR SERVICES SECTION
+   High-Fidelity Tech Dashboard Style
+   ============================================ */
+
+.circular-services-section {
+    position: relative;
+    min-height: 100vh;
+    padding: 60px 20px 40px;
+    /* Reduced top padding to move higher */
+    background: linear-gradient(to bottom, #0a0e27 0%, #ffffff 100%);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* Changed to column to stack title/grid better */
+    align-items: center;
+    justify-content: flex-start;
+    /* Start from top */
+    scroll-snap-align: start;
+}
+
+/* Background effects */
+.circular-services-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(ellipse at 20% 30%, rgba(14, 165, 233, 0.1) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 70%, rgba(59, 130, 246, 0.1) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+/* ============================================
+   CONTAINER & TEXT
+   ============================================ */
+.services-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.services-title {
+    /* Match About Section Size: text-3xl sm:text-4xl md:text-[2.4rem] */
+    font-size: 1.875rem;
+    /* text-3xl */
+    line-height: 2.25rem;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 2rem;
+    /* Match mt-8 */
+    margin-bottom: 2rem;
+    /* Match mb-8 approx */
+    color: #ffffff;
+    /* White color requested */
+    font-family: 'Poppins', sans-serif;
+}
+
+@media (min-width: 640px) {
+    .services-title {
+        font-size: 2.25rem;
+        /* text-4xl */
+        line-height: 2.5rem;
+        margin-top: 3rem;
+        /* match sm:mt-12 */
+    }
+}
+
+@media (min-width: 768px) {
+    .services-title {
+        font-size: 2.4rem;
+        /* md:text-[2.4rem] */
+    }
+}
+
+.services-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    text-align: center;
+    margin-bottom: 80px;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+}
+
+/* ============================================
+   SERVICES GRID
+   ============================================ */
+.services-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    /* Reduced gap for better mobile fit */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 10px;
+}
+
+/* ============================================
+   SERVICE ITEM
+   ============================================ */
+.service-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    width: 160px;
+    /* Fixed width for alignment */
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.service-item.animate-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ============================================
+   TECH CIRCLE CONTAINER
+   ============================================ */
+.service-circle {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* ============================================
+   ICON CENTER
+   ============================================ */
+.icon-container {
+    position: relative;
+    z-index: 10;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(15, 23, 42, 0) 70%);
+    border-radius: 50%;
+    border: 1px solid rgba(14, 165, 233, 0.3);
+    box-shadow: 0 0 15px rgba(14, 165, 233, 0.2);
+    transition: all 0.4s ease;
+}
+
+.service-circle:hover .icon-container {
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.3) 0%, rgba(59, 130, 246, 0.1) 80%);
+    box-shadow: 0 0 25px rgba(6, 182, 212, 0.4);
+    transform: scale(1.1);
+}
+
+.service-icon {
+    width: 32px;
+    height: 32px;
+    color: #0ea5e9;
+    /* Sky-500 */
+    stroke-width: 1.5;
+    filter: drop-shadow(0 0 5px rgba(14, 165, 233, 0.5));
+    transition: all 0.4s ease;
+}
+
+.service-circle:hover .service-icon {
+    color: #22d3ee;
+    /* Cyan-400 */
+    filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.8));
+    transform: scale(1.1);
+}
+
+/* ============================================
+   RINGS (The "Copy Paste" Look)
+   ============================================ */
+
+/* Common Ring Styling */
+.tech-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* 1. The Tick Ring (Outer Dashed Dial) */
+/* Mimics a speedometer dial */
+.ring-ticks {
+    width: 130px;
+    height: 130px;
+    background: repeating-conic-gradient(from 0deg,
+            rgba(6, 182, 212, 0.8) 0deg 2deg,
+            /* The tick */
+            transparent 2deg 12deg
+            /* The gap */
+        );
+    /* Mask to make it a ring */
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 8px), #fff calc(100% - 8px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 8px), #fff calc(100% - 8px));
+
+    animation: rotateSlow 20s linear infinite;
+    opacity: 0.7;
+}
+
+/* 2. The Solid Arcs (Loading Bar style) */
+/* A partially filled ring */
+.ring-arcs {
+    width: 110px;
+    height: 110px;
+    border: 2px solid rgba(59, 130, 246, 0.1);
+    /* Very faint full track */
+    border-top: 2px solid #3b82f6;
+    /* Solid Blue Sector */
+    border-right: 2px solid transparent;
+    /* Gap */
+    border-bottom: 2px solid #06b6d4;
+    /* Solid Cyan Sector */
+    border-left: 2px solid transparent;
+    /* Gap */
+    border-radius: 50%;
+
+    animation: rotateReverse 8s linear infinite;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.1);
+}
+
+/* 3. The Inner Dashed Circle */
+.ring-inner {
+    width: 80px;
+    height: 80px;
+    border: 1px dashed rgba(14, 165, 233, 0.5);
+    /* Fine dashes */
+    border-radius: 50%;
+    animation: rotateSlow 12s linear infinite reverse;
+}
+
+/* 4. Glow Effect Ring */
+.ring-glow {
+    width: 100px;
+    height: 100px;
+    background: transparent;
+    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.15);
+    /* Subtle ambient glow */
+    animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* ============================================
+   HOVER INTERACTIONS
+   ============================================ */
+.service-circle:hover .ring-ticks {
+    animation-duration: 4s;
+    /* Speed up ticks */
+    opacity: 1;
+    background: repeating-conic-gradient(from 0deg,
+            #22d3ee 0deg 2deg,
+            transparent 2deg 12deg);
+}
+
+.service-circle:hover .ring-arcs {
+    border-top-color: #22d3ee;
+    border-bottom-color: #3b82f6;
+    box-shadow: 0 0 15px rgba(34, 211, 238, 0.4);
+    animation-duration: 2s;
+    /* Speed up spinning */
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes rotateSlow {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes rotateReverse {
+    from {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+}
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   SERVICE TITLE TEXT
+   ============================================ */
+.service-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #334155;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.service-circle:hover~.service-title,
+.service-item:hover .service-title {
+    color: #0284c7;
+    /* Sky-600 */
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+    .circular-services-section {
+        padding: 60px 15px;
+    }
+
+    .services-grid {
+        gap: 30px;
+        /* Allow wrapping with reasonable gap */
+        justify-content: center;
+    }
+
+    .service-item {
+        width: 140px;
+        /* Adjust item width for small screens */
+    }
+
+    .service-circle {
+        transform: scale(0.9);
+    }
+}
+
+@media (max-width: 480px) {
+    .circular-services-section {
+        padding-top: 50px;
+    }
+
+    .services-grid {
+        gap: 15px;
+        /* Tighter gap for very small screens */
+    }
+
+    .service-item {
+        width: 45%;
+        /* Use percentage to fit 2 per row */
+        max-width: 140px;
+        align-items: center;
+    }
+
+    .service-circle {
+        width: 120px;
+        height: 120px;
+        transform: scale(0.85);
+        /* Slightly smaller rings */
+    }
+
+    .service-title {
+        font-size: 0.8rem;
+    }
+}

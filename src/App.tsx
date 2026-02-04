@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import CoFounders from './CoFounders'
 import HeroCube from './HeroCube'
-import HexagonServices from './HexagonServices'
+import CircularServices from './CircularServices'
 import { RESPONSIVE_CLASSES } from './responsive'
 
 interface NavLink {
@@ -738,8 +738,8 @@ function App() {
                 </div>
             </section>
 
-            {/* Hexagon Services Section */}
-            <HexagonServices />
+            {/* Circular Services Section */}
+            <CircularServices />
 
             {/* Portfolio Section */}
             <section ref={portfolioRef} id="portfolio" className="scroll-snap-section min-h-[100dvh] md:min-h-0 pt-16 sm:pt-20 md:pt-16 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center bg-gradient-to-b from-stone-50 to-black relative">
@@ -867,58 +867,6 @@ function App() {
             {/* Contact Section */}
             <section ref={contactRef} id="contact" className="scroll-snap-section min-h-[100dvh] md:min-h-0 pt-20 sm:pt-24 md:pt-24 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center relative bg-gradient-to-b from-black to-slate-900">
                 <div className="container px-2.5 sm:px-3 md:px-0">
-                    {/* Vintage Phone Icon with Speech Bubbles */}
-                    <div key={`contact-phone-${contactAnimationKey}`} className="section-heading-fade flex justify-center mb-4 sm:mb-6">
-                        <div className="relative">
-                            {/* Speech Bubbles */}
-                            <div className="absolute -top-2 -left-8 sm:-left-12 md:-left-16 animate-bounce" style={{ animationDelay: '0s', animationDuration: '2s' }}>
-                                <svg width="40" height="30" viewBox="0 0 40 30" className="opacity-80">
-                                    <rect x="2" y="2" width="36" height="20" rx="8" fill="white" stroke="#374151" strokeWidth="2" />
-                                    <path d="M 10 22 L 8 28 L 15 22 Z" fill="white" stroke="#374151" strokeWidth="2" />
-                                </svg>
-                            </div>
-                            <div className="absolute -top-4 -right-6 sm:-right-10 md:-right-14 animate-bounce" style={{ animationDelay: '0.5s', animationDuration: '2s' }}>
-                                <svg width="35" height="28" viewBox="0 0 35 28" className="opacity-80">
-                                    <ellipse cx="17.5" cy="12" rx="15" ry="10" fill="white" stroke="#374151" strokeWidth="2" />
-                                    <path d="M 25 18 L 28 24 L 20 18 Z" fill="white" stroke="#374151" strokeWidth="2" />
-                                </svg>
-                            </div>
-                            <div className="absolute top-8 right-0 sm:right-2 animate-bounce" style={{ animationDelay: '1s', animationDuration: '2s' }}>
-                                <svg width="45" height="32" viewBox="0 0 45 32" className="opacity-80">
-                                    <ellipse cx="22.5" cy="14" rx="18" ry="12" fill="white" stroke="#374151" strokeWidth="2" />
-                                    <path d="M 35 20 L 40 28 L 30 22 Z" fill="white" stroke="#374151" strokeWidth="2" />
-                                </svg>
-                            </div>
-
-                            {/* Vintage Phone */}
-                            <svg width="80" height="80" viewBox="0 0 100 100" className="drop-shadow-lg">
-                                {/* Phone Receiver */}
-                                <g className="animate-pulse" style={{ animationDuration: '3s' }}>
-                                    {/* Top part of receiver */}
-                                    <ellipse cx="35" cy="25" rx="18" ry="8" fill="#F3F4F6" stroke="#9CA3AF" strokeWidth="2" />
-                                    <rect x="17" y="25" width="36" height="8" fill="#F3F4F6" />
-                                    <ellipse cx="35" cy="33" rx="18" ry="8" fill="#E5E7EB" stroke="#9CA3AF" strokeWidth="2" />
-
-                                    {/* Cord */}
-                                    <path d="M 35 33 Q 40 45, 35 55 T 35 75" stroke="#9CA3AF" strokeWidth="3" fill="none" strokeLinecap="round" />
-
-                                    {/* Bottom part of receiver */}
-                                    <ellipse cx="35" cy="75" rx="18" ry="8" fill="#F3F4F6" stroke="#9CA3AF" strokeWidth="2" />
-                                    <rect x="17" y="75" width="36" height="8" fill="#F3F4F6" />
-                                    <ellipse cx="35" cy="83" rx="18" ry="8" fill="#E5E7EB" stroke="#9CA3AF" strokeWidth="2" />
-
-                                    {/* Speaker holes */}
-                                    <circle cx="28" cy="29" r="1.5" fill="#9CA3AF" />
-                                    <circle cx="35" cy="29" r="1.5" fill="#9CA3AF" />
-                                    <circle cx="42" cy="29" r="1.5" fill="#9CA3AF" />
-                                    <circle cx="28" cy="79" r="1.5" fill="#9CA3AF" />
-                                    <circle cx="35" cy="79" r="1.5" fill="#9CA3AF" />
-                                    <circle cx="42" cy="79" r="1.5" fill="#9CA3AF" />
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-
                     <div key={`contact-heading-${contactAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-0">
                         <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-center mb-6 sm:mb-8 text-white">
                             LET'S WORK TOGETHER
