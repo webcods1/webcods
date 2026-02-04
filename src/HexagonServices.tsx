@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './HexagonServices.css';
 
 interface Service {
@@ -82,8 +82,45 @@ const services: Service[] = [
 ];
 
 const HexagonServices: React.FC = () => {
+    const sectionRef = useRef<HTMLElement>(null);
+    const hexagonRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        // Trigger animation for all hexagons with staggered delay
+                        hexagonRefs.current.forEach((hexagon, index) => {
+                            if (hexagon) {
+                                setTimeout(() => {
+                                    hexagon.classList.add('animate-in');
+                                }, index * 100); // 100ms delay between each hexagon
+                            }
+                        });
+                        // Unobserve after animation is triggered
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            {
+                threshold: 0.2, // Trigger when 20% of section is visible
+            }
+        );
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
+
+        return () => {
+            if (sectionRef.current) {
+                observer.unobserve(sectionRef.current);
+            }
+        };
+    }, []);
+
     return (
-        <section className="hexagon-services-section">
+        <section id="services" className="hexagon-services-section" ref={sectionRef}>
             {/* Animated tech background */}
             <div className="tech-background"></div>
             <div className="tech-lines"></div>
@@ -97,7 +134,9 @@ const HexagonServices: React.FC = () => {
                         <div
                             key={index}
                             className="hexagon-wrapper"
-                            style={{ animationDelay: `${index * 0.1}s` }}
+                            ref={(el) => {
+                                hexagonRefs.current[index] = el;
+                            }}
                         >
                             <div className="hexagon">
                                 <div className="hexagon-inner">

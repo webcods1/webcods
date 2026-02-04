@@ -13,6 +13,7 @@
     align-items: center;
     justify-content: center;
     perspective: 1500px;
+    scroll-snap-align: start;
 }
 
 /* ============================================
@@ -113,15 +114,16 @@
 }
 
 /* ============================================
-   HEXAGON GRID LAYOUT
+   HEXAGON GRID LAYOUT - Honeycomb Pattern
    ============================================ */
 .hexagon-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 40px;
-    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
 /* ============================================
@@ -131,19 +133,37 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: hexagonFadeIn 0.8s ease-out backwards;
+    opacity: 0;
+    transform: translateX(-200%) rotate(-180deg) scale(0.3);
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    margin: -10px 5px;
 }
 
-@keyframes hexagonFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(30px) scale(0.8);
-    }
+/* Honeycomb offset for alternating rows */
+.hexagon-wrapper:nth-child(4),
+.hexagon-wrapper:nth-child(5),
+.hexagon-wrapper:nth-child(6) {
+    margin-left: 85px;
+}
 
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+.hexagon-wrapper:nth-child(7),
+.hexagon-wrapper:nth-child(8),
+.hexagon-wrapper:nth-child(9) {
+    margin-left: 5px;
+}
+
+.hexagon-wrapper.animate-in {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg) scale(1);
+}
+
+/* Alternate animation from right for even items */
+.hexagon-wrapper:nth-child(even) {
+    transform: translateX(200%) rotate(180deg) scale(0.3);
+}
+
+.hexagon-wrapper:nth-child(even).animate-in {
+    transform: translateX(0) rotate(0deg) scale(1);
 }
 
 /* ============================================
@@ -151,8 +171,8 @@
    ============================================ */
 .hexagon {
     position: relative;
-    width: 180px;
-    height: 200px;
+    width: 140px;
+    height: 160px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -326,14 +346,16 @@
    RESPONSIVE DESIGN
    ============================================ */
 @media (max-width: 1024px) {
-    .hexagon-grid {
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 30px;
+
+    .hexagon-wrapper:nth-child(4),
+    .hexagon-wrapper:nth-child(5),
+    .hexagon-wrapper:nth-child(6) {
+        margin-left: 70px;
     }
 
     .hexagon {
-        width: 160px;
-        height: 180px;
+        width: 120px;
+        height: 140px;
     }
 }
 
@@ -347,44 +369,57 @@
     }
 
     .hexagon-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 25px;
         padding: 10px;
     }
 
-    .hexagon {
-        width: 140px;
-        height: 160px;
+    .hexagon-wrapper {
+        margin: -8px 3px;
     }
 
-    .hexagon-content svg {
-        width: 40px;
-        height: 40px;
-    }
-
-    .service-title {
-        font-size: 0.85rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .hexagon-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
+    .hexagon-wrapper:nth-child(4),
+    .hexagon-wrapper:nth-child(5),
+    .hexagon-wrapper:nth-child(6) {
+        margin-left: 55px;
     }
 
     .hexagon {
-        width: 120px;
-        height: 140px;
+        width: 100px;
+        height: 115px;
     }
 
     .hexagon-content svg {
-        width: 36px;
-        height: 36px;
+        width: 32px;
+        height: 32px;
     }
 
     .service-title {
         font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hexagon-wrapper {
+        margin: -6px 2px;
+    }
+
+    .hexagon-wrapper:nth-child(4),
+    .hexagon-wrapper:nth-child(5),
+    .hexagon-wrapper:nth-child(6) {
+        margin-left: 45px;
+    }
+
+    .hexagon {
+        width: 85px;
+        height: 100px;
+    }
+
+    .hexagon-content svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .service-title {
+        font-size: 0.65rem;
     }
 }
 
