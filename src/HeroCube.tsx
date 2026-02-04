@@ -147,19 +147,12 @@ const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' })
                         transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
                     }}
                 >
-                    {/* Video Container */}
+                    {/* Image Container */}
                     <div className={`w-full aspect-video rounded-md overflow-hidden mb-2 border ${t.innerBorder} shadow-sm bg-black`}>
-                        <video
-                            src="/rexo.mp4"
+                        <img
+                            src="/rexo.jpeg"
+                            alt="Innovation Showcase"
                             className="w-full h-full object-cover"
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                            onError={(e) => {
-                                console.error('Video failed to load');
-                                (e.target as HTMLVideoElement).style.display = 'none';
-                            }}
                         />
                     </div>
 
