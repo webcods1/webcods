@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import CoFounders from './CoFounders'
 import HeroCube from './HeroCube'
-import ClothBannerServices from './ClothBannerServices'
 import { RESPONSIVE_CLASSES } from './responsive'
 
 interface NavLink {
@@ -814,9 +813,6 @@ function App() {
                     </div>
                 </div>
             </section>
-
-            {/* Cloth Banner Services Section */}
-            <ClothBannerServices />
 
             {/* Portfolio Section */}
             <section ref={portfolioRef} id="portfolio" className="scroll-snap-section min-h-[100dvh] md:min-h-0 pt-16 sm:pt-20 md:pt-16 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center bg-gradient-to-b from-stone-50 to-black relative">

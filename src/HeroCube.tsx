@@ -137,7 +137,7 @@ const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' })
                     onClick={(e) => e.stopPropagation()}
                     className={`
                         absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-                        w-80 p-6 bg-white/95 backdrop-blur-3xl rounded-2xl 
+                        w-64 p-4 bg-white/95 backdrop-blur-3xl rounded-xl 
                         border-2 ${t.innerBorder} ${t.shadow} 
                         transition-all duration-700 delay-100 text-center flex flex-col items-center
                         ${isOpen ? 'opacity-100 scale-100 z-50 pointer-events-auto' : 'opacity-0 scale-50 -z-10 pointer-events-none'}
@@ -148,7 +148,7 @@ const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' })
                     }}
                 >
                     {/* Video Container */}
-                    <div className={`w-full aspect-video rounded-xl overflow-hidden mb-4 border-2 ${t.innerBorder} shadow-lg bg-black`}>
+                    <div className={`w-full aspect-video rounded-lg overflow-hidden mb-3 border-2 ${t.innerBorder} shadow-md bg-black`}>
                         <video
                             src="/orex.mp4"
                             className="w-full h-full object-cover"
@@ -163,13 +163,13 @@ const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' })
                         />
                     </div>
 
-                    <div className={`text-[10px] font-bold ${t.badgeText} uppercase tracking-widest mb-2 ${t.badgeBg} px-3 py-1 rounded-full`}>
+                    <div className={`text-[9px] font-bold ${t.badgeText} uppercase tracking-widest mb-1.5 ${t.badgeBg} px-2.5 py-0.5 rounded-full`}>
                         Featured Project
                     </div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-2 leading-tight">
+                    <h3 className="text-base font-bold text-gray-800 mb-1.5 leading-tight">
                         Innovation Showcase
                     </h3>
-                    <p className="text-sm text-gray-600 leading-relaxed max-w-[240px]">
+                    <p className="text-xs text-gray-600 leading-relaxed max-w-[200px]">
                         Experience our latest creation in action. Click outside to close.
                     </p>
                 </div>
