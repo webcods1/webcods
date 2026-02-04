@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface HeroCubeProps {
     variant?: 'blue' | 'sky';
@@ -7,19 +7,7 @@ interface HeroCubeProps {
 
 const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const videoRef = useRef<HTMLVideoElement>(null);
-
-    // Control video playback based on cube state
-    useEffect(() => {
-        if (videoRef.current) {
-            if (isOpen) {
-                videoRef.current.play().catch(err => console.error('Video play failed:', err));
-            } else {
-                videoRef.current.pause();
-                videoRef.current.currentTime = 0; // Reset to start
-            }
-        }
-    }, [isOpen]);
+    const contentRef = useRef<HTMLDivElement>(null);
 
     // Color mappings
     const colors = {
@@ -48,6 +36,23 @@ const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' })
     };
 
     const t = colors[variant];
+
+    // Click outside to close
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (isOpen && contentRef.current && !contentRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        };
+
+        if (isOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isOpen]);
 
     // Helper for staggered delays
     // Order: Top(0), Right(1), Left(2), Bottom(3).
@@ -128,6 +133,8 @@ const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' })
 
                 {/* Inner Content - Revealed when OPEN */}
                 <div
+                    ref={contentRef}
+                    onClick={(e) => e.stopPropagation()}
                     className={`
                         absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
                         w-80 p-6 bg-white/95 backdrop-blur-3xl rounded-2xl 
@@ -143,12 +150,12 @@ const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' })
                     {/* Video Container */}
                     <div className={`w-full aspect-video rounded-xl overflow-hidden mb-4 border-2 ${t.innerBorder} shadow-lg bg-black`}>
                         <video
-                            ref={videoRef}
                             src="/orex.mp4"
+                            className="w-full h-full object-cover"
+                            autoPlay
                             loop
                             muted
                             playsInline
-                            className="w-full h-full object-cover"
                             onError={(e) => {
                                 console.error('Video failed to load');
                                 (e.target as HTMLVideoElement).style.display = 'none';
@@ -157,13 +164,13 @@ const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' })
                     </div>
 
                     <div className={`text-[10px] font-bold ${t.badgeText} uppercase tracking-widest mb-2 ${t.badgeBg} px-3 py-1 rounded-full`}>
-                        Work in Progress
+                        Featured Project
                     </div>
                     <h3 className="text-xl font-bold text-gray-800 mb-2 leading-tight">
-                        Next Innovation
+                        Innovation Showcase
                     </h3>
-                    <p className="text-sm text-gray-600 leading-relaxed max-w-[260px]">
-                        We are building something extraordinary. Stay tuned for the reveal.
+                    <p className="text-sm text-gray-600 leading-relaxed max-w-[240px]">
+                        Experience our latest creation in action. Click outside to close.
                     </p>
                 </div>
 
