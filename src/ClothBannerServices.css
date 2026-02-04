@@ -1,9 +1,20 @@
-/* Cloth Banner Services Section */
+/* ============================================
+   CINEMATIC CLOTH BANNER SERVICES SECTION
+   Realistic wind physics & fabric simulation
+   ============================================ */
+
+/* Import premium fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+/* Main Section Container */
 .cloth-banner-section {
     position: relative;
     min-height: 100vh;
     padding: 120px 20px 80px;
-    background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+    background: linear-gradient(180deg,
+            #e8f4f8 0%,
+            #f0f7fa 50%,
+            #fafbfc 100%);
     overflow: hidden;
 }
 
@@ -16,298 +27,428 @@
 /* Section Headers */
 .section-title {
     font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 700;
+    font-weight: 800;
     text-align: center;
     margin-bottom: 1rem;
-    color: #2c3e50;
+    color: #1a3a52;
     font-family: 'Poppins', sans-serif;
+    letter-spacing: -1px;
 }
 
 .section-subtitle {
     font-size: clamp(1rem, 2vw, 1.25rem);
     text-align: center;
     margin-bottom: 100px;
-    color: #6c757d;
+    color: #5a7a92;
     font-family: 'Inter', sans-serif;
+    font-weight: 400;
 }
 
-/* Clothesline Rope */
+/* ============================================
+   CLOTHESLINE ROPE - Realistic Physics
+   ============================================ */
 .clothesline-rope {
     position: relative;
     width: 100%;
-    height: 4px;
-    background: linear-gradient(180deg, #8b7355 0%, #6b5645 50%, #8b7355 100%);
-    border-radius: 2px;
-    margin: 0 auto 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    animation: ropeSwing 4s ease-in-out infinite;
+    height: 5px;
+    background: linear-gradient(180deg,
+            #a08060 0%,
+            #7a6050 30%,
+            #5a4840 50%,
+            #7a6050 70%,
+            #a08060 100%);
+    border-radius: 3px;
+    margin: 0 auto;
+    box-shadow:
+        0 3px 8px rgba(0, 0, 0, 0.15),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+    animation: ropeSwing 6s ease-in-out infinite;
     transform-origin: center;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
+/* Rope end knots */
 .clothesline-rope::before,
 .clothesline-rope::after {
     content: '';
     position: absolute;
-    width: 20px;
-    height: 20px;
-    background: #8b7355;
+    width: 24px;
+    height: 24px;
+    background: radial-gradient(circle at 30% 30%,
+            #a08060,
+            #7a6050 50%,
+            #5a4840);
     border-radius: 50%;
     top: 50%;
     transform: translateY(-50%);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.25),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.2),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.2);
 }
 
 .clothesline-rope::before {
-    left: -10px;
+    left: -12px;
 }
 
 .clothesline-rope::after {
-    right: -10px;
+    right: -12px;
 }
 
+/* Realistic rope swaying animation */
 @keyframes ropeSwing {
 
     0%,
     100% {
-        transform: translateY(0) rotate(0deg);
+        transform: translateY(0) rotate(0deg) scaleY(1);
     }
 
-    25% {
-        transform: translateY(-2px) rotate(0.3deg);
+    15% {
+        transform: translateY(-1px) rotate(0.2deg) scaleY(0.998);
+    }
+
+    30% {
+        transform: translateY(1px) rotate(-0.15deg) scaleY(1.001);
+    }
+
+    45% {
+        transform: translateY(-0.5px) rotate(0.1deg) scaleY(0.999);
+    }
+
+    60% {
+        transform: translateY(1.5px) rotate(-0.2deg) scaleY(1.002);
     }
 
     75% {
-        transform: translateY(2px) rotate(-0.3deg);
+        transform: translateY(-1px) rotate(0.15deg) scaleY(0.999);
+    }
+
+    90% {
+        transform: translateY(0.5px) rotate(-0.1deg) scaleY(1);
     }
 }
 
-/* Cloth Banners Container */
+/* ============================================
+   CLOTH BANNERS - Container & Layout
+   ============================================ */
 .cloth-banners {
     display: flex;
     justify-content: center;
-    gap: 60px;
+    gap: 80px;
     flex-wrap: wrap;
     padding: 0 20px;
     margin-top: -2px;
 }
 
-/* Individual Cloth Banner */
+/* ============================================
+   INDIVIDUAL CLOTH BANNER - Base Setup
+   ============================================ */
 .cloth-banner {
     position: relative;
-    width: 220px;
-    perspective: 1000px;
-    animation: bannerEntrance 1s ease-out backwards;
+    width: 240px;
+    perspective: 1200px;
+    animation: bannerEntrance 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
 }
 
 @keyframes bannerEntrance {
     from {
         opacity: 0;
-        transform: translateY(-50px) scale(0.8);
+        transform: translateY(-80px) scale(0.7) rotateX(-20deg);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0) scale(1) rotateX(0deg);
     }
 }
 
-/* Clothespins */
+/* ============================================
+   CLOTHESPINS - Realistic Wood Texture
+   ============================================ */
 .clothespin {
     position: absolute;
-    top: -8px;
-    width: 30px;
-    height: 16px;
-    background: linear-gradient(180deg, #d4a574 0%, #b8935f 100%);
-    border-radius: 3px;
+    top: -10px;
+    width: 32px;
+    height: 18px;
+    background: linear-gradient(135deg,
+            #d4a574 0%,
+            #c89960 40%,
+            #b8935f 60%,
+            #a68550 100%);
+    border-radius: 4px;
     z-index: 10;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-    animation: clothespinSwing 3s ease-in-out infinite;
+    box-shadow:
+        0 3px 6px rgba(0, 0, 0, 0.2),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+        inset -1px -1px 2px rgba(0, 0, 0, 0.2);
+    animation: clothespinSwing 4s ease-in-out infinite;
 }
 
+/* Clothespin spring/metal part */
 .clothespin::before {
     content: '';
     position: absolute;
-    width: 4px;
-    height: 12px;
-    background: #8b7355;
+    width: 5px;
+    height: 14px;
+    background: linear-gradient(90deg, #6a6a6a, #8a8a8a, #6a6a6a);
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 2px;
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.4),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.3);
 }
 
 .clothespin-left {
-    left: 30px;
+    left: 35px;
     animation-delay: 0s;
 }
 
 .clothespin-right {
-    right: 30px;
-    animation-delay: 0.5s;
+    right: 35px;
+    animation-delay: 0.7s;
 }
 
 @keyframes clothespinSwing {
 
     0%,
     100% {
-        transform: rotate(0deg);
+        transform: rotate(0deg) translateY(0);
     }
 
-    25% {
-        transform: rotate(-2deg);
+    20% {
+        transform: rotate(-1.5deg) translateY(-0.5px);
     }
 
-    75% {
-        transform: rotate(2deg);
+    40% {
+        transform: rotate(1deg) translateY(0.5px);
+    }
+
+    60% {
+        transform: rotate(-0.8deg) translateY(-0.3px);
+    }
+
+    80% {
+        transform: rotate(0.5deg) translateY(0.2px);
     }
 }
 
-/* Cloth Fabric */
+/* ============================================
+   CLOTH FABRIC - Cinematic Wind Physics
+   ============================================ */
 .cloth-fabric {
     position: relative;
     width: 100%;
-    min-height: 320px;
-    background: linear-gradient(135deg, #fdfbf7 0%, #f5f1e8 100%);
-    border-radius: 8px;
-    padding: 40px 25px 30px;
+    min-height: 340px;
+    background: linear-gradient(145deg,
+            #ffffff 0%,
+            #faf8f5 30%,
+            #f5f1ea 70%,
+            #f0ebe3 100%);
+    border-radius: 10px;
+    padding: 45px 28px 35px;
     box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+        0 15px 40px rgba(0, 0, 0, 0.12),
+        0 5px 15px rgba(0, 0, 0, 0.08),
+        inset 0 2px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.04);
     transform-origin: top center;
-    animation: clothWave 3.5s ease-in-out infinite;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+    animation: clothWindWave 5s ease-in-out infinite;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
+    will-change: transform, box-shadow;
 }
 
-/* Stagger the wave animation for each banner */
+/* ============================================
+   CINEMATIC WIND ANIMATION
+   Natural cloth movement with realistic physics
+   ============================================ */
+
+/* Stagger wind timing for each banner */
 .cloth-banner:nth-child(1) .cloth-fabric {
     animation-delay: 0s;
 }
 
 .cloth-banner:nth-child(2) .cloth-fabric {
-    animation-delay: 0.3s;
+    animation-delay: 0.4s;
 }
 
 .cloth-banner:nth-child(3) .cloth-fabric {
-    animation-delay: 0.6s;
+    animation-delay: 0.8s;
 }
 
 .cloth-banner:nth-child(4) .cloth-fabric {
-    animation-delay: 0.9s;
-}
-
-.cloth-banner:nth-child(5) .cloth-fabric {
     animation-delay: 1.2s;
 }
 
-@keyframes clothWave {
+.cloth-banner:nth-child(5) .cloth-fabric {
+    animation-delay: 1.6s;
+}
+
+/* Main wind wave animation - smooth, natural motion */
+@keyframes clothWindWave {
 
     0%,
     100% {
         transform:
-            perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0);
+            perspective(1200px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0) scale(1);
         box-shadow:
-            0 10px 30px rgba(0, 0, 0, 0.1),
-            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            0 15px 40px rgba(0, 0, 0, 0.12),
+            0 5px 15px rgba(0, 0, 0, 0.08),
+            inset 0 2px 0 rgba(255, 255, 255, 0.9);
     }
 
-    15% {
+    /* Wind gust from left */
+    12% {
         transform:
-            perspective(1000px) rotateX(-3deg) rotateY(4deg) translateZ(10px);
+            perspective(1200px) rotateX(-2deg) rotateY(6deg) rotateZ(1deg) translateZ(12px) translateX(3px) scale(1.01);
         box-shadow:
-            -5px 15px 35px rgba(0, 0, 0, 0.15),
-            inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            -8px 18px 45px rgba(0, 0, 0, 0.18),
+            -3px 8px 20px rgba(0, 0, 0, 0.12),
+            inset 0 2px 0 rgba(255, 255, 255, 1);
     }
 
-    35% {
+    /* Settling */
+    25% {
         transform:
-            perspective(1000px) rotateX(2deg) rotateY(-3deg) translateZ(5px);
+            perspective(1200px) rotateX(1deg) rotateY(-3deg) rotateZ(-0.5deg) translateZ(6px) translateX(-1px) scale(0.99);
         box-shadow:
-            5px 12px 32px rgba(0, 0, 0, 0.12),
-            inset 0 1px 0 rgba(255, 255, 255, 0.85);
+            4px 16px 42px rgba(0, 0, 0, 0.14),
+            2px 6px 18px rgba(0, 0, 0, 0.1),
+            inset 0 2px 0 rgba(255, 255, 255, 0.95);
     }
 
+    /* Wind gust from right */
+    38% {
+        transform:
+            perspective(1200px) rotateX(-1.5deg) rotateY(-7deg) rotateZ(-1.2deg) translateZ(14px) translateX(-4px) scale(1.015);
+        box-shadow:
+            10px 20px 48px rgba(0, 0, 0, 0.2),
+            4px 9px 22px rgba(0, 0, 0, 0.14),
+            inset 0 2px 0 rgba(255, 255, 255, 1);
+    }
+
+    /* Gentle sway */
     50% {
         transform:
-            perspective(1000px) rotateX(-1deg) rotateY(5deg) translateZ(8px);
+            perspective(1200px) rotateX(0.5deg) rotateY(4deg) rotateZ(0.8deg) translateZ(8px) translateX(2px) scale(1.005);
         box-shadow:
-            -3px 14px 34px rgba(0, 0, 0, 0.13),
-            inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            -5px 17px 43px rgba(0, 0, 0, 0.15),
+            -2px 7px 19px rgba(0, 0, 0, 0.11),
+            inset 0 2px 0 rgba(255, 255, 255, 0.97);
     }
 
-    65% {
+    /* Return wave */
+    62% {
         transform:
-            perspective(1000px) rotateX(3deg) rotateY(-2deg) translateZ(6px);
+            perspective(1200px) rotateX(2deg) rotateY(-4.5deg) rotateZ(-0.7deg) translateZ(10px) translateX(-2.5px) scale(0.995);
         box-shadow:
-            4px 13px 33px rgba(0, 0, 0, 0.11),
-            inset 0 1px 0 rgba(255, 255, 255, 0.87);
+            6px 18px 44px rgba(0, 0, 0, 0.16),
+            3px 7px 20px rgba(0, 0, 0, 0.12),
+            inset 0 2px 0 rgba(255, 255, 255, 0.96);
     }
 
-    85% {
+    /* Soft flutter */
+    75% {
         transform:
-            perspective(1000px) rotateX(-2deg) rotateY(3deg) translateZ(4px);
+            perspective(1200px) rotateX(-1deg) rotateY(5deg) rotateZ(0.6deg) translateZ(7px) translateX(1.5px) scale(1.002);
         box-shadow:
-            -2px 11px 31px rgba(0, 0, 0, 0.1),
-            inset 0 1px 0 rgba(255, 255, 255, 0.83);
+            -4px 16px 41px rgba(0, 0, 0, 0.13),
+            -2px 6px 18px rgba(0, 0, 0, 0.09),
+            inset 0 2px 0 rgba(255, 255, 255, 0.94);
+    }
+
+    /* Final settle */
+    88% {
+        transform:
+            perspective(1200px) rotateX(0.5deg) rotateY(-2deg) rotateZ(-0.3deg) translateZ(4px) translateX(-1px) scale(0.998);
+        box-shadow:
+            3px 15px 39px rgba(0, 0, 0, 0.11),
+            1px 5px 16px rgba(0, 0, 0, 0.08),
+            inset 0 2px 0 rgba(255, 255, 255, 0.92);
     }
 }
 
-/* Hover effect - pause wind animation */
+
+/* ============================================
+   HOVER INTERACTION - Pause Wind
+   ============================================ */
 .cloth-fabric:hover {
     animation-play-state: paused;
     transform:
-        perspective(1000px) rotateX(-5deg) translateZ(15px) scale(1.05);
+        perspective(1200px) rotateX(-6deg) translateZ(20px) scale(1.06);
     box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 1);
+        0 25px 60px rgba(0, 0, 0, 0.25),
+        0 10px 25px rgba(0, 0, 0, 0.15),
+        inset 0 2px 0 rgba(255, 255, 255, 1);
 }
 
-/* Fabric Folds */
+/* ============================================
+   FABRIC FOLDS - Dynamic Wrinkles
+   ============================================ */
 .fabric-fold {
     position: absolute;
     width: 100%;
-    height: 2px;
+    height: 3px;
     background: linear-gradient(90deg,
             transparent 0%,
-            rgba(0, 0, 0, 0.03) 20%,
-            rgba(0, 0, 0, 0.05) 50%,
-            rgba(0, 0, 0, 0.03) 80%,
+            rgba(0, 0, 0, 0.02) 10%,
+            rgba(0, 0, 0, 0.05) 30%,
+            rgba(0, 0, 0, 0.08) 50%,
+            rgba(0, 0, 0, 0.05) 70%,
+            rgba(0, 0, 0, 0.02) 90%,
             transparent 100%);
     left: 0;
-    animation: foldWave 3s ease-in-out infinite;
+    animation: foldWave 4s ease-in-out infinite;
+    border-radius: 50%;
+    filter: blur(0.5px);
 }
 
 .fold-1 {
-    top: 25%;
+    top: 22%;
     animation-delay: 0s;
 }
 
 .fold-2 {
-    top: 50%;
-    animation-delay: 0.5s;
+    top: 48%;
+    animation-delay: 0.6s;
 }
 
 .fold-3 {
-    top: 75%;
-    animation-delay: 1s;
+    top: 74%;
+    animation-delay: 1.2s;
 }
 
 @keyframes foldWave {
 
     0%,
     100% {
-        opacity: 0.3;
-        transform: scaleX(1) translateY(0);
+        opacity: 0.4;
+        transform: scaleX(1) translateY(0) scaleY(1);
+    }
+
+    25% {
+        opacity: 0.7;
+        transform: scaleX(0.96) translateY(1px) scaleY(1.2);
     }
 
     50% {
+        opacity: 0.8;
+        transform: scaleX(0.93) translateY(2px) scaleY(1.4);
+    }
+
+    75% {
         opacity: 0.6;
-        transform: scaleX(0.95) translateY(2px);
+        transform: scaleX(0.97) translateY(1px) scaleY(1.1);
     }
 }
 
-/* Cloth Content */
+/* ============================================
+   CLOTH CONTENT - Service Information
+   ============================================ */
 .cloth-content {
     position: relative;
     z-index: 2;
@@ -315,80 +456,142 @@
 }
 
 .service-icon {
-    font-size: 3rem;
-    margin-bottom: 20px;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-    animation: iconFloat 3s ease-in-out infinite;
+    font-size: 3.5rem;
+    margin-bottom: 24px;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.12));
+    animation: iconFloat 4s ease-in-out infinite;
+    display: inline-block;
 }
 
 @keyframes iconFloat {
 
     0%,
     100% {
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
+    }
+
+    25% {
+        transform: translateY(-6px) scale(1.05);
     }
 
     50% {
-        transform: translateY(-5px);
+        transform: translateY(-3px) scale(1.02);
+    }
+
+    75% {
+        transform: translateY(-8px) scale(1.06);
     }
 }
 
 .service-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #2c3e50;
-    margin-bottom: 15px;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: #1a3a52;
+    margin-bottom: 16px;
     font-family: 'Poppins', sans-serif;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.8px;
+    line-height: 1.2;
 }
 
 .service-description {
-    font-size: 0.95rem;
-    color: #6c757d;
-    line-height: 1.6;
+    font-size: 1rem;
+    color: #5a7a92;
+    line-height: 1.7;
     font-family: 'Inter', sans-serif;
+    font-weight: 400;
 }
 
-/* Ambient Light Effect */
+/* ============================================
+   AMBIENT LIGHTING - Atmospheric Effect
+   ============================================ */
 .ambient-light {
     position: absolute;
-    top: 0;
+    top: -100px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
-    height: 400px;
+    width: 85%;
+    height: 500px;
     background: radial-gradient(ellipse at center,
-            rgba(255, 255, 255, 0.4) 0%,
+            rgba(255, 255, 255, 0.5) 0%,
+            rgba(135, 206, 235, 0.15) 30%,
             transparent 70%);
     pointer-events: none;
-    animation: lightPulse 6s ease-in-out infinite;
+    animation: lightPulse 8s ease-in-out infinite;
+    filter: blur(40px);
 }
 
 @keyframes lightPulse {
 
     0%,
     100% {
-        opacity: 0.5;
+        opacity: 0.6;
+        transform: translateX(-50%) scale(1);
     }
 
     50% {
-        opacity: 0.8;
+        opacity: 0.9;
+        transform: translateX(-50%) scale(1.1);
     }
 }
 
-/* Responsive Design */
+/* ============================================
+   FABRIC TEXTURE - Realistic Weave
+   ============================================ */
+.cloth-fabric::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        /* Horizontal threads */
+        repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.015) 2px,
+            rgba(0, 0, 0, 0.015) 4px),
+        /* Vertical threads */
+        repeating-linear-gradient(90deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.015) 2px,
+            rgba(0, 0, 0, 0.015) 4px),
+        /* Diagonal texture for depth */
+        repeating-linear-gradient(45deg,
+            transparent,
+            transparent 3px,
+            rgba(255, 255, 255, 0.02) 3px,
+            rgba(255, 255, 255, 0.02) 6px);
+    border-radius: 10px;
+    pointer-events: none;
+    opacity: 0.7;
+    mix-blend-mode: multiply;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
 @media (max-width: 1200px) {
     .cloth-banners {
-        gap: 40px;
+        gap: 60px;
     }
 
     .cloth-banner {
-        width: 200px;
+        width: 220px;
     }
 
     .cloth-fabric {
-        min-height: 300px;
-        padding: 35px 20px 25px;
+        min-height: 320px;
+        padding: 40px 24px 30px;
+    }
+
+    .service-icon {
+        font-size: 3rem;
+    }
+
+    .service-title {
+        font-size: 1.5rem;
     }
 }
 
@@ -402,17 +605,41 @@
     }
 
     .cloth-banners {
-        gap: 50px;
+        gap: 60px;
         flex-direction: column;
         align-items: center;
     }
 
     .cloth-banner {
-        width: 280px;
+        width: 300px;
     }
 
     .cloth-fabric {
-        min-height: 280px;
+        min-height: 300px;
+    }
+
+    .service-icon {
+        font-size: 2.8rem;
+        margin-bottom: 20px;
+    }
+
+    .service-title {
+        font-size: 1.45rem;
+    }
+
+    .service-description {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .cloth-banner {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .cloth-fabric {
+        padding: 35px 20px 28px;
     }
 
     .service-icon {
@@ -420,37 +647,6 @@
     }
 
     .service-title {
-        font-size: 1.35rem;
+        font-size: 1.3rem;
     }
-}
-
-@media (max-width: 480px) {
-    .cloth-banner {
-        width: 100%;
-        max-width: 300px;
-    }
-}
-
-/* Add texture to fabric */
-.cloth-fabric::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image:
-        repeating-linear-gradient(0deg,
-            transparent,
-            transparent 2px,
-            rgba(0, 0, 0, 0.01) 2px,
-            rgba(0, 0, 0, 0.01) 4px),
-        repeating-linear-gradient(90deg,
-            transparent,
-            transparent 2px,
-            rgba(0, 0, 0, 0.01) 2px,
-            rgba(0, 0, 0, 0.01) 4px);
-    border-radius: 8px;
-    pointer-events: none;
-    opacity: 0.5;
 }

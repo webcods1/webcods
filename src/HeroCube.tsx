@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 interface HeroCubeProps {
     variant?: 'blue' | 'sky';
@@ -7,6 +7,19 @@ interface HeroCubeProps {
 
 const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    // Control video playback based on cube state
+    useEffect(() => {
+        if (videoRef.current) {
+            if (isOpen) {
+                videoRef.current.play().catch(err => console.error('Video play failed:', err));
+            } else {
+                videoRef.current.pause();
+                videoRef.current.currentTime = 0; // Reset to start
+            }
+        }
+    }, [isOpen]);
 
     // Color mappings
     const colors = {
@@ -117,7 +130,7 @@ const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' })
                 <div
                     className={`
                         absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-                        w-64 p-5 bg-white/95 backdrop-blur-3xl rounded-2xl 
+                        w-80 p-6 bg-white/95 backdrop-blur-3xl rounded-2xl 
                         border-2 ${t.innerBorder} ${t.shadow} 
                         transition-all duration-700 delay-100 text-center flex flex-col items-center
                         ${isOpen ? 'opacity-100 scale-100 z-50 pointer-events-auto' : 'opacity-0 scale-50 -z-10 pointer-events-none'}
@@ -127,25 +140,29 @@ const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' })
                         transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
                     }}
                 >
-                    <div className={`w-16 h-16 rounded-full overflow-hidden mb-3 border-2 ${t.innerBorder} shadow-sm`}>
-                        <img
-                            src="/mill.jpeg"
-                            alt="WIP"
+                    {/* Video Container */}
+                    <div className={`w-full aspect-video rounded-xl overflow-hidden mb-4 border-2 ${t.innerBorder} shadow-lg bg-black`}>
+                        <video
+                            ref={videoRef}
+                            src="/orex.mp4"
+                            loop
+                            muted
+                            playsInline
                             className="w-full h-full object-cover"
                             onError={(e) => {
-                                (e.target as HTMLImageElement).style.display = 'none';
-                                (e.target as HTMLImageElement).parentElement!.style.backgroundColor = '#e2e8f0';
+                                console.error('Video failed to load');
+                                (e.target as HTMLVideoElement).style.display = 'none';
                             }}
                         />
                     </div>
 
-                    <div className={`text-[10px] font-bold ${t.badgeText} uppercase tracking-widest mb-1 ${t.badgeBg} px-2 py-0.5 rounded-full`}>
+                    <div className={`text-[10px] font-bold ${t.badgeText} uppercase tracking-widest mb-2 ${t.badgeBg} px-3 py-1 rounded-full`}>
                         Work in Progress
                     </div>
-                    <h3 className="text-lg font-bold text-gray-800 mb-1 leading-tight">
+                    <h3 className="text-xl font-bold text-gray-800 mb-2 leading-tight">
                         Next Innovation
                     </h3>
-                    <p className="text-xs text-gray-500 leading-relaxed max-w-[200px]">
+                    <p className="text-sm text-gray-600 leading-relaxed max-w-[260px]">
                         We are building something extraordinary. Stay tuned for the reveal.
                     </p>
                 </div>
