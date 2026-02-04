@@ -137,7 +137,7 @@ const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' })
                     onClick={(e) => e.stopPropagation()}
                     className={`
                         absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-                        w-64 p-4 bg-white/95 backdrop-blur-3xl rounded-xl 
+                        w-56 p-3 bg-white/95 backdrop-blur-3xl rounded-lg 
                         border-2 ${t.innerBorder} ${t.shadow} 
                         transition-all duration-700 delay-100 text-center flex flex-col items-center
                         ${isOpen ? 'opacity-100 scale-100 z-50 pointer-events-auto' : 'opacity-0 scale-50 -z-10 pointer-events-none'}
@@ -148,9 +148,9 @@ const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' })
                     }}
                 >
                     {/* Video Container */}
-                    <div className={`w-full aspect-video rounded-lg overflow-hidden mb-3 border-2 ${t.innerBorder} shadow-md bg-black`}>
+                    <div className={`w-full aspect-video rounded-md overflow-hidden mb-2 border ${t.innerBorder} shadow-sm bg-black`}>
                         <video
-                            src="/orex.mp4"
+                            src="/rexo.mp4"
                             className="w-full h-full object-cover"
                             autoPlay
                             loop
@@ -163,14 +163,14 @@ const HeroCube: React.FC<HeroCubeProps> = ({ variant = 'blue', className = '' })
                         />
                     </div>
 
-                    <div className={`text-[9px] font-bold ${t.badgeText} uppercase tracking-widest mb-1.5 ${t.badgeBg} px-2.5 py-0.5 rounded-full`}>
+                    <div className={`text-[8px] font-bold ${t.badgeText} uppercase tracking-widest mb-1 ${t.badgeBg} px-2 py-0.5 rounded-full`}>
                         Featured Project
                     </div>
-                    <h3 className="text-base font-bold text-gray-800 mb-1.5 leading-tight">
+                    <h3 className="text-sm font-bold text-gray-800 mb-1 leading-tight">
                         Innovation Showcase
                     </h3>
-                    <p className="text-xs text-gray-600 leading-relaxed max-w-[200px]">
-                        Experience our latest creation in action. Click outside to close.
+                    <p className="text-[10px] text-gray-600 leading-relaxed max-w-[180px]">
+                        Experience our latest creation. Click outside to close.
                     </p>
                 </div>
 
