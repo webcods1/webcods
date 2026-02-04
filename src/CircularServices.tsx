@@ -32,10 +32,10 @@ const services: Service[] = [
         )
     },
     {
-        title: 'Strategy',
+        title: 'App Development',
         icon: (
             <svg className="service-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
             </svg>
         )
     },
@@ -60,6 +60,7 @@ const services: Service[] = [
 const CircularServices: React.FC = () => {
     const sectionRef = useRef<HTMLElement>(null);
     const serviceRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const animationTimeouts = useRef<ReturnType<typeof setTimeout>[]>([]);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -68,17 +69,28 @@ const CircularServices: React.FC = () => {
                     if (entry.isIntersecting) {
                         serviceRefs.current.forEach((service, index) => {
                             if (service) {
-                                setTimeout(() => {
+                                const timeout = setTimeout(() => {
                                     service.classList.add('animate-in');
                                 }, index * 100);
+                                animationTimeouts.current.push(timeout);
                             }
                         });
-                        observer.unobserve(entry.target);
+                    } else {
+                        // Clear pending timeouts
+                        animationTimeouts.current.forEach(clearTimeout);
+                        animationTimeouts.current = [];
+
+                        // Remove class to reset animation
+                        serviceRefs.current.forEach((service) => {
+                            if (service) {
+                                service.classList.remove('animate-in');
+                            }
+                        });
                     }
                 });
             },
             {
-                threshold: 0.2,
+                threshold: 0.2, // Keep threshold as requested or default
             }
         );
 
@@ -90,6 +102,7 @@ const CircularServices: React.FC = () => {
             if (sectionRef.current) {
                 observer.unobserve(sectionRef.current);
             }
+            animationTimeouts.current.forEach(clearTimeout);
         };
     }, []);
 
