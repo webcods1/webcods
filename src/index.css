@@ -154,6 +154,67 @@
 }
 
 /* ========================================
+   LIQUID GLASS NAVBAR SYSTEM
+   ======================================== */
+
+.liquid-glass {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.15));
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 
+        0 4px 24px rgba(0, 0, 0, 0.05),
+        inset 0 0 1px 1px rgba(255, 255, 255, 0.3);
+    border-radius: 100px;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.liquid-glass:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.25));
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 
+        0 12px 40px rgba(31, 38, 135, 0.08),
+        inset 0 0 15px rgba(255, 255, 255, 0.3);
+    transform: scale(1.01) translateY(1px);
+}
+
+.liquid-glass-item {
+    position: relative;
+    padding: 6px 12px;
+    color: #1a1a1a;
+    font-weight: 700;
+    font-size: 14px;
+    transition: all 0.4s ease;
+    border-radius: 20px;
+    text-decoration: none;
+}
+
+.liquid-glass-item:hover {
+    color: #38bdf8;
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.liquid-glass-item::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: #38bdf8;
+    transition: all 0.4s ease;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    opacity: 0;
+}
+
+.liquid-glass-item:hover::after {
+    width: 12px;
+    opacity: 1;
+}
+
+/* ========================================
    INTERACTIVE LETTER DISTORTION FOR WEBCODS
    ======================================== */
 
@@ -810,4 +871,19 @@
 
 .hover\:pause:hover {
     animation-play-state: paused;
+}
+
+@keyframes slideRightEnter {
+    from {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-slide-right {
+    animation: slideRightEnter 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
