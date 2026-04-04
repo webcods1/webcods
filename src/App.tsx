@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 const TOTAL_FRAMES = 171
-// Height multiplier: how many viewport heights the animation takes
-const HERO_SCROLL_MULTIPLIER = 5
+const HERO_SCROLL_MULTIPLIER = 5 // User scrolls 5x viewport heights to finish
 
 function getFrameSrc(frame: number): string {
     const n = Math.min(Math.max(frame, 1), TOTAL_FRAMES)
@@ -10,58 +9,134 @@ function getFrameSrc(frame: number): string {
 }
 
 function App() {
-    const [frame, setFrame] = useState(1)
-
-    // To prevent mobile address bar from causing jumpy frames, calculate vh once
-    const vhRef = useRef(window.innerHeight)
+    const canvasRef = useRef<HTMLCanvasElement>(null)
+    const imagesRef = useRef<(HTMLImageElement | null)[]>([])
+    const frameIndexRef = useRef(1)
 
     useEffect(() => {
+        const canvas = canvasRef.current
+        if (!canvas) return
+        const ctx = canvas.getContext('2d', { alpha: false }) // Optimize: disable alpha channel since it's a solid video frame
+        if (!ctx) return
+
+        // 1. Initialize empty array for images (1-indexed for convenience)
+        if (imagesRef.current.length === 0) {
+            imagesRef.current = new Array(TOTAL_FRAMES + 1).fill(null)
+            
+            // 2. Preload frames in chunks to prevent network queue blocking
+            // Frame 1 is critical, load it immediately
+            const img1 = new Image()
+            img1.src = getFrameSrc(1)
+            imagesRef.current[1] = img1
+            
+            img1.onload = () => {
+                renderFrame(1) // Draw immediately when first frame is ready
+                // Once frame 1 is ready, aggressively background load the rest
+                for (let i = 2; i <= TOTAL_FRAMES; i++) {
+                    const img = new Image()
+                    img.src = getFrameSrc(i)
+                    imagesRef.current[i] = img
+                }
+            }
+        }
+
+        // 3. Logic to draw the image like CSS `object-fit: cover`
+        const renderFrame = (fIndex: number) => {
+            const img = imagesRef.current[fIndex]
+            
+            // If image isn't loaded yet, try finding the nearest earlier loaded frame
+            let validImg = img
+            if (!validImg || !validImg.complete || validImg.naturalHeight === 0) {
+                // Find fallback
+                for (let fallback = fIndex - 1; fallback >= 1; fallback--) {
+                    if (imagesRef.current[fallback]?.complete && imagesRef.current[fallback]?.naturalHeight !== 0) {
+                        validImg = imagesRef.current[fallback]
+                        break
+                    }
+                }
+            }
+
+            if (!validImg || !validImg.complete || validImg.naturalHeight === 0) return
+
+            // Ensure canvas dimensions match actual screen pixels
+            if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
+                canvas.width = window.innerWidth
+                canvas.height = window.innerHeight
+            }
+
+            // Calculate object-cover dimensions
+            const canvasRatio = canvas.width / canvas.height
+            const imgRatio = validImg.width / validImg.height
+            let drawWidth = canvas.width
+            let drawHeight = canvas.height
+            let offsetX = 0
+            let offsetY = 0
+
+            if (canvasRatio > imgRatio) {
+                drawWidth = canvas.width
+                drawHeight = drawWidth / imgRatio
+                offsetY = (canvas.height - drawHeight) / 2
+            } else {
+                drawHeight = canvas.height
+                drawWidth = drawHeight * imgRatio
+                offsetX = (canvas.width - drawWidth) / 2
+            }
+
+            ctx.drawImage(validImg, offsetX, offsetY, drawWidth, drawHeight)
+        }
+
+        // 4. Ultra-smooth scroll listener completely bypassing React state
+        let requestedDraw = false
+        const handleScroll = () => {
+            if (!requestedDraw) {
+                requestedDraw = true
+                requestAnimationFrame(() => {
+                    const top = window.scrollY
+                    const vh = window.innerHeight
+                    const heroLen = vh * HERO_SCROLL_MULTIPLIER
+
+                    const progress = Math.min(Math.max(top / heroLen, 0), 1)
+                    const targetFrame = Math.floor(progress * (TOTAL_FRAMES - 1)) + 1
+                    
+                    if (targetFrame !== frameIndexRef.current) {
+                        frameIndexRef.current = targetFrame
+                        renderFrame(targetFrame)
+                    }
+                    requestedDraw = false
+                })
+            }
+        }
+
+        // 5. Handle resizing effectively
+        let resizeTimer: number
         const handleResize = () => {
-            vhRef.current = window.innerHeight
-        }
-        window.addEventListener('resize', handleResize)
-        return () => window.removeEventListener('resize', handleResize)
-    }, [])
-
-    useEffect(() => {
-        const onScroll = () => {
-            // Using standard window scrolling
-            const top = window.scrollY
-            const vh = vhRef.current
-            const heroLen = vh * HERO_SCROLL_MULTIPLIER
-
-            // Scrub the hero frames based on scroll progress
-            const progress = Math.min(top / heroLen, 1)
-            const f = Math.floor(progress * (TOTAL_FRAMES - 1)) + 1
-            setFrame(Math.min(f, TOTAL_FRAMES))
+            clearTimeout(resizeTimer)
+            resizeTimer = window.setTimeout(() => {
+                renderFrame(frameIndexRef.current)
+            }, 50) // debounce
         }
 
-        window.addEventListener('scroll', onScroll, { passive: true })
-        // Initial setup
-        onScroll()
+        window.addEventListener('scroll', handleScroll, { passive: true })
+        window.addEventListener('resize', handleResize, { passive: true })
         
-        return () => window.removeEventListener('scroll', onScroll)
+        // Initial Draw Event
+        handleScroll()
+        // If image 1 loaded before useEffect bound it somehow
+        if (imagesRef.current[1]?.complete) renderFrame(1)
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+            window.removeEventListener('resize', handleResize)
+            clearTimeout(resizeTimer)
+        }
     }, [])
 
-    // Preload adjacent frames
-    useEffect(() => {
-        for (let i = Math.max(1, frame - 3); i <= Math.min(TOTAL_FRAMES, frame + 6); i++) {
-            const img = new Image()
-            img.src = getFrameSrc(i)
-        }
-    }, [frame])
-
-    // Convert total multiplier to actual css units for body height
-    // We add 1 so that the max scrollY (which is height - 100vh) exactly equals HERO_SCROLL_MULTIPLIER * 100vh
     const totalH = (HERO_SCROLL_MULTIPLIER + 1) * 100
 
     return (
         <div style={{ backgroundColor: '#000', overflowX: 'hidden' }}>
-            {/* The transparent element that forces the page to have standard scrollable height */}
             <div style={{ height: `${totalH}vh`, pointerEvents: 'none' }} />
 
-            {/* FIXED container holding the actual visual elements */}
-            {/* 1. Hero Fullscreen Banner */}
             <div
                 style={{
                     position: 'fixed',
@@ -73,14 +148,15 @@ function App() {
                     backgroundColor: '#000',
                 }}
             >
-                <img
-                    src={getFrameSrc(frame)}
-                    alt="Animation Frame"
-                    className="w-full h-full object-cover bg-black"
+                {/* 
+                  Using Canvas instead of <img> allows sub-millisecond drawing 
+                  meaning absolutely 0 lag or "white flashes" while scrolling fast
+                */}
+                <canvas 
+                    ref={canvasRef} 
+                    className="w-full h-full bg-black block"
                 />
             </div>
-
-
         </div>
     )
 }
