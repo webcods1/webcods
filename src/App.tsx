@@ -488,7 +488,7 @@ function App() {
                     </nav>
 
                     <div className="mt-12 pt-8 border-t border-white/10">
-                        <p className="text-white/40 text-sm">â”¬âŒ 2025 WebCods</p>
+                        <p className="text-white/40 text-sm">Ã¢â€Â¬Ã¢Å’Â 2025 WebCods</p>
                     </div>
                 </div>
             </div>
@@ -572,26 +572,28 @@ function App() {
                     </div>
                 </div>
 
-                {/* Co-Founders Button - Bottom Centered */}
-                <div className="absolute bottom-24 sm:bottom-32 md:bottom-10 left-1/2 transform -translate-x-1/2 z-30 w-[85%] sm:w-[75%] md:w-auto">
+                {/* Contact Button - Bottom Centered */}
+                <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-30">
                     <button
-                        onClick={() => setCurrentView('cofounders')}
-                        className="
-                            w-full md:w-auto flex justify-center items-center
-                            group relative px-6 sm:px-8 py-2.5 sm:py-3 overflow-hidden rounded-full 
-                            bg-black backdrop-blur-md border border-white/20
-                            text-white text-sm sm:text-base font-bold transition-all duration-300
-                            hover:scale-105 hover:shadow-[0_0_20px_rgba(0,0,0,0.3)]
-                            hover:border-white
-                        "
+                        onClick={() => {
+                            const contactSection = document.getElementById(`contact`);
+                            if (contactSection) contactSection.scrollIntoView({ behavior: `smooth` });
+                        }}
+                        className="cursor-pointer relative bg-white/10 py-2 rounded-full min-w-[8.5rem] min-h-[2.92rem] group max-w-full flex items-center justify-start hover:bg-blue-500 transition-all duration-[0.8s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] shadow-[inset_1px_2px_5px_#00000080]"
                     >
-                        <span className="absolute inset-0 w-full h-full bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
-                        <span className="relative z-10 flex items-center gap-2 sm:gap-3 transition-colors duration-300 group-hover:text-black">
-                            Meet Co-Founders
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" style={{ animation: 'moveRight 1s ease-in-out infinite' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                        </span>
+                        <div className="absolute flex px-1 py-0.5 justify-start items-center inset-0">
+                            <div className="w-[0%] group-hover:w-full transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)]"></div>
+                            <div className="rounded-full shrink-0 flex justify-center items-center shadow-[inset_1px_-1px_3px_0_black] h-full aspect-square bg-blue-500 transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] group-hover:bg-black">
+                                <div className="size-[0.8rem] text-black group-hover:text-white group-hover:-rotate-45 transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" height="100%" width="100%">
+                                        <path fill="currentColor" d="M12.175 9H0V7H12.175L6.575 1.4L8 0L16 8L8 16L6.575 14.6L12.175 9Z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="pl-[3.4rem] pr-[1.1rem] group-hover:pl-[1.1rem] group-hover:pr-[3.4rem] transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] group-hover:text-black text-white">
+                            Contacts
+                        </div>
                     </button>
                 </div>
 
@@ -739,7 +741,7 @@ function App() {
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
                                         <div className="w-full h-full flex items-center justify-center">
                                             <div className="text-center z-20 relative">
-                                                <div className="text-2xl mb-0.5">â‰¡Æ’ÃœÃ‡</div>
+                                                <div className="text-2xl mb-0.5">Ã¢â€°Â¡Ã†â€™ÃƒÅ“Ãƒâ€¡</div>
                                             </div>
                                         </div>
                                     </div>
@@ -768,7 +770,7 @@ function App() {
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
                                         <div className="w-full h-full flex items-center justify-center">
                                             <div className="text-center z-20 relative">
-                                                <div className="text-2xl mb-0.5">Î“Â£Â¿</div>
+                                                <div className="text-2xl mb-0.5">ÃŽâ€œÃ‚Â£Ã‚Â¿</div>
                                             </div>
                                         </div>
                                     </div>
@@ -1004,7 +1006,7 @@ function App() {
 
             {/* Footer */}
             < footer className="text-center py-6 bg-gray-100 mt-8" >
-                <p className="text-gray-800 text-xs sm:text-sm md:text-base px-4">â”¬âŒ 2025 WebCods. All Rights Reserved.</p>
+                <p className="text-gray-800 text-xs sm:text-sm md:text-base px-4">Ã¢â€Â¬Ã¢Å’Â 2025 WebCods. All Rights Reserved.</p>
             </footer >
 
             {/* Floating WhatsApp Button */}
