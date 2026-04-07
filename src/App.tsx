@@ -44,50 +44,7 @@ function App() {
         { href: '#contact', label: 'Contact' },
     ]
 
-    const services = [
-        {
-            title: 'Custom Web Development',
-            description: 'Tailored modern websites.',
-            gradient: 'from-purple-500 to-pink-500',
-            textColor: 'text-white',
-            descColor: 'text-purple-100'
-        },
-        {
-            title: 'App Development',
-            description: 'Native & cross-platform apps.',
-            gradient: 'from-blue-500 to-cyan-500',
-            textColor: 'text-white',
-            descColor: 'text-blue-100'
-        },
-        {
-            title: 'E-commerce Solutions',
-            description: 'Secure online stores.',
-            gradient: 'from-green-500 to-emerald-500',
-            textColor: 'text-white',
-            descColor: 'text-green-100'
-        },
-        {
-            title: 'Responsive Design',
-            description: 'Perfect on every device.',
-            gradient: 'from-orange-500 to-red-500',
-            textColor: 'text-white',
-            descColor: 'text-orange-100'
-        },
-        {
-            title: 'SEO Optimization',
-            description: 'Boost your rankings.',
-            gradient: 'from-indigo-500 to-purple-600',
-            textColor: 'text-white',
-            descColor: 'text-indigo-100'
-        },
-        {
-            title: 'Maintenance',
-            description: 'Secure & updated.',
-            gradient: 'from-teal-500 to-blue-600',
-            textColor: 'text-white',
-            descColor: 'text-teal-100'
-        },
-    ]
+    const services: any[] = []
 
     // Carousel for hero section descriptions
     const [currentTextIndex, setCurrentTextIndex] = useState<number>(0)
@@ -531,59 +488,110 @@ function App() {
                     </nav>
 
                     <div className="mt-12 pt-8 border-t border-white/10">
-                        <p className="text-white/40 text-sm">┬⌐ 2025 WebCods</p>
+                        <p className="text-white/40 text-sm">â”¬âŒ 2025 WebCods</p>
                     </div>
                 </div>
             </div>
 
 
+            {/* Hero Section - Editorial Style Layout */}
             <section
                 ref={heroRef}
                 id="hero"
-                className="scroll-snap-section relative w-full h-[100vh] flex justify-center items-center overflow-hidden bg-[length:100%_100%] md:bg-cover bg-center bg-no-repeat"
-                style={{ backgroundImage: "url('/banner1.jpg')" }}
+                className="scroll-snap-section relative w-full h-[100vh] flex justify-center items-center overflow-hidden bg-gradient-to-b from-sky-400 to-white"
             >
-
                 {/* Main Content Container */}
-                <div className="w-full h-full px-4 sm:px-6 md:px-16 lg:px-24 flex items-start pt-16 sm:pt-24 md:pt-0 md:items-center">
-                    {/* All banner text has been removed */}
-                </div>
+                <div className="w-full h-full px-4 sm:px-6 md:px-16 lg:px-24 flex items-start pt-32 sm:pt-40 md:pt-0 md:items-center">
+                    <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-16 items-center">
 
-                {/* Bottom Contacts Button */}
-                <div className="absolute bottom-10 sm:bottom-16 w-full flex justify-center">
-                    <button
-                        className="cursor-pointer relative bg-white/10 py-2 rounded-full min-w-[8.5rem] min-h-[2.92rem] group max-w-full flex items-center justify-start hover:bg-green-400 transition-all duration-[0.8s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] shadow-[inset_1px_2px_5px_#00000080]"
-                    >
-                        <div className="absolute flex px-1 py-0.5 justify-start items-center inset-0">
+                        {/* Left Side - Large WEBCODS Text */}
+                        <div className="relative">
                             <div
-                                className="w-[0%] group-hover:w-full transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)]"
-                            ></div>
-                            <div
-                                className="rounded-full shrink-0 flex justify-center items-center shadow-[inset_1px_-1px_3px_0_black] h-full aspect-square bg-green-400 transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] group-hover:bg-black"
+                                key={animationKey}
+                                className="hero-brand-text"
+                                onMouseEnter={handleMouseEnter}
+                                onMouseLeave={handleMouseLeave}
+                                onMouseMove={handleMouseMove}
                             >
-                                <div
-                                    className="size-[0.8rem] text-black group-hover:text-white group-hover:-rotate-45 transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)]"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 16 16"
-                                        height="100%"
-                                        width="100%"
-                                    >
-                                        <path
-                                            fill="currentColor"
-                                            d="M12.175 9H0V7H12.175L6.575 1.4L8 0L16 8L8 16L6.575 14.6L12.175 9Z"
-                                        ></path>
-                                    </svg>
-                                </div>
+                                <h1 className="mt-0 md:mt-0 text-[18vw] sm:text-[16vw] md:text-[100px] lg:text-[150px] xl:text-[200px] font-black leading-[0.85] tracking-tighter select-none webcods-interactive-text">
+                                    {'WEB'.split('').map((letter, index) => (
+                                        <span
+                                            key={`web-${index}`}
+                                            ref={el => { letterRefs.current[index] = el }}
+                                            className="inline-block text-sky-400 letter-hover"
+                                            style={{
+                                                transform: `translate(${letterOffsets[index]?.x || 0}px, ${letterOffsets[index]?.y || 0}px)`,
+                                                filter: `blur(${letterOffsets[index]?.blur || 0}px)`,
+                                                transition: isHovering ? 'none' : 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease-out',
+                                                willChange: 'transform, filter'
+                                            }}
+                                        >
+                                            {letter}
+                                        </span>
+                                    ))}
+                                    <br />
+                                    {'CODS'.split('').map((letter, index) => (
+                                        <span
+                                            key={`cods-${index}`}
+                                            ref={el => { letterRefs.current[index + 3] = el }}
+                                            className="inline-block text-blue-900 letter-hover"
+                                            style={{
+                                                transform: `translate(${letterOffsets[index + 3]?.x || 0}px, ${letterOffsets[index + 3]?.y || 0}px)`,
+                                                filter: `blur(${letterOffsets[index + 3]?.blur || 0}px)`,
+                                                transition: isHovering ? 'none' : 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease-out',
+                                                willChange: 'transform, filter'
+                                            }}
+                                        >
+                                            {letter}
+                                        </span>
+                                    ))}
+                                </h1>
                             </div>
                         </div>
-                        <div
-                            className="pl-[3.4rem] pr-[1.1rem] group-hover:pl-[1.1rem] group-hover:pr-[3.4rem] transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] group-hover:text-black text-white"
-                        >
-                            Contacts
+
+                        {/* Right Side - Tagline & Description Carousel */}
+                        <div className="relative flex flex-col justify-center space-y-4 sm:space-y-6 mt-6 sm:mt-8 md:mt-0">
+                            {/* Small Tagline */}
+                            <div key={`tagline-${currentTextIndex}`} className="hero-tagline-fade">
+                                <p className="text-[10px] sm:text-xs md:text-sm text-gray-500 uppercase tracking-widest font-medium mb-2">
+                                    {heroDescriptions[currentTextIndex].tagline}
+                                </p>
+                            </div>
+
+                            {/* Main Description */}
+                            <div key={`description-${currentTextIndex}`} className="hero-description-fade">
+                                <h2 className="text-lg sm:text-xl md:text-4xl lg:text-5xl xl:text-6xl font-normal text-gray-800 leading-tight tracking-tight pr-0 md:pr-16">
+                                    {heroDescriptions[currentTextIndex].title}
+                                </h2>
+                            </div>
+
+                            {/* Next Arrow Button */}
+
                         </div>
+
+                    </div>
+                </div>
+
+                {/* Co-Founders Button - Bottom Centered */}
+                <div className="absolute bottom-24 sm:bottom-32 md:bottom-10 left-1/2 transform -translate-x-1/2 z-30 w-[85%] sm:w-[75%] md:w-auto">
+                    <button
+                        onClick={() => setCurrentView('cofounders')}
+                        className="
+                            w-full md:w-auto flex justify-center items-center
+                            group relative px-6 sm:px-8 py-2.5 sm:py-3 overflow-hidden rounded-full 
+                            bg-black backdrop-blur-md border border-white/20
+                            text-white text-sm sm:text-base font-bold transition-all duration-300
+                            hover:scale-105 hover:shadow-[0_0_20px_rgba(0,0,0,0.3)]
+                            hover:border-white
+                        "
+                    >
+                        <span className="absolute inset-0 w-full h-full bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
+                        <span className="relative z-10 flex items-center gap-2 sm:gap-3 transition-colors duration-300 group-hover:text-black">
+                            Meet Co-Founders
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" style={{ animation: 'moveRight 1s ease-in-out infinite' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </span>
                     </button>
                 </div>
 
@@ -655,85 +663,7 @@ function App() {
                         </h2>
                     </div>
 
-                    <div key={`services-content-${servicesAnimationKey}`} className="section-content-stagger" style={{ perspective: '1000px' }}>
-                        <div className="md:max-w-4xl md:mx-auto">
-                            <div className="
-                grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-8 lg:gap-10
-                px-4 md:px-0
-              ">
-                                {services.map((service, index) => (
-                                    <div
-                                        key={index}
-                                        onClick={(e) => handleCardClick(e)}
-                                        className={`
-                      bg-gradient-to-br from-blue-500 to-cyan-500
-                      p-3 md:p-3 lg:p-4 rounded-xl md:rounded-2xl
-                      h-[220px] md:h-[140px] lg:h-[160px] flex flex-col justify-center
-                      shadow-[0_8px_24px_rgba(0,0,0,0.15)]
-                      transition-all duration-500
-                      hover:scale-105 hover:shadow-[0_12px_32px_rgba(0,0,0,0.25)] hover:rotate-1
-                      border border-white/20
-                      group
-                      service-card-fade
-                      service-card
-                      service-card-${index}
-                      relative overflow-hidden
-                      cursor-pointer
-                    `}
-                                        style={{
-                                            animationDelay: `${index * 0.1}s`
-                                        } as React.CSSProperties}
-                                    >
-                                        {/* Service Icons - Show on hover */}
-                                        {index === 0 && (
-                                            // Custom Web Development - Code icon
-                                            <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                                            </svg>
-                                        )}
-                                        {index === 1 && (
-                                            // App Development - Mobile icon
-                                            <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                                            </svg>
-                                        )}
-                                        {index === 2 && (
-                                            // E-commerce - Shopping Cart icon
-                                            <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                                            </svg>
-                                        )}
-                                        {index === 3 && (
-                                            // Responsive Design - Device icon
-                                            <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                            </svg>
-                                        )}
-                                        {index === 4 && (
-                                            // SEO - Search icon
-                                            <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                            </svg>
-                                        )}
-                                        {index === 5 && (
-                                            // Maintenance - Settings icon
-                                            <svg className="block service-card-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 absolute top-2 right-2 sm:top-3 sm:right-3 text-white/40 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            </svg>
-                                        )}
 
-                                        <h3 className={`text-xs sm:text-sm md:text-xl lg:text-2xl xl:text-3xl font-bold mb-1 md:mb-4 text-white transition-colors duration-500 relative z-20`}>
-                                            {service.title}
-                                        </h3>
-                                        <p className={`text-[10px] sm:text-xs md:text-base lg:text-lg xl:text-xl text-blue-100 leading-tight md:leading-normal transition-colors duration-500`}>
-                                            {service.description}
-                                        </p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </section>
 
@@ -809,7 +739,7 @@ function App() {
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
                                         <div className="w-full h-full flex items-center justify-center">
                                             <div className="text-center z-20 relative">
-                                                <div className="text-2xl mb-0.5">≡ƒÜÇ</div>
+                                                <div className="text-2xl mb-0.5">â‰¡Æ’ÃœÃ‡</div>
                                             </div>
                                         </div>
                                     </div>
@@ -838,7 +768,7 @@ function App() {
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
                                         <div className="w-full h-full flex items-center justify-center">
                                             <div className="text-center z-20 relative">
-                                                <div className="text-2xl mb-0.5">Γ£¿</div>
+                                                <div className="text-2xl mb-0.5">Î“Â£Â¿</div>
                                             </div>
                                         </div>
                                     </div>
@@ -1074,7 +1004,7 @@ function App() {
 
             {/* Footer */}
             < footer className="text-center py-6 bg-gray-100 mt-8" >
-                <p className="text-gray-800 text-xs sm:text-sm md:text-base px-4">┬⌐ 2025 WebCods. All Rights Reserved.</p>
+                <p className="text-gray-800 text-xs sm:text-sm md:text-base px-4">â”¬âŒ 2025 WebCods. All Rights Reserved.</p>
             </footer >
 
             {/* Floating WhatsApp Button */}
