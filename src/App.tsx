@@ -24,7 +24,7 @@ function App() {
     const contactRef = useRef<HTMLDivElement>(null)
     const foundersRef = useRef<HTMLDivElement>(null)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-
+    const [isContactMobileClicked, setIsContactMobileClicked] = useState(false)
 
     // Interactive letter distortion state
     const [isHovering, setIsHovering] = useState<boolean>(false)
@@ -38,9 +38,9 @@ function App() {
 
     const navLinks: NavLink[] = [
         { href: '#hero', label: 'Home' },
-        { href: '#about', label: 'About' },
         { href: '#services', label: 'Services' },
         { href: '#portfolio', label: 'Portfolio' },
+        { href: '#about', label: 'About' },
         { href: '#contact', label: 'Contact' },
     ]
 
@@ -403,8 +403,9 @@ function App() {
 
 
     return (
-        <div className="min-h-screen bg-black text-gray-300 scroll-snap-container">
-            {/* Static Logo */}
+        <>
+            <div className="min-h-screen bg-black text-gray-300 scroll-snap-container">
+                {/* Static Logo */}
             <div className="fixed -top-14 -left-20 md:-top-[4.5rem] md:-left-[3.75rem] z-[1000]">
                 <img src="/mylogo.png" alt="WebCods" className="h-[15rem] w-auto" />
             </div>
@@ -504,48 +505,29 @@ function App() {
                 <div className="w-full h-full px-4 sm:px-6 md:px-16 lg:px-24 flex items-start pt-32 sm:pt-40 md:pt-0 md:items-center">
                     <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-16 items-center">
 
-                        {/* Left Side - Large WEBCODS Text */}
-                        <div className="relative">
-                            <div
-                                key={animationKey}
-                                className="hero-brand-text"
-                                onMouseEnter={handleMouseEnter}
-                                onMouseLeave={handleMouseLeave}
-                                onMouseMove={handleMouseMove}
-                            >
-                                <h1 className="mt-0 md:mt-0 text-[18vw] sm:text-[16vw] md:text-[100px] lg:text-[150px] xl:text-[200px] font-black leading-[0.85] tracking-tighter select-none webcods-interactive-text">
-                                    {'WEB'.split('').map((letter, index) => (
-                                        <span
-                                            key={`web-${index}`}
-                                            ref={el => { letterRefs.current[index] = el }}
-                                            className="inline-block text-sky-400 letter-hover"
-                                            style={{
-                                                transform: `translate(${letterOffsets[index]?.x || 0}px, ${letterOffsets[index]?.y || 0}px)`,
-                                                filter: `blur(${letterOffsets[index]?.blur || 0}px)`,
-                                                transition: isHovering ? 'none' : 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease-out',
-                                                willChange: 'transform, filter'
-                                            }}
-                                        >
-                                            {letter}
-                                        </span>
-                                    ))}
-                                    <br />
-                                    {'CODS'.split('').map((letter, index) => (
-                                        <span
-                                            key={`cods-${index}`}
-                                            ref={el => { letterRefs.current[index + 3] = el }}
-                                            className="inline-block text-blue-900 letter-hover"
-                                            style={{
-                                                transform: `translate(${letterOffsets[index + 3]?.x || 0}px, ${letterOffsets[index + 3]?.y || 0}px)`,
-                                                filter: `blur(${letterOffsets[index + 3]?.blur || 0}px)`,
-                                                transition: isHovering ? 'none' : 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease-out',
-                                                willChange: 'transform, filter'
-                                            }}
-                                        >
-                                            {letter}
-                                        </span>
-                                    ))}
-                                </h1>
+                        {/* Left Side - Banner Slider */}
+                        <div className="relative w-full aspect-[16/10] md:aspect-[16/9] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/20 bg-white/10">
+                            <style>{`
+                                @keyframes slideBannerLoop {
+                                    0%, 25%   { transform: translateX(0); }
+                                    30%, 55%  { transform: translateX(-33.333%); }
+                                    60%, 85%  { transform: translateX(-66.666%); }
+                                    90%, 100% { transform: translateX(0); }
+                                }
+                                .animate-slide-loop {
+                                    animation: slideBannerLoop 15s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+                                }
+                            `}</style>
+                            <div className="flex w-[300%] h-full animate-slide-loop">
+                                <div className="w-1/3 h-full shrink-0 flex items-center justify-center">
+                                    <img src="/portfolio.png" alt="Banner 1" className="w-full h-full object-contain" />
+                                </div>
+                                <div className="w-1/3 h-full shrink-0 flex items-center justify-center">
+                                    <img src="/portfolio1.png" alt="Banner 2" className="w-full h-full object-contain" />
+                                </div>
+                                <div className="w-1/3 h-full shrink-0 flex items-center justify-center">
+                                    <img src="/portfolio2.png" alt="Banner 3" className="w-full h-full object-contain" />
+                                </div>
                             </div>
                         </div>
 
@@ -576,22 +558,31 @@ function App() {
                 <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-30">
                     <button
                         onClick={() => {
-                            const contactSection = document.getElementById(`contact`);
-                            if (contactSection) contactSection.scrollIntoView({ behavior: `smooth` });
+                            if (window.innerWidth < 768) {
+                                setIsContactMobileClicked(true);
+                                // Hold the animation so user can see it fully, then dial
+                                setTimeout(() => {
+                                    window.location.href = 'tel:9074789784';
+                                    setTimeout(() => setIsContactMobileClicked(false), 500); // reset state after dialer triggers
+                                }, 800);
+                            } else {
+                                const contactSection = document.getElementById(`contact`);
+                                if (contactSection) contactSection.scrollIntoView({ behavior: `smooth` });
+                            }
                         }}
-                        className="cursor-pointer relative bg-white/10 py-2 rounded-full min-w-[8.5rem] min-h-[2.92rem] group max-w-full flex items-center justify-start hover:bg-blue-500 transition-all duration-[0.8s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] shadow-[inset_1px_2px_5px_#00000080]"
+                        className={`cursor-pointer relative bg-white/10 py-2 rounded-full min-w-[8.5rem] min-h-[2.92rem] group max-w-full flex items-center justify-start hover:bg-blue-500 transition-all duration-[0.8s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] shadow-[inset_1px_2px_5px_#00000080] ${isContactMobileClicked ? 'bg-blue-500 scale-95' : 'active:scale-95'}`}
                     >
                         <div className="absolute flex px-1 py-0.5 justify-start items-center inset-0">
-                            <div className="w-[0%] group-hover:w-full transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)]"></div>
-                            <div className="rounded-full shrink-0 flex justify-center items-center shadow-[inset_1px_-1px_3px_0_black] h-full aspect-square bg-blue-500 transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] group-hover:bg-black">
-                                <div className="size-[0.8rem] text-black group-hover:text-white group-hover:-rotate-45 transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)]">
+                            <div className={`transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] ${isContactMobileClicked ? 'w-full' : 'w-[0%] group-hover:w-full'}`}></div>
+                            <div className={`rounded-full shrink-0 flex justify-center items-center shadow-[inset_1px_-1px_3px_0_black] h-full aspect-square bg-blue-500 transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] ${isContactMobileClicked ? 'bg-black' : 'group-hover:bg-black'}`}>
+                                <div className={`size-[0.8rem] transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] ${isContactMobileClicked ? 'text-white -rotate-45' : 'text-black group-hover:text-white group-hover:-rotate-45'}`}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" height="100%" width="100%">
                                         <path fill="currentColor" d="M12.175 9H0V7H12.175L6.575 1.4L8 0L16 8L8 16L6.575 14.6L12.175 9Z"></path>
                                     </svg>
                                 </div>
                             </div>
                         </div>
-                        <div className="pl-[3.4rem] pr-[1.1rem] group-hover:pl-[1.1rem] group-hover:pr-[3.4rem] transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] group-hover:text-black text-white">
+                        <div className={`relative transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] ${isContactMobileClicked ? 'pl-[1.1rem] pr-[3.4rem] text-black' : 'pl-[3.4rem] pr-[1.1rem] group-hover:pl-[1.1rem] group-hover:pr-[3.4rem] group-hover:text-black text-white'}`}>
                             Contacts
                         </div>
                     </button>
@@ -599,62 +590,6 @@ function App() {
 
             </section>
 
-
-            {/* About Section - Three Stage Animation */}
-            <section ref={aboutRef} id="about" className="scroll-snap-section pt-20 sm:pt-24 md:pt-24 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center bg-gradient-to-b from-white to-blue-950 relative overflow-hidden min-h-[100dvh] md:min-h-screen">
-                <div className="container px-3 sm:px-4 md:px-0 relative flex flex-col items-center justify-start md:justify-center">
-                    {/* About Heading - Fades in first */}
-                    <div key={`about-heading-${aboutAnimationKey}`} className="about-heading-fade mt-8 sm:mt-12 md:mt-0 mb-6 sm:mb-8">
-                        <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-blue-950 text-center">ABOUT</h2>
-                    </div>
-
-                    {/* Stage 1 & 2: Falling and Organizing Letters */}
-                    <div key={aboutAnimationKey} className="relative h-24 sm:h-28 md:h-32 mt-16 sm:mt-20 md:mt-4 mb-8 sm:mb-10 md:mb-2 text-center flex items-center justify-center w-full">
-                        {'WEBCODS'.split('').map((letter, index) => {
-                            // Stage 1: Random scattered positions
-                            const randomDelay = index * 0.1 + Math.random() * 0.3;
-                            const randomRotation = (Math.random() - 0.5) * 50;
-                            const randomHorizontal = (Math.random() - 0.5) * 80; // -40% to 40%
-
-                            // Color: WEB (0-2) = light blue, CODS (3-7) = dark blue
-                            const colorClass = index < 3 ? 'letter-light-blue' : 'letter-dark-blue';
-
-                            return (
-                                <span
-                                    key={index}
-                                    className={`about-letter ${colorClass}`}
-                                    style={{
-                                        animationDelay: `${randomDelay}s`,
-                                        '--random-rotation': `${randomRotation}deg`,
-                                        '--random-horizontal': `${randomHorizontal}%`,
-                                        '--final-position': `${index * 12.5}%`, // 8 letters = 100% / 8
-                                    } as React.CSSProperties}
-                                >
-                                    {letter}
-                                </span>
-                            );
-                        })}
-                    </div>
-
-                    {/* Stage 3: About Content - Fades in after letters organize */}
-                    <div key={`about-content-${aboutAnimationKey}`} className="about-content-reveal mt-6 sm:mt-8 md:mt-0">
-                        <p className="text-center text-blue-950 mb-6 sm:mb-8 text-[11px] sm:text-xs md:text-base lg:text-lg px-2 sm:px-4 md:px-2 leading-relaxed">
-                            Founded in 2025, WebCods has been at the forefront of web development and app development innovation. We are passionate about creating exceptional digital experiences that empower businesses to thrive in the modern landscape. Our team combines cutting-edge technology with creative excellence to deliver solutions that exceed expectations.
-                        </p>
-
-                        <div className="flex flex-row justify-between gap-6 sm:gap-8 md:gap-0 mt-6 sm:mt-8 text-left px-0 md:px-32">
-                            <div>
-                                <h3 className="text-3xl sm:text-4xl md:text-[2.2rem] text-white font-bold">{counts.projects}+</h3>
-                                <p className="text-white text-xs sm:text-sm md:text-base">Projects Completed</p>
-                            </div>
-                            <div>
-                                <h3 className="text-3xl sm:text-4xl md:text-[2.2rem] text-white font-bold">{counts.clients}+</h3>
-                                <p className="text-white text-xs sm:text-sm md:text-base">Happy Clients</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             {/* Services Section */}
             <section ref={servicesRef} id="services" className={`scroll-snap-section min-h-[100dvh] md:min-h-0 ${RESPONSIVE_CLASSES.sectionPadding} pt-20 sm:pt-24 md:pt-12 flex items-start md:items-center justify-center bg-gradient-to-b from-blue-950 to-stone-50 relative`}>
@@ -789,6 +724,62 @@ function App() {
                     </div>
 
 
+                </div>
+            </section>
+
+            {/* About Section - Three Stage Animation */}
+            <section ref={aboutRef} id="about" className="scroll-snap-section pt-20 sm:pt-24 md:pt-24 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center bg-gradient-to-b from-white to-blue-950 relative overflow-hidden min-h-[100dvh] md:min-h-screen">
+                <div className="container px-3 sm:px-4 md:px-0 relative flex flex-col items-center justify-start md:justify-center">
+                    {/* About Heading - Fades in first */}
+                    <div key={`about-heading-${aboutAnimationKey}`} className="about-heading-fade mt-8 sm:mt-12 md:mt-0 mb-6 sm:mb-8">
+                        <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-blue-950 text-center">ABOUT</h2>
+                    </div>
+
+                    {/* Stage 1 & 2: Falling and Organizing Letters */}
+                    <div key={aboutAnimationKey} className="relative h-24 sm:h-28 md:h-32 mt-16 sm:mt-20 md:mt-4 mb-8 sm:mb-10 md:mb-2 text-center flex items-center justify-center w-full">
+                        {'WEBCODS'.split('').map((letter, index) => {
+                            // Stage 1: Random scattered positions
+                            const randomDelay = index * 0.1 + Math.random() * 0.3;
+                            const randomRotation = (Math.random() - 0.5) * 50;
+                            const randomHorizontal = (Math.random() - 0.5) * 80; // -40% to 40%
+
+                            // Color: WEB (0-2) = light blue, CODS (3-7) = dark blue
+                            const colorClass = index < 3 ? 'letter-light-blue' : 'letter-dark-blue';
+
+                            return (
+                                <span
+                                    key={index}
+                                    className={`about-letter ${colorClass}`}
+                                    style={{
+                                        animationDelay: `${randomDelay}s`,
+                                        '--random-rotation': `${randomRotation}deg`,
+                                        '--random-horizontal': `${randomHorizontal}%`,
+                                        '--final-position': `${index * 12.5}%`, // 8 letters = 100% / 8
+                                    } as React.CSSProperties}
+                                >
+                                    {letter}
+                                </span>
+                            );
+                        })}
+                    </div>
+
+                    {/* Stage 3: About Content - Fades in after letters organize */}
+                    <div key={`about-content-${aboutAnimationKey}`} className="about-content-reveal mt-6 sm:mt-8 md:mt-0">
+                        <p className="text-center text-blue-950 mb-6 sm:mb-8 text-[11px] sm:text-xs md:text-base lg:text-lg px-2 sm:px-4 md:px-2 leading-relaxed">
+                            Founded in 2025, WebCods has been at the forefront of web development and app development innovation. We are passionate about creating exceptional digital experiences that empower businesses to thrive in the modern landscape. Our team combines cutting-edge technology with creative excellence to deliver solutions that exceed expectations.
+                        </p>
+
+                        <div className="flex flex-row justify-between gap-6 sm:gap-8 md:gap-0 mt-6 sm:mt-8 text-left px-0 md:px-32">
+                            <div>
+                                <h3 className="text-3xl sm:text-4xl md:text-[2.2rem] text-white font-bold">{counts.projects}+</h3>
+                                <p className="text-white text-xs sm:text-sm md:text-base">Projects Completed</p>
+                            </div>
+                            <div>
+                                <h3 className="text-3xl sm:text-4xl md:text-[2.2rem] text-white font-bold">{counts.clients}+</h3>
+                                <p className="text-white text-xs sm:text-sm md:text-base">Happy Clients</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -1006,24 +997,26 @@ function App() {
 
             {/* Footer */}
             < footer className="text-center py-6 bg-gray-100 mt-8" >
-                <p className="text-gray-800 text-xs sm:text-sm md:text-base px-4">Ã¢â€Â¬Ã¢Å’Â 2025 WebCods. All Rights Reserved.</p>
+                <p className="text-gray-800 text-xs sm:text-sm md:text-base px-4">Ã¢â€ Â¬Ã¢Å’Â  2025 WebCods. All Rights Reserved.</p>
             </footer >
+            </div>
 
             {/* Floating WhatsApp Button */}
             <a
                 href="https://wa.me/919400525063"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8 z-50 flex items-center group cursor-pointer"
+                className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8 z-[9999] flex items-center group cursor-pointer"
             >
                 <div className="
+                    hidden md:block
                     bg-white text-gray-800 
                     px-3 sm:px-4 py-1.5 sm:py-2 rounded-full 
                     shadow-lg mr-2 sm:mr-3 md:mr-4 
                     text-xs sm:text-sm font-bold 
                     transform transition-all duration-300
-                    opacity-80 md:opacity-0 md:group-hover:opacity-80
-                    md:translate-x-4 md:group-hover:translate-x-0
+                    opacity-0 md:group-hover:opacity-80
+                    translate-x-4 group-hover:translate-x-0
                     whitespace-nowrap
                 ">
                     Connect with us
@@ -1042,7 +1035,7 @@ function App() {
                     </svg>
                 </div>
             </a>
-        </div >
+        </>
     )
 }
 
