@@ -17,6 +17,7 @@ function App() {
     const [counts, setCounts] = useState({ projects: 0, clients: 0 })
     const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set())
     const [activeServiceCard, setActiveServiceCard] = useState<HTMLDivElement | null>(null)
+    const [mobileServiceIndex, setMobileServiceIndex] = useState<number>(0)
     const heroRef = useRef<HTMLDivElement>(null)
     const aboutRef = useRef<HTMLDivElement>(null)
     const servicesRef = useRef<HTMLDivElement>(null)
@@ -217,6 +218,15 @@ function App() {
         }
     }, [])
 
+    // Auto-slide for mobile service cards (3 slides of 2 cards each)
+    useEffect(() => {
+        const totalSlides = 3
+        const interval = setInterval(() => {
+            setMobileServiceIndex(prev => (prev + 1) % totalSlides)
+        }, 3000)
+        return () => clearInterval(interval)
+    }, [])
+
     // Intersection Observer for Portfolio section
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -405,15 +415,11 @@ function App() {
     return (
         <>
             <div className="min-h-screen bg-black text-gray-300 scroll-snap-container">
-                {/* Static Logo */}
-            <div className="fixed -top-14 -left-20 md:-top-[4.5rem] md:-left-[3.75rem] z-[1000]">
-                <img src="/mylogo.png" alt="WebCods" className="h-[15rem] w-auto" />
-            </div>
 
-            {/* Desktop Header / Navbar - Centered */}
-            <header className="hidden md:flex fixed top-0 left-0 w-full z-[999] justify-center items-center px-6 py-3">
-                {/* Nav links pill - centered */}
-                <nav className="
+                {/* Desktop Header / Navbar - Centered */}
+                <header className="hidden md:flex fixed top-0 left-0 w-full z-[999] justify-center items-center px-6 py-3">
+                    {/* Nav links pill - centered */}
+                    <nav className="
           mx-auto h-[50px] md:h-[54px]
           px-8 md:px-10 py-2 md:py-2.5
           flex items-center
@@ -424,90 +430,94 @@ function App() {
           transition-all duration-300
           hover:bg-white/50 hover:shadow-[0_8px_32px_rgba(31,38,135,0.25)]
         ">
-                    <ul className="flex items-center gap-6 md:gap-10 list-none">
-                        {navLinks.map((link) => (
-                            <li key={link.href}>
-                                <a
-                                    href={link.href}
-                                    className="
+                        <ul className="flex items-center gap-6 md:gap-10 list-none">
+                            {navLinks.map((link) => (
+                                <li key={link.href}>
+                                    <a
+                                        href={link.href}
+                                        className="
                     text-gray-800 text-xs md:text-[0.95rem] font-semibold
                     no-underline transition-all duration-300
                     hover:text-sky-500 hover:-translate-y-0.5
                   "
-                                >
-                                    {link.label}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
-            </header>
+                                    >
+                                        {link.label}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                </header>
 
-            {/* Mobile Navigation System */}
-            {/* Toggle Button (Visible only on Mobile) */}
-            <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden fixed top-6 right-6 z-[1002] w-12 h-12 flex flex-col justify-center items-center gap-[6px] bg-transparent"
-                aria-label="Toggle Menu"
-            >
-                <span
-                    className={`block w-6 h-[2px] bg-white transition-all duration-300 ease-in-out transform origin-center ${isMobileMenuOpen ? 'rotate-45 translate-y-[8px]' : ''}`}
-                ></span>
-                <span
-                    className={`block w-6 h-[2px] bg-white transition-all duration-300 ease-in-out transform origin-center ${isMobileMenuOpen ? '-rotate-45 -translate-y-[8px]' : ''}`} // Fixed magic number for perfect X
-                    style={{ transform: isMobileMenuOpen ? 'rotate(-45deg) translateY(-1px)' : 'none' }} // Fine tuning with style since class overlap might happen
-                ></span>
-                {/* Re-doing the span logic to be cleaner without inline style overrides confusion */}
-            </button>
-            {/* Let's use a cleaner button implementation in the replacement content below for robustness */}
+                {/* Mobile Navigation System */}
+                {/* Toggle Button (Visible only on Mobile) */}
+                <button
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    className="md:hidden fixed top-6 right-6 z-[1002] w-12 h-12 flex flex-col justify-center items-center gap-[6px] bg-transparent"
+                    aria-label="Toggle Menu"
+                >
+                    <span
+                        className={`block w-6 h-[2px] bg-white transition-all duration-300 ease-in-out transform origin-center ${isMobileMenuOpen ? 'rotate-45 translate-y-[8px]' : ''}`}
+                    ></span>
+                    <span
+                        className={`block w-6 h-[2px] bg-white transition-all duration-300 ease-in-out transform origin-center ${isMobileMenuOpen ? '-rotate-45 -translate-y-[8px]' : ''}`} // Fixed magic number for perfect X
+                        style={{ transform: isMobileMenuOpen ? 'rotate(-45deg) translateY(-1px)' : 'none' }} // Fine tuning with style since class overlap might happen
+                    ></span>
+                    {/* Re-doing the span logic to be cleaner without inline style overrides confusion */}
+                </button>
+                {/* Let's use a cleaner button implementation in the replacement content below for robustness */}
 
-            {/* Mobile Menu Overlay */}
-            <div
-                className={`
+                {/* Mobile Menu Overlay */}
+                <div
+                    className={`
                     md:hidden fixed inset-0 z-[1001] bg-black/95 backdrop-blur-xl
                     transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
                     ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
                 `}
-            >
-                <div className="flex flex-col h-full justify-center px-8 sm:px-12">
-                    <div className="mb-12">
-                        <img src="/mylogo.png" alt="WebCods" className="h-12 w-auto opacity-80" />
-                    </div>
+                >
+                    <div className="flex flex-col h-full justify-center px-8 sm:px-12">
+                        <div className="mb-12">
+                            <img src="/mylogo.png" alt="WebCods" className="h-12 w-auto opacity-80" />
+                        </div>
 
-                    <nav className="flex flex-col gap-6">
-                        {navLinks.map((link, index) => (
-                            <a
-                                key={link.href}
-                                href={link.href}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="text-3xl font-bold text-white/80 hover:text-white hover:pl-4 transition-all duration-300"
-                                style={{ transitionDelay: `${index * 50}ms` }}
-                            >
-                                {link.label}
-                            </a>
-                        ))}
-                    </nav>
+                        <nav className="flex flex-col gap-6">
+                            {navLinks.map((link, index) => (
+                                <a
+                                    key={link.href}
+                                    href={link.href}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="text-3xl font-bold text-white/80 hover:text-white hover:pl-4 transition-all duration-300"
+                                    style={{ transitionDelay: `${index * 50}ms` }}
+                                >
+                                    {link.label}
+                                </a>
+                            ))}
+                        </nav>
 
-                    <div className="mt-12 pt-8 border-t border-white/10">
-                        <p className="text-white/40 text-sm">Ã¢â€Â¬Ã¢Å’Â 2025 WebCods</p>
+                        <div className="mt-12 pt-8 border-t border-white/10">
+                            <p className="text-white/40 text-sm">Ã¢â€Â¬Ã¢Å’Â 2025 WebCods</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
 
-            {/* Hero Section - Editorial Style Layout */}
-            <section
-                ref={heroRef}
-                id="hero"
-                className="scroll-snap-section relative w-full h-[100vh] flex justify-center items-center overflow-hidden bg-gradient-to-b from-sky-400 to-white"
-            >
-                {/* Main Content Container */}
-                <div className="w-full h-full px-4 sm:px-6 md:px-16 lg:px-24 flex items-start pt-32 sm:pt-40 md:pt-0 md:items-center">
-                    <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-16 items-center">
+                {/* Hero Section - Editorial Style Layout */}
+                <section
+                    ref={heroRef}
+                    id="hero"
+                    className="scroll-snap-section relative w-full h-[100vh] flex justify-center items-center overflow-hidden bg-gradient-to-b from-sky-400 to-white"
+                >
+                    {/* Logo - only in hero section */}
+                    <div className="absolute -top-14 -left-20 md:-top-[4.5rem] md:-left-[3.75rem] z-[50]">
+                        <img src="/mylogo.png" alt="WebCods" className="h-[15rem] w-auto" />
+                    </div>
+                    {/* Main Content Container */}
+                    <div className="w-full h-full px-4 sm:px-6 md:px-16 lg:px-24 flex items-start pt-32 sm:pt-40 md:pt-0 md:items-center">
+                        <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-16 items-center">
 
-                        {/* Left Side - Banner Slider */}
-                        <div className="relative w-full aspect-[16/10] md:aspect-[16/9] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/20 bg-white/10">
-                            <style>{`
+                            {/* Left Side - Banner Slider */}
+                            <div className="relative w-full aspect-[16/10] md:aspect-[16/9] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/20 bg-white/10">
+                                <style>{`
                                 @keyframes slideBannerLoop {
                                     0%, 25%   { transform: translateX(0); }
                                     30%, 55%  { transform: translateX(-33.333%); }
@@ -518,110 +528,305 @@ function App() {
                                     animation: slideBannerLoop 15s cubic-bezier(0.65, 0, 0.35, 1) infinite;
                                 }
                             `}</style>
-                            <div className="flex w-[300%] h-full animate-slide-loop">
-                                <div className="w-1/3 h-full shrink-0 flex items-center justify-center">
-                                    <img src="/portfolio.png" alt="Banner 1" className="w-full h-full object-contain" />
-                                </div>
-                                <div className="w-1/3 h-full shrink-0 flex items-center justify-center">
-                                    <img src="/portfolio1.png" alt="Banner 2" className="w-full h-full object-contain" />
-                                </div>
-                                <div className="w-1/3 h-full shrink-0 flex items-center justify-center">
-                                    <img src="/portfolio2.png" alt="Banner 3" className="w-full h-full object-contain" />
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Right Side - Tagline & Description Carousel */}
-                        <div className="relative flex flex-col justify-center space-y-4 sm:space-y-6 mt-6 sm:mt-8 md:mt-0">
-                            {/* Small Tagline */}
-                            <div key={`tagline-${currentTextIndex}`} className="hero-tagline-fade">
-                                <p className="text-[10px] sm:text-xs md:text-sm text-gray-500 uppercase tracking-widest font-medium mb-2">
-                                    {heroDescriptions[currentTextIndex].tagline}
-                                </p>
-                            </div>
-
-                            {/* Main Description */}
-                            <div key={`description-${currentTextIndex}`} className="hero-description-fade">
-                                <h2 className="text-lg sm:text-xl md:text-4xl lg:text-5xl xl:text-6xl font-normal text-gray-800 leading-tight tracking-tight pr-0 md:pr-16">
-                                    {heroDescriptions[currentTextIndex].title}
-                                </h2>
-                            </div>
-
-                            {/* Next Arrow Button */}
-
-                        </div>
-
-                    </div>
-                </div>
-
-                {/* Contact Button - Bottom Centered */}
-                <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-30">
-                    <button
-                        onClick={() => {
-                            if (window.innerWidth < 768) {
-                                setIsContactMobileClicked(true);
-                                // Hold the animation so user can see it fully, then dial
-                                setTimeout(() => {
-                                    window.location.href = 'tel:9074789784';
-                                    setTimeout(() => setIsContactMobileClicked(false), 500); // reset state after dialer triggers
-                                }, 800);
-                            } else {
-                                const contactSection = document.getElementById(`contact`);
-                                if (contactSection) contactSection.scrollIntoView({ behavior: `smooth` });
-                            }
-                        }}
-                        className={`cursor-pointer relative bg-white/10 py-2 rounded-full min-w-[8.5rem] min-h-[2.92rem] group max-w-full flex items-center justify-start hover:bg-blue-500 transition-all duration-[0.8s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] shadow-[inset_1px_2px_5px_#00000080] ${isContactMobileClicked ? 'bg-blue-500 scale-95' : 'active:scale-95'}`}
-                    >
-                        <div className="absolute flex px-1 py-0.5 justify-start items-center inset-0">
-                            <div className={`transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] ${isContactMobileClicked ? 'w-full' : 'w-[0%] group-hover:w-full'}`}></div>
-                            <div className={`rounded-full shrink-0 flex justify-center items-center shadow-[inset_1px_-1px_3px_0_black] h-full aspect-square bg-blue-500 transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] ${isContactMobileClicked ? 'bg-black' : 'group-hover:bg-black'}`}>
-                                <div className={`size-[0.8rem] transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] ${isContactMobileClicked ? 'text-white -rotate-45' : 'text-black group-hover:text-white group-hover:-rotate-45'}`}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" height="100%" width="100%">
-                                        <path fill="currentColor" d="M12.175 9H0V7H12.175L6.575 1.4L8 0L16 8L8 16L6.575 14.6L12.175 9Z"></path>
-                                    </svg>
+                                <div className="flex w-[300%] h-full animate-slide-loop">
+                                    <div className="w-1/3 h-full shrink-0 flex items-center justify-center">
+                                        <img src="/portfolio.png" alt="Banner 1" className="w-full h-full object-contain" />
+                                    </div>
+                                    <div className="w-1/3 h-full shrink-0 flex items-center justify-center">
+                                        <img src="/portfolio1.png" alt="Banner 2" className="w-full h-full object-contain" />
+                                    </div>
+                                    <div className="w-1/3 h-full shrink-0 flex items-center justify-center">
+                                        <img src="/portfolio2.png" alt="Banner 3" className="w-full h-full object-contain" />
+                                    </div>
                                 </div>
                             </div>
+
+                            {/* Right Side - Tagline & Description Carousel */}
+                            <div className="relative flex flex-col justify-center space-y-4 sm:space-y-6 mt-6 sm:mt-8 md:mt-0">
+                                {/* Small Tagline */}
+                                <div key={`tagline-${currentTextIndex}`} className="hero-tagline-fade">
+                                    <p className="text-[10px] sm:text-xs md:text-sm text-gray-500 uppercase tracking-widest font-medium mb-2">
+                                        {heroDescriptions[currentTextIndex].tagline}
+                                    </p>
+                                </div>
+
+                                {/* Main Description */}
+                                <div key={`description-${currentTextIndex}`} className="hero-description-fade">
+                                    <h2 className="text-lg sm:text-xl md:text-4xl lg:text-5xl xl:text-6xl font-normal text-gray-800 leading-tight tracking-tight pr-0 md:pr-16">
+                                        {heroDescriptions[currentTextIndex].title}
+                                    </h2>
+                                </div>
+
+                                {/* Next Arrow Button */}
+
+                            </div>
+
                         </div>
-                        <div className={`relative transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] ${isContactMobileClicked ? 'pl-[1.1rem] pr-[3.4rem] text-black' : 'pl-[3.4rem] pr-[1.1rem] group-hover:pl-[1.1rem] group-hover:pr-[3.4rem] group-hover:text-black text-white'}`}>
-                            Contacts
-                        </div>
-                    </button>
-                </div>
-
-            </section>
-
-
-            {/* Services Section */}
-            <section ref={servicesRef} id="services" className={`scroll-snap-section min-h-[100dvh] md:min-h-0 ${RESPONSIVE_CLASSES.sectionPadding} pt-20 sm:pt-24 md:pt-12 flex items-start md:items-center justify-center bg-gradient-to-b from-blue-950 to-stone-50 relative`}>
-                <div className="container">
-                    <div key={`services-heading-${servicesAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-0">
-                        <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-center mb-6 sm:mb-8">
-                            SERVICES
-                        </h2>
                     </div>
 
-
-                </div>
-            </section>
-
-            {/* Portfolio Section */}
-            <section ref={portfolioRef} id="portfolio" className="scroll-snap-section min-h-[100dvh] md:min-h-0 pt-24 sm:pt-28 md:pt-24 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center bg-gradient-to-b from-stone-50 to-black relative">
-                <div className="container relative px-4 md:px-0">
-                    <div key={`portfolio-heading-${portfolioAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-0">
-                        <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-center mb-6 sm:mb-8 text-gray-800">
-                            OUR PORTFOLIO
-                        </h2>
-                        <p className="text-center text-gray-600 mb-8 text-sm md:text-base">
-                            Showcasing our latest digital innovations and successful projects
-                        </p>
+                    {/* Contact Button - Bottom Centered */}
+                    <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-30">
+                        <button
+                            onClick={() => {
+                                if (window.innerWidth < 768) {
+                                    setIsContactMobileClicked(true);
+                                    // Hold the animation so user can see it fully, then dial
+                                    setTimeout(() => {
+                                        window.location.href = 'tel:9074789784';
+                                        setTimeout(() => setIsContactMobileClicked(false), 500); // reset state after dialer triggers
+                                    }, 800);
+                                } else {
+                                    const contactSection = document.getElementById(`contact`);
+                                    if (contactSection) contactSection.scrollIntoView({ behavior: `smooth` });
+                                }
+                            }}
+                            className={`cursor-pointer relative bg-white/10 py-2 rounded-full min-w-[8.5rem] min-h-[2.92rem] group max-w-full flex items-center justify-start hover:bg-blue-500 transition-all duration-[0.8s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] shadow-[inset_1px_2px_5px_#00000080] ${isContactMobileClicked ? 'bg-blue-500 scale-95' : 'active:scale-95'}`}
+                        >
+                            <div className="absolute flex px-1 py-0.5 justify-start items-center inset-0">
+                                <div className={`transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] ${isContactMobileClicked ? 'w-full' : 'w-[0%] group-hover:w-full'}`}></div>
+                                <div className={`rounded-full shrink-0 flex justify-center items-center shadow-[inset_1px_-1px_3px_0_black] h-full aspect-square bg-blue-500 transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] ${isContactMobileClicked ? 'bg-black' : 'group-hover:bg-black'}`}>
+                                    <div className={`size-[0.8rem] transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] ${isContactMobileClicked ? 'text-white -rotate-45' : 'text-black group-hover:text-white group-hover:-rotate-45'}`}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" height="100%" width="100%">
+                                            <path fill="currentColor" d="M12.175 9H0V7H12.175L6.575 1.4L8 0L16 8L8 16L6.575 14.6L12.175 9Z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={`relative transition-all duration-[1s] ease-[cubic-bezier(0.510,0.026,0.368,1.016)] ${isContactMobileClicked ? 'pl-[1.1rem] pr-[3.4rem] text-black' : 'pl-[3.4rem] pr-[1.1rem] group-hover:pl-[1.1rem] group-hover:pr-[3.4rem] group-hover:text-black text-white'}`}>
+                                Contacts
+                            </div>
+                        </button>
                     </div>
 
-                    <div key={`portfolio-content-${portfolioAnimationKey}`} className="section-content-stagger">
-                        {/* All Cards - Vertical on Mobile, Horizontal Centered on Desktop */}
-                        <div className="md:flex md:justify-center pb-4 px-4 md:px-0">
-                            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
-                                {/* ZCafe - Completed */}
-                                <div className="
+                </section>
+
+
+                {/* Services Section */}
+                <section ref={servicesRef} id="services" className={`scroll-snap-section min-h-[100dvh] md:min-h-0 ${RESPONSIVE_CLASSES.sectionPadding} pt-20 sm:pt-24 md:pt-12 pb-12 md:pb-16 flex items-start md:items-center justify-center bg-white relative`}>
+                    <div className="container px-4 md:px-0">
+                        <div key={`services-heading-${servicesAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-0">
+                            <h2 className="text-4xl sm:text-5xl md:text-[3rem] font-normal text-center mb-3 sm:mb-4 text-gray-900 tracking-[0.25em]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                                SERVICES
+                            </h2>
+                            <p className="text-center text-gray-500 mb-8 sm:mb-10 text-sm md:text-base">
+                                Comprehensive digital solutions to elevate your business
+                            </p>
+                        </div>
+
+                        <div key={`services-cards-${servicesAnimationKey}`} className="section-content-stagger">
+
+                            {/* Mobile Carousel - 2 cards per slide, auto-slide */}
+                            <div className="sm:hidden overflow-hidden w-full">
+                                <div
+                                    className="flex transition-transform duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
+                                    style={{ transform: `translateX(-${mobileServiceIndex * 100}%)` }}
+                                >
+                                    {/* Slide 1: Web Design + App Development */}
+                                    <div className="w-full shrink-0 px-4">
+                                        <div className="flex flex-col gap-6 w-full mx-auto">
+                                            <div className="rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-gray-100 flex flex-col">
+                                                <div className="bg-white p-8 flex items-center justify-center h-[160px]">
+                                                    <svg className="w-20 h-20 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                                    </svg>
+                                                </div>
+                                                <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-6 text-white flex-grow">
+                                                    <h3 className="text-xl font-bold mb-2">Web Design</h3>
+                                                    <p className="text-blue-100 text-sm leading-relaxed">Stunning, responsive websites crafted with modern aesthetics and seamless interactivity.</p>
+                                                </div>
+                                            </div>
+                                            <div className="rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-gray-100 flex flex-col">
+                                                <div className="bg-white p-8 flex items-center justify-center h-[160px]">
+                                                    <svg className="w-20 h-20 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                                    </svg>
+                                                </div>
+                                                <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-6 text-white flex-grow">
+                                                    <h3 className="text-xl font-bold mb-2">App Development</h3>
+                                                    <p className="text-blue-100 text-sm leading-relaxed">Native and cross-platform mobile apps built for high performance and user engagement.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Slide 2: E-Commerce + SEO */}
+                                    <div className="w-full shrink-0 px-4">
+                                        <div className="flex flex-col gap-6 w-full mx-auto">
+                                            <div className="rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-gray-100 flex flex-col">
+                                                <div className="bg-white p-8 flex items-center justify-center h-[160px]">
+                                                    <svg className="w-20 h-20 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" />
+                                                    </svg>
+                                                </div>
+                                                <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-6 text-white flex-grow">
+                                                    <h3 className="text-xl font-bold mb-2">E-Commerce</h3>
+                                                    <p className="text-blue-100 text-sm leading-relaxed">End-to-end online store solutions with secure payments and easy management.</p>
+                                                </div>
+                                            </div>
+                                            <div className="rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-gray-100 flex flex-col">
+                                                <div className="bg-white p-8 flex items-center justify-center h-[160px]">
+                                                    <svg className="w-20 h-20 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10V7m0 3h3" />
+                                                    </svg>
+                                                </div>
+                                                <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-6 text-white flex-grow">
+                                                    <h3 className="text-xl font-bold mb-2">SEO Optimization</h3>
+                                                    <p className="text-blue-100 text-sm leading-relaxed">Strategic optimization techniques to raise your visibility and search rankings.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Slide 3: UI/UX + Maintenance */}
+                                    <div className="w-full shrink-0 px-4">
+                                        <div className="flex flex-col gap-6 w-full mx-auto">
+                                            <div className="rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-gray-100 flex flex-col">
+                                                <div className="bg-white p-8 flex items-center justify-center h-[160px]">
+                                                    <svg className="w-20 h-20 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                                                    </svg>
+                                                </div>
+                                                <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-6 text-white flex-grow">
+                                                    <h3 className="text-xl font-bold mb-2">UI/UX Design</h3>
+                                                    <p className="text-blue-100 text-sm leading-relaxed">Designing focus on user experience to make your digital products intuitive.</p>
+                                                </div>
+                                            </div>
+                                            <div className="rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-gray-100 flex flex-col">
+                                                <div className="bg-white p-8 flex items-center justify-center h-[160px]">
+                                                    <svg className="w-20 h-20 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    </svg>
+                                                </div>
+                                                <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-6 text-white flex-grow">
+                                                    <h3 className="text-xl font-bold mb-2">Maintenance</h3>
+                                                    <p className="text-blue-100 text-sm leading-relaxed">Continuous support and updates to keep your systems secure and optimized.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* Dot indicators - 3 slides */}
+                                <div className="flex justify-center gap-2 mt-8">
+                                    {[0, 1, 2].map(i => (
+                                        <button
+                                            key={i}
+                                            onClick={() => setMobileServiceIndex(i)}
+                                            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                                                mobileServiceIndex === i
+                                                    ? 'bg-blue-600 w-8'
+                                                    : 'bg-gray-300'
+                                            }`}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Desktop/Tablet Grid */}
+                            <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 max-w-5xl mx-auto">
+
+                                {/* Web Design Card */}
+                                <div className="service-card-fade group rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(37,99,235,0.2)] transition-all duration-500 hover:-translate-y-2 border border-gray-100">
+                                    <div className="bg-white p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
+                                        <svg className="w-16 h-16 sm:w-20 sm:h-20 text-blue-600 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                    <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-5 sm:p-6 text-white">
+                                        <h3 className="text-lg sm:text-xl font-bold mb-2">Web Design</h3>
+                                        <p className="text-blue-100 text-xs sm:text-sm leading-relaxed">Stunning, responsive websites crafted with modern aesthetics and seamless user experience.</p>
+                                    </div>
+                                </div>
+
+                                {/* App Development Card */}
+                                <div className="service-card-fade group rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(37,99,235,0.2)] transition-all duration-500 hover:-translate-y-2 border border-gray-100">
+                                    <div className="bg-white p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
+                                        <svg className="w-16 h-16 sm:w-20 sm:h-20 text-blue-600 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                    <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-5 sm:p-6 text-white">
+                                        <h3 className="text-lg sm:text-xl font-bold mb-2">App Development</h3>
+                                        <p className="text-blue-100 text-xs sm:text-sm leading-relaxed">Native and cross-platform mobile apps that deliver powerful performance and engagement.</p>
+                                    </div>
+                                </div>
+
+                                {/* E-Commerce Card */}
+                                <div className="service-card-fade group rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(37,99,235,0.2)] transition-all duration-500 hover:-translate-y-2 border border-gray-100">
+                                    <div className="bg-white p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
+                                        <svg className="w-16 h-16 sm:w-20 sm:h-20 text-blue-600 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" />
+                                        </svg>
+                                    </div>
+                                    <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-5 sm:p-6 text-white">
+                                        <h3 className="text-lg sm:text-xl font-bold mb-2">E-Commerce</h3>
+                                        <p className="text-blue-100 text-xs sm:text-sm leading-relaxed">Complete online store solutions with secure payments and intuitive shopping experiences.</p>
+                                    </div>
+                                </div>
+
+                                {/* SEO Optimization Card */}
+                                <div className="service-card-fade group rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(37,99,235,0.2)] transition-all duration-500 hover:-translate-y-2 border border-gray-100">
+                                    <div className="bg-white p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
+                                        <svg className="w-16 h-16 sm:w-20 sm:h-20 text-blue-600 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10V7m0 3h3" />
+                                        </svg>
+                                    </div>
+                                    <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-5 sm:p-6 text-white">
+                                        <h3 className="text-lg sm:text-xl font-bold mb-2">SEO Optimization</h3>
+                                        <p className="text-blue-100 text-xs sm:text-sm leading-relaxed">Data-driven strategies to boost your search rankings and drive organic traffic growth.</p>
+                                    </div>
+                                </div>
+
+                                {/* UI/UX Design Card */}
+                                <div className="service-card-fade group rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(37,99,235,0.2)] transition-all duration-500 hover:-translate-y-2 border border-gray-100">
+                                    <div className="bg-white p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
+                                        <svg className="w-16 h-16 sm:w-20 sm:h-20 text-blue-600 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                                        </svg>
+                                    </div>
+                                    <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-5 sm:p-6 text-white">
+                                        <h3 className="text-lg sm:text-xl font-bold mb-2">UI/UX Design</h3>
+                                        <p className="text-blue-100 text-xs sm:text-sm leading-relaxed">User-centered design that transforms complex ideas into beautiful, intuitive interfaces.</p>
+                                    </div>
+                                </div>
+
+                                {/* Maintenance Card */}
+                                <div className="service-card-fade group rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(37,99,235,0.2)] transition-all duration-500 hover:-translate-y-2 border border-gray-100">
+                                    <div className="bg-white p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
+                                        <svg className="w-16 h-16 sm:w-20 sm:h-20 text-blue-600 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                    </div>
+                                    <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-5 sm:p-6 text-white">
+                                        <h3 className="text-lg sm:text-xl font-bold mb-2">Maintenance</h3>
+                                        <p className="text-blue-100 text-xs sm:text-sm leading-relaxed">Reliable ongoing support, updates, and monitoring to keep your digital products running smoothly.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Portfolio Section */}
+                <section ref={portfolioRef} id="portfolio" className="scroll-snap-section min-h-[100dvh] md:min-h-0 pt-24 sm:pt-28 md:pt-24 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center bg-gradient-to-b from-stone-50 to-black relative">
+                    <div className="container relative px-4 md:px-0">
+                        <div key={`portfolio-heading-${portfolioAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-0">
+                            <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-center mb-6 sm:mb-8 text-gray-800">
+                                OUR PORTFOLIO
+                            </h2>
+                            <p className="text-center text-gray-600 mb-8 text-sm md:text-base">
+                                Showcasing our latest digital innovations and successful projects
+                            </p>
+                        </div>
+
+                        <div key={`portfolio-content-${portfolioAnimationKey}`} className="section-content-stagger">
+                            {/* All Cards - Vertical on Mobile, Horizontal Centered on Desktop */}
+                            <div className="md:flex md:justify-center pb-4 px-4 md:px-0">
+                                <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+                                    {/* ZCafe - Completed */}
+                                    <div className="
                                     group relative bg-white/10 backdrop-blur-lg rounded-lg overflow-hidden
                                     border border-white/20 shadow-[0_4px_16px_rgba(0,0,0,0.15)]
                                     transition-all duration-500
@@ -630,40 +835,40 @@ function App() {
                                     portfolio-card-fade
                                     w-[240px] md:w-[280px]
                                 ">
-                                    <div className="relative overflow-hidden h-20 md:h-24 bg-white">
-                                        <img
-                                            src="/zcafe.png"
-                                            alt="ZCafe Logo"
-                                            className="w-full h-full object-contain p-3"
-                                        />
-                                    </div>
-                                    <div className="p-2 md:p-3 bg-gradient-to-b from-gray-900 to-black h-[90px] md:h-[100px] flex flex-col">
-                                        <h3 className="text-sm md:text-base font-bold text-white mb-1">ZCafe</h3>
-                                        <p className="text-gray-300 text-[10px] md:text-xs mb-2 line-clamp-2 flex-grow">
-                                            Product booking webapp
-                                        </p>
-                                        <a
-                                            href="https://www.zcafe.in"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="
+                                        <div className="relative overflow-hidden h-20 md:h-24 bg-white">
+                                            <img
+                                                src="/zcafe.png"
+                                                alt="ZCafe Logo"
+                                                className="w-full h-full object-contain p-3"
+                                            />
+                                        </div>
+                                        <div className="p-2 md:p-3 bg-gradient-to-b from-gray-900 to-black h-[90px] md:h-[100px] flex flex-col">
+                                            <h3 className="text-sm md:text-base font-bold text-white mb-1">ZCafe</h3>
+                                            <p className="text-gray-300 text-[10px] md:text-xs mb-2 line-clamp-2 flex-grow">
+                                                Product booking webapp
+                                            </p>
+                                            <a
+                                                href="https://www.zcafe.in"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="
                                                 inline-flex items-center justify-center gap-1 w-full px-2 py-1 
                                                 bg-gradient-to-r from-purple-600 to-blue-600 
                                                 text-white font-semibold rounded text-[10px]
                                                 transition-all duration-300
                                                 hover:from-purple-700 hover:to-blue-700
                                             "
-                                        >
-                                            Visit Site
-                                            <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                            </svg>
-                                        </a>
+                                            >
+                                                Visit Site
+                                                <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                                </svg>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
 
-                                {/* Project 2 - In Progress */}
-                                <div className="
+                                    {/* Project 2 - In Progress */}
+                                    <div className="
                                     group relative bg-white/10 backdrop-blur-lg rounded-lg overflow-hidden
                                     border border-white/20 shadow-[0_4px_16px_rgba(0,0,0,0.15)]
                                     transition-all duration-500
@@ -672,27 +877,27 @@ function App() {
                                     portfolio-card-fade
                                     w-[240px] md:w-[280px]
                                 ">
-                                    <div className="relative overflow-hidden h-20 md:h-24 bg-gradient-to-br from-cyan-600 to-teal-600">
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
-                                        <div className="w-full h-full flex items-center justify-center">
-                                            <div className="text-center z-20 relative">
-                                                <div className="text-2xl mb-0.5">Ã¢â€°Â¡Ã†â€™ÃƒÅ“Ãƒâ€¡</div>
+                                        <div className="relative overflow-hidden h-20 md:h-24 bg-gradient-to-br from-cyan-600 to-teal-600">
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+                                            <div className="w-full h-full flex items-center justify-center">
+                                                <div className="text-center z-20 relative">
+                                                    <div className="text-2xl mb-0.5">Ã¢â€°Â¡Ã†â€™ÃƒÅ“Ãƒâ€¡</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="p-2 md:p-3 bg-gradient-to-b from-gray-900 to-black h-[90px] md:h-[100px] flex flex-col">
+                                            <h3 className="text-sm md:text-base font-bold text-white mb-1">Next Innovation</h3>
+                                            <p className="text-gray-300 text-[10px] md:text-xs mb-2 line-clamp-2 flex-grow">
+                                                Coming soon...
+                                            </p>
+                                            <div className="px-2 py-1 bg-gray-700/50 text-gray-400 font-semibold rounded text-center border border-gray-600/50 text-[10px]">
+                                                In Development
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="p-2 md:p-3 bg-gradient-to-b from-gray-900 to-black h-[90px] md:h-[100px] flex flex-col">
-                                        <h3 className="text-sm md:text-base font-bold text-white mb-1">Next Innovation</h3>
-                                        <p className="text-gray-300 text-[10px] md:text-xs mb-2 line-clamp-2 flex-grow">
-                                            Coming soon...
-                                        </p>
-                                        <div className="px-2 py-1 bg-gray-700/50 text-gray-400 font-semibold rounded text-center border border-gray-600/50 text-[10px]">
-                                            In Development
-                                        </div>
-                                    </div>
-                                </div>
 
-                                {/* Project 3 - In Progress */}
-                                <div className="
+                                    {/* Project 3 - In Progress */}
+                                    <div className="
                                     group relative bg-white/10 backdrop-blur-lg rounded-lg overflow-hidden
                                     border border-white/20 shadow-[0_4px_16px_rgba(0,0,0,0.15)]
                                     transition-all duration-500
@@ -701,167 +906,167 @@ function App() {
                                     portfolio-card-fade
                                     w-[240px] md:w-[280px]
                                 ">
-                                    <div className="relative overflow-hidden h-20 md:h-24 bg-gradient-to-br from-orange-600 to-pink-600">
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
-                                        <div className="w-full h-full flex items-center justify-center">
-                                            <div className="text-center z-20 relative">
-                                                <div className="text-2xl mb-0.5">ÃŽâ€œÃ‚Â£Ã‚Â¿</div>
+                                        <div className="relative overflow-hidden h-20 md:h-24 bg-gradient-to-br from-orange-600 to-pink-600">
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+                                            <div className="w-full h-full flex items-center justify-center">
+                                                <div className="text-center z-20 relative">
+                                                    <div className="text-2xl mb-0.5">ÃŽâ€œÃ‚Â£Ã‚Â¿</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="p-2 md:p-3 bg-gradient-to-b from-gray-900 to-black h-[90px] md:h-[100px] flex flex-col">
-                                        <h3 className="text-sm md:text-base font-bold text-white mb-1">Future Project</h3>
-                                        <p className="text-gray-300 text-[10px] md:text-xs mb-2 line-clamp-2 flex-grow">
-                                            Watch this space!
-                                        </p>
-                                        <div className="px-2 py-1 bg-gray-700/50 text-gray-400 font-semibold rounded text-center border border-gray-600/50 text-[10px]">
-                                            In Development
+                                        <div className="p-2 md:p-3 bg-gradient-to-b from-gray-900 to-black h-[90px] md:h-[100px] flex flex-col">
+                                            <h3 className="text-sm md:text-base font-bold text-white mb-1">Future Project</h3>
+                                            <p className="text-gray-300 text-[10px] md:text-xs mb-2 line-clamp-2 flex-grow">
+                                                Watch this space!
+                                            </p>
+                                            <div className="px-2 py-1 bg-gray-700/50 text-gray-400 font-semibold rounded text-center border border-gray-600/50 text-[10px]">
+                                                In Development
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
+                </section>
 
+                {/* About Section - Three Stage Animation */}
+                <section ref={aboutRef} id="about" className="scroll-snap-section pt-20 sm:pt-24 md:pt-24 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center bg-gradient-to-b from-white to-blue-950 relative overflow-hidden min-h-[100dvh] md:min-h-screen">
+                    <div className="container px-3 sm:px-4 md:px-0 relative flex flex-col items-center justify-start md:justify-center">
+                        {/* About Heading - Fades in first */}
+                        <div key={`about-heading-${aboutAnimationKey}`} className="about-heading-fade mt-8 sm:mt-12 md:mt-0 mb-6 sm:mb-8">
+                            <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-blue-950 text-center">ABOUT</h2>
+                        </div>
 
-                </div>
-            </section>
+                        {/* Stage 1 & 2: Falling and Organizing Letters */}
+                        <div key={aboutAnimationKey} className="relative h-24 sm:h-28 md:h-32 mt-16 sm:mt-20 md:mt-4 mb-8 sm:mb-10 md:mb-2 text-center flex items-center justify-center w-full">
+                            {'WEBCODS'.split('').map((letter, index) => {
+                                // Stage 1: Random scattered positions
+                                const randomDelay = index * 0.1 + Math.random() * 0.3;
+                                const randomRotation = (Math.random() - 0.5) * 50;
+                                const randomHorizontal = (Math.random() - 0.5) * 80; // -40% to 40%
 
-            {/* About Section - Three Stage Animation */}
-            <section ref={aboutRef} id="about" className="scroll-snap-section pt-20 sm:pt-24 md:pt-24 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center bg-gradient-to-b from-white to-blue-950 relative overflow-hidden min-h-[100dvh] md:min-h-screen">
-                <div className="container px-3 sm:px-4 md:px-0 relative flex flex-col items-center justify-start md:justify-center">
-                    {/* About Heading - Fades in first */}
-                    <div key={`about-heading-${aboutAnimationKey}`} className="about-heading-fade mt-8 sm:mt-12 md:mt-0 mb-6 sm:mb-8">
-                        <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-blue-950 text-center">ABOUT</h2>
-                    </div>
+                                // Color: WEB (0-2) = light blue, CODS (3-7) = dark blue
+                                const colorClass = index < 3 ? 'letter-light-blue' : 'letter-dark-blue';
 
-                    {/* Stage 1 & 2: Falling and Organizing Letters */}
-                    <div key={aboutAnimationKey} className="relative h-24 sm:h-28 md:h-32 mt-16 sm:mt-20 md:mt-4 mb-8 sm:mb-10 md:mb-2 text-center flex items-center justify-center w-full">
-                        {'WEBCODS'.split('').map((letter, index) => {
-                            // Stage 1: Random scattered positions
-                            const randomDelay = index * 0.1 + Math.random() * 0.3;
-                            const randomRotation = (Math.random() - 0.5) * 50;
-                            const randomHorizontal = (Math.random() - 0.5) * 80; // -40% to 40%
+                                return (
+                                    <span
+                                        key={index}
+                                        className={`about-letter ${colorClass}`}
+                                        style={{
+                                            animationDelay: `${randomDelay}s`,
+                                            '--random-rotation': `${randomRotation}deg`,
+                                            '--random-horizontal': `${randomHorizontal}%`,
+                                            '--final-position': `${index * 12.5}%`, // 8 letters = 100% / 8
+                                        } as React.CSSProperties}
+                                    >
+                                        {letter}
+                                    </span>
+                                );
+                            })}
+                        </div>
 
-                            // Color: WEB (0-2) = light blue, CODS (3-7) = dark blue
-                            const colorClass = index < 3 ? 'letter-light-blue' : 'letter-dark-blue';
+                        {/* Stage 3: About Content - Fades in after letters organize */}
+                        <div key={`about-content-${aboutAnimationKey}`} className="about-content-reveal mt-6 sm:mt-8 md:mt-0">
+                            <p className="text-center text-blue-950 mb-6 sm:mb-8 text-[11px] sm:text-xs md:text-base lg:text-lg px-2 sm:px-4 md:px-2 leading-relaxed">
+                                Founded in 2025, WebCods has been at the forefront of web development and app development innovation. We are passionate about creating exceptional digital experiences that empower businesses to thrive in the modern landscape. Our team combines cutting-edge technology with creative excellence to deliver solutions that exceed expectations.
+                            </p>
 
-                            return (
-                                <span
-                                    key={index}
-                                    className={`about-letter ${colorClass}`}
-                                    style={{
-                                        animationDelay: `${randomDelay}s`,
-                                        '--random-rotation': `${randomRotation}deg`,
-                                        '--random-horizontal': `${randomHorizontal}%`,
-                                        '--final-position': `${index * 12.5}%`, // 8 letters = 100% / 8
-                                    } as React.CSSProperties}
-                                >
-                                    {letter}
-                                </span>
-                            );
-                        })}
-                    </div>
-
-                    {/* Stage 3: About Content - Fades in after letters organize */}
-                    <div key={`about-content-${aboutAnimationKey}`} className="about-content-reveal mt-6 sm:mt-8 md:mt-0">
-                        <p className="text-center text-blue-950 mb-6 sm:mb-8 text-[11px] sm:text-xs md:text-base lg:text-lg px-2 sm:px-4 md:px-2 leading-relaxed">
-                            Founded in 2025, WebCods has been at the forefront of web development and app development innovation. We are passionate about creating exceptional digital experiences that empower businesses to thrive in the modern landscape. Our team combines cutting-edge technology with creative excellence to deliver solutions that exceed expectations.
-                        </p>
-
-                        <div className="flex flex-row justify-between gap-6 sm:gap-8 md:gap-0 mt-6 sm:mt-8 text-left px-0 md:px-32">
-                            <div>
-                                <h3 className="text-3xl sm:text-4xl md:text-[2.2rem] text-white font-bold">{counts.projects}+</h3>
-                                <p className="text-white text-xs sm:text-sm md:text-base">Projects Completed</p>
-                            </div>
-                            <div>
-                                <h3 className="text-3xl sm:text-4xl md:text-[2.2rem] text-white font-bold">{counts.clients}+</h3>
-                                <p className="text-white text-xs sm:text-sm md:text-base">Happy Clients</p>
+                            <div className="flex flex-row justify-between gap-6 sm:gap-8 md:gap-0 mt-6 sm:mt-8 text-left px-0 md:px-32">
+                                <div>
+                                    <h3 className="text-3xl sm:text-4xl md:text-[2.2rem] text-white font-bold">{counts.projects}+</h3>
+                                    <p className="text-white text-xs sm:text-sm md:text-base">Projects Completed</p>
+                                </div>
+                                <div>
+                                    <h3 className="text-3xl sm:text-4xl md:text-[2.2rem] text-white font-bold">{counts.clients}+</h3>
+                                    <p className="text-white text-xs sm:text-sm md:text-base">Happy Clients</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            {/* Contact Section */}
-            <section ref={contactRef} id="contact" className="scroll-snap-section min-h-[100dvh] md:min-h-0 pt-20 sm:pt-24 md:pt-24 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center relative bg-gradient-to-b from-black to-slate-900">
-                <div className="container px-2.5 sm:px-3 md:px-0">
-                    <div key={`contact-heading-${contactAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-0">
-                        <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-center mb-6 sm:mb-8 text-white">
-                            LET'S WORK TOGETHER
-                        </h2>
-                    </div>
+                {/* Contact Section */}
+                <section ref={contactRef} id="contact" className="scroll-snap-section min-h-[100dvh] md:min-h-0 pt-20 sm:pt-24 md:pt-24 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center relative bg-gradient-to-b from-black to-slate-900">
+                    <div className="container px-2.5 sm:px-3 md:px-0">
+                        <div key={`contact-heading-${contactAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-0">
+                            <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-center mb-6 sm:mb-8 text-white">
+                                LET'S WORK TOGETHER
+                            </h2>
+                        </div>
 
-                    <div key={`contact-form-${contactAnimationKey}`} className="section-content-fade">
-                        <div className="max-w-6xl mx-auto">
-                            {/* Desktop: Two Column Layout | Mobile: Single Column */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-12 items-start">
+                        <div key={`contact-form-${contactAnimationKey}`} className="section-content-fade">
+                            <div className="max-w-6xl mx-auto">
+                                {/* Desktop: Two Column Layout | Mobile: Single Column */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-12 items-start">
 
-                                {/* Left Side - Contact Form */}
-                                <div className="order-1 md:mt-16">
-                                    <form
-                                        onSubmit={(e) => {
-                                            e.preventDefault();
-                                            const formData = new FormData(e.currentTarget);
-                                            const name = formData.get('name');
-                                            const phone = formData.get('phone');
-                                            const email = formData.get('email');
-                                            const service = formData.get('service');
-                                            const message = formData.get('message');
+                                    {/* Left Side - Contact Form */}
+                                    <div className="order-1 md:mt-16">
+                                        <form
+                                            onSubmit={(e) => {
+                                                e.preventDefault();
+                                                const formData = new FormData(e.currentTarget);
+                                                const name = formData.get('name');
+                                                const phone = formData.get('phone');
+                                                const email = formData.get('email');
+                                                const service = formData.get('service');
+                                                const message = formData.get('message');
 
-                                            const subject = `New Inquiry from ${name} - ${service}`;
-                                            const body = `Name: ${name}%0D%0APhone: ${phone}%0D%0AEmail: ${email}%0D%0AService: ${service}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+                                                const subject = `New Inquiry from ${name} - ${service}`;
+                                                const body = `Name: ${name}%0D%0APhone: ${phone}%0D%0AEmail: ${email}%0D%0AService: ${service}%0D%0A%0D%0AMessage:%0D%0A${message}`;
 
-                                            window.location.href = `mailto:webcods1@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
-                                        }}
-                                        className="space-y-2 sm:space-y-2.5 md:space-y-4"
-                                    >
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-2.5 md:gap-4">
-                                            <input
-                                                type="text"
-                                                name="name"
-                                                placeholder="Name"
-                                                className="
-                                                w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 md:py-3
-                                                bg-white/10 border border-white/20 rounded-lg md:rounded-xl
-                                                text-base text-white placeholder-gray-400
-                                                focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
-                                                backdrop-blur-sm transition-all duration-300
-                                                "
-                                                required
-                                            />
-                                            <input
-                                                type="tel"
-                                                name="phone"
-                                                placeholder="Phone Number"
-                                                className="
-                                                w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 md:py-3
-                                                bg-white/10 border border-white/20 rounded-lg md:rounded-xl
-                                                text-base text-white placeholder-gray-400
-                                                focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
-                                                backdrop-blur-sm transition-all duration-300
-                                                "
-                                                required
-                                            />
-                                        </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3 md:gap-4">
-                                            <input
-                                                type="email"
-                                                name="email"
-                                                placeholder="Email Address"
-                                                className="
-                                                w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 md:py-3
-                                                bg-white/10 border border-white/20 rounded-lg md:rounded-xl
-                                                text-base text-white placeholder-gray-400
-                                                focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
-                                                backdrop-blur-sm transition-all duration-300
-                                                "
-                                                required
-                                            />
-                                            <div className="relative">
-                                                <select
-                                                    name="service"
+                                                window.location.href = `mailto:webcods1@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+                                            }}
+                                            className="space-y-2 sm:space-y-2.5 md:space-y-4"
+                                        >
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-2.5 md:gap-4">
+                                                <input
+                                                    type="text"
+                                                    name="name"
+                                                    placeholder="Name"
                                                     className="
+                                                w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 md:py-3
+                                                bg-white/10 border border-white/20 rounded-lg md:rounded-xl
+                                                text-base text-white placeholder-gray-400
+                                                focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
+                                                backdrop-blur-sm transition-all duration-300
+                                                "
+                                                    required
+                                                />
+                                                <input
+                                                    type="tel"
+                                                    name="phone"
+                                                    placeholder="Phone Number"
+                                                    className="
+                                                w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 md:py-3
+                                                bg-white/10 border border-white/20 rounded-lg md:rounded-xl
+                                                text-base text-white placeholder-gray-400
+                                                focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
+                                                backdrop-blur-sm transition-all duration-300
+                                                "
+                                                    required
+                                                />
+                                            </div>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3 md:gap-4">
+                                                <input
+                                                    type="email"
+                                                    name="email"
+                                                    placeholder="Email Address"
+                                                    className="
+                                                w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 md:py-3
+                                                bg-white/10 border border-white/20 rounded-lg md:rounded-xl
+                                                text-base text-white placeholder-gray-400
+                                                focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
+                                                backdrop-blur-sm transition-all duration-300
+                                                "
+                                                    required
+                                                />
+                                                <div className="relative">
+                                                    <select
+                                                        name="service"
+                                                        className="
                                                     w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 md:py-3
                                                     bg-white/10 border border-white/20 rounded-lg md:rounded-xl
                                                     text-xs sm:text-sm md:text-base text-white placeholder-gray-400
@@ -869,25 +1074,25 @@ function App() {
                                                     backdrop-blur-sm transition-all duration-300
                                                     appearance-none cursor-pointer
                                                     "
-                                                    required
-                                                >
-                                                    <option value="" disabled selected className="text-gray-800">Select Service</option>
-                                                    <option value="web-design" className="text-gray-800">Web Design</option>
-                                                    <option value="app-design" className="text-gray-800">App Design</option>
-                                                    <option value="ecommerce" className="text-gray-800">E-Commerce</option>
-                                                    <option value="seo" className="text-gray-800">SEO Optimization</option>
-                                                    <option value="maintenance" className="text-gray-800">Maintenance</option>
-                                                </select>
-                                                <svg className="w-4 h-4 sm:w-5 sm:h-5 absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                                </svg>
+                                                        required
+                                                    >
+                                                        <option value="" disabled selected className="text-gray-800">Select Service</option>
+                                                        <option value="web-design" className="text-gray-800">Web Design</option>
+                                                        <option value="app-design" className="text-gray-800">App Design</option>
+                                                        <option value="ecommerce" className="text-gray-800">E-Commerce</option>
+                                                        <option value="seo" className="text-gray-800">SEO Optimization</option>
+                                                        <option value="maintenance" className="text-gray-800">Maintenance</option>
+                                                    </select>
+                                                    <svg className="w-4 h-4 sm:w-5 sm:h-5 absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                    </svg>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <textarea
-                                            name="message"
-                                            placeholder="Tell us about your project..."
-                                            rows={4}
-                                            className="
+                                            <textarea
+                                                name="message"
+                                                placeholder="Tell us about your project..."
+                                                rows={4}
+                                                className="
                                             w-full px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 md:py-3
                                             bg-white/10 border border-white/20 rounded-lg md:rounded-xl
                                             text-xs sm:text-sm md:text-base text-white placeholder-gray-400
@@ -895,11 +1100,11 @@ function App() {
                                             backdrop-blur-sm transition-all duration-300
                                             resize-none
                                             "
-                                            required
-                                        />
-                                        <button
-                                            type="submit"
-                                            className="
+                                                required
+                                            />
+                                            <button
+                                                type="submit"
+                                                className="
                                             w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white
                                             px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-4 rounded-lg md:rounded-xl
                                             font-bold text-sm sm:text-base md:text-lg
@@ -907,98 +1112,98 @@ function App() {
                                             hover:shadow-[0_0_20px_rgba(124,58,237,0.5)] hover:scale-[1.02]
                                             cursor-pointer active:scale-95
                                             "
-                                        >
-                                            Send Message
-                                        </button>
-                                    </form>
-                                </div>
-
-                                {/* Right Side - Handshake SVG and Text (order-2 on mobile, shown after form) */}
-                                <div className="order-2 flex flex-col items-center justify-start p-2 sm:p-4 md:p-0 md:pt-0 md:-mt-8 relative">
-                                    <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-blue-500/20 rounded-3xl blur-3xl animate-pulse"></div>
-
-                                    <svg viewBox="0 0 500 400" className="w-full h-auto max-w-[160px] sm:max-w-[200px] md:max-w-lg drop-shadow-[0_10px_40px_rgba(124,58,237,0.4)] relative z-10">
-                                        <defs>
-                                            <linearGradient id="cyberGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                                <stop offset="0%" stopColor="#A78BFA" />
-                                                <stop offset="100%" stopColor="#7C3AED" />
-                                            </linearGradient>
-                                            <linearGradient id="cyberGradient2" x1="100%" y1="0%" x2="0%" y2="100%">
-                                                <stop offset="0%" stopColor="#60A5FA" />
-                                                <stop offset="100%" stopColor="#2563EB" />
-                                            </linearGradient>
-                                            <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
-                                                <feGaussianBlur stdDeviation="5" result="coloredBlur" />
-                                                <feMerge>
-                                                    <feMergeNode in="coloredBlur" />
-                                                    <feMergeNode in="SourceGraphic" />
-                                                </feMerge>
-                                            </filter>
-                                        </defs>
-
-                                        {/* Abstract Geometric Composition */}
-                                        <g className="handshake-hand">
-
-                                            {/* Left Element (WebCods - Tech/Structure) */}
-                                            <g transform="translate(140, 200)">
-                                                {/* Stylized Hand/Arm Shape - Geometric */}
-                                                <path d="M-100,50 L0,50 L40,10 L60,30 L20,70 L-100,70 Z" fill="url(#cyberGradient1)" opacity="0.8" />
-                                                <circle cx="50" cy="20" r="8" fill="#DDD6FE" filter="url(#neonGlow)" />
-                                                <path d="M-80,60 L20,60" stroke="#C4B5FD" strokeWidth="2" strokeDasharray="4 4" />
-                                            </g>
-
-                                            {/* Right Element (Client - Vision/Flow) */}
-                                            <g transform="translate(360, 200)">
-                                                {/* Stylized Hand/Arm Shape - Fluid */}
-                                                <path d="M100,50 L0,50 L-40,10 L-60,30 L-20,70 L100,70 Z" fill="url(#cyberGradient2)" opacity="0.8" />
-                                                <circle cx="-50" cy="20" r="8" fill="#DBEAFE" filter="url(#neonGlow)" />
-                                                <path d="M80,60 L-20,60" stroke="#BFDBFE" strokeWidth="2" />
-                                            </g>
-
-                                            {/* The Connection Point (Center) */}
-                                            <g transform="translate(250, 180)">
-                                                <circle cx="0" cy="40" r="25" fill="white" opacity="0.1" className="animate-pulse" />
-                                                <circle cx="0" cy="40" r="15" fill="white" opacity="0.3" />
-
-                                                {/* Glowing Core */}
-                                                <path d="M-10,40 L0,30 L10,40 L0,50 Z" fill="#F3E8FF" filter="url(#neonGlow)">
-                                                    <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite" />
-                                                    <animateTransform attributeName="transform" type="rotate" from="0 0 40" to="360 0 40" dur="4s" repeatCount="indefinite" />
-                                                </path>
-                                            </g>
-
-                                            {/* Floating UI Elements */}
-                                            <rect x="180" y="100" width="140" height="80" rx="10" fill="white" fillOpacity="0.05" stroke="white" strokeOpacity="0.1" />
-                                            <circle cx="200" cy="120" r="3" fill="#A78BFA" />
-                                            <circle cx="215" cy="120" r="3" fill="#60A5FA" />
-                                            <rect x="200" y="140" width="80" height="4" rx="2" fill="white" fillOpacity="0.1" />
-                                            <rect x="200" y="155" width="60" height="4" rx="2" fill="white" fillOpacity="0.1" />
-
-                                        </g>
-                                    </svg>
-
-                                    <div className="text-center -mt-4 md:-mt-8">
-                                        <h3 className="text-lg md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
-                                            Partner with WebCods
-                                        </h3>
-                                        <p className="text-gray-400 mt-1 md:mt-2 text-sm md:text-base">
-                                            Let's build something amazing together.
-                                        </p>
+                                            >
+                                                Send Message
+                                            </button>
+                                        </form>
                                     </div>
-                                </div>
 
+                                    {/* Right Side - Handshake SVG and Text (order-2 on mobile, shown after form) */}
+                                    <div className="order-2 flex flex-col items-center justify-start p-2 sm:p-4 md:p-0 md:pt-0 md:-mt-8 relative">
+                                        <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-blue-500/20 rounded-3xl blur-3xl animate-pulse"></div>
+
+                                        <svg viewBox="0 0 500 400" className="w-full h-auto max-w-[160px] sm:max-w-[200px] md:max-w-lg drop-shadow-[0_10px_40px_rgba(124,58,237,0.4)] relative z-10">
+                                            <defs>
+                                                <linearGradient id="cyberGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                    <stop offset="0%" stopColor="#A78BFA" />
+                                                    <stop offset="100%" stopColor="#7C3AED" />
+                                                </linearGradient>
+                                                <linearGradient id="cyberGradient2" x1="100%" y1="0%" x2="0%" y2="100%">
+                                                    <stop offset="0%" stopColor="#60A5FA" />
+                                                    <stop offset="100%" stopColor="#2563EB" />
+                                                </linearGradient>
+                                                <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+                                                    <feGaussianBlur stdDeviation="5" result="coloredBlur" />
+                                                    <feMerge>
+                                                        <feMergeNode in="coloredBlur" />
+                                                        <feMergeNode in="SourceGraphic" />
+                                                    </feMerge>
+                                                </filter>
+                                            </defs>
+
+                                            {/* Abstract Geometric Composition */}
+                                            <g className="handshake-hand">
+
+                                                {/* Left Element (WebCods - Tech/Structure) */}
+                                                <g transform="translate(140, 200)">
+                                                    {/* Stylized Hand/Arm Shape - Geometric */}
+                                                    <path d="M-100,50 L0,50 L40,10 L60,30 L20,70 L-100,70 Z" fill="url(#cyberGradient1)" opacity="0.8" />
+                                                    <circle cx="50" cy="20" r="8" fill="#DDD6FE" filter="url(#neonGlow)" />
+                                                    <path d="M-80,60 L20,60" stroke="#C4B5FD" strokeWidth="2" strokeDasharray="4 4" />
+                                                </g>
+
+                                                {/* Right Element (Client - Vision/Flow) */}
+                                                <g transform="translate(360, 200)">
+                                                    {/* Stylized Hand/Arm Shape - Fluid */}
+                                                    <path d="M100,50 L0,50 L-40,10 L-60,30 L-20,70 L100,70 Z" fill="url(#cyberGradient2)" opacity="0.8" />
+                                                    <circle cx="-50" cy="20" r="8" fill="#DBEAFE" filter="url(#neonGlow)" />
+                                                    <path d="M80,60 L-20,60" stroke="#BFDBFE" strokeWidth="2" />
+                                                </g>
+
+                                                {/* The Connection Point (Center) */}
+                                                <g transform="translate(250, 180)">
+                                                    <circle cx="0" cy="40" r="25" fill="white" opacity="0.1" className="animate-pulse" />
+                                                    <circle cx="0" cy="40" r="15" fill="white" opacity="0.3" />
+
+                                                    {/* Glowing Core */}
+                                                    <path d="M-10,40 L0,30 L10,40 L0,50 Z" fill="#F3E8FF" filter="url(#neonGlow)">
+                                                        <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite" />
+                                                        <animateTransform attributeName="transform" type="rotate" from="0 0 40" to="360 0 40" dur="4s" repeatCount="indefinite" />
+                                                    </path>
+                                                </g>
+
+                                                {/* Floating UI Elements */}
+                                                <rect x="180" y="100" width="140" height="80" rx="10" fill="white" fillOpacity="0.05" stroke="white" strokeOpacity="0.1" />
+                                                <circle cx="200" cy="120" r="3" fill="#A78BFA" />
+                                                <circle cx="215" cy="120" r="3" fill="#60A5FA" />
+                                                <rect x="200" y="140" width="80" height="4" rx="2" fill="white" fillOpacity="0.1" />
+                                                <rect x="200" y="155" width="60" height="4" rx="2" fill="white" fillOpacity="0.1" />
+
+                                            </g>
+                                        </svg>
+
+                                        <div className="text-center -mt-4 md:-mt-8">
+                                            <h3 className="text-lg md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
+                                                Partner with WebCods
+                                            </h3>
+                                            <p className="text-gray-400 mt-1 md:mt-2 text-sm md:text-base">
+                                                Let's build something amazing together.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section >
+                </section >
 
 
 
-            {/* Footer */}
-            < footer className="text-center py-6 bg-gray-100 mt-8" >
-                <p className="text-gray-800 text-xs sm:text-sm md:text-base px-4">Ã¢â€ Â¬Ã¢Å’Â  2025 WebCods. All Rights Reserved.</p>
-            </footer >
+                {/* Footer */}
+                < footer className="text-center py-6 bg-gray-100 mt-8" >
+                    <p className="text-gray-800 text-xs sm:text-sm md:text-base px-4">Ã¢â€ Â¬Ã¢Å’Â  2025 WebCods. All Rights Reserved.</p>
+                </footer >
             </div>
 
             {/* Floating WhatsApp Button */}
