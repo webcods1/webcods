@@ -565,7 +565,7 @@ function App() {
                     </div>
 
                     {/* Contact Button - Bottom Centered */}
-                    <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-30">
+                    <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-30">
                         <button
                             onClick={() => {
                                 if (window.innerWidth < 768) {
