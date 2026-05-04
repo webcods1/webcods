@@ -18,6 +18,9 @@ function App() {
     const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set())
     const [activeServiceCard, setActiveServiceCard] = useState<HTMLDivElement | null>(null)
     const [mobileServiceIndex, setMobileServiceIndex] = useState<number>(0)
+    const [desktopServiceIndex, setDesktopServiceIndex] = useState<number>(3)
+    const [isDesktopServiceTransitioning, setIsDesktopServiceTransitioning] = useState<boolean>(true)
+    const [mobilePortfolioIndex, setMobilePortfolioIndex] = useState<number>(0)
     const heroRef = useRef<HTMLDivElement>(null)
     const aboutRef = useRef<HTMLDivElement>(null)
     const servicesRef = useRef<HTMLDivElement>(null)
@@ -45,7 +48,150 @@ function App() {
         { href: '#contact', label: 'Contact' },
     ]
 
-    const services: any[] = []
+    const services = [
+        {
+            title: 'Web Design',
+            description: 'Stunning, responsive websites crafted with modern aesthetics and seamless user experience.',
+            icon: (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            ),
+        },
+        {
+            title: 'App Development',
+            description: 'Native and cross-platform mobile apps that deliver powerful performance and engagement.',
+            icon: (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+            ),
+        },
+        {
+            title: 'E-Commerce',
+            description: 'Complete online store solutions with secure payments and intuitive shopping experiences.',
+            icon: (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" />
+            ),
+        },
+        {
+            title: 'SEO Optimization',
+            description: 'Data-driven strategies to boost your search rankings and drive organic traffic growth.',
+            icon: (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10V7m0 3h3" />
+            ),
+        },
+        {
+            title: 'UI/UX Design',
+            description: 'User-centered design that transforms complex ideas into beautiful, intuitive interfaces.',
+            icon: (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+            ),
+        },
+        {
+            title: 'Maintenance',
+            description: 'Reliable ongoing support, updates, and monitoring to keep your digital products running smoothly.',
+            icon: (
+                <>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </>
+            ),
+        },
+    ]
+
+    const mobileServiceSlides = [
+        services.slice(0, 2),
+        services.slice(2, 4),
+        services.slice(4, 6),
+    ]
+
+    const desktopServiceSlides = [
+        services.slice(0, 3),
+        services.slice(3, 6),
+    ]
+
+    const desktopServiceTrackSlides = [
+        desktopServiceSlides[1],
+        desktopServiceSlides[0],
+        desktopServiceSlides[1],
+        desktopServiceSlides[0],
+    ]
+
+    const desktopServiceActiveIndex = desktopServiceIndex % 2 === 1 ? 0 : 1
+
+    const portfolioItems = [
+        {
+            title: 'ZCafe E-Commerce App',
+            description: 'Coffee premix shopping UI with product browsing, offers, cart flow, and a mobile-first purchase experience.',
+            image: '/work%20(3).png',
+            tag: 'E-Commerce',
+        },
+        {
+            title: 'Fresh & Co Landing Page',
+            description: 'Food brand landing page with a bold product hero, benefit cards, and clean responsive storytelling.',
+            image: '/work.png',
+            tag: 'Food Brand',
+        },
+        {
+            title: 'CleanMyCar Service Site',
+            description: 'Premium dark service interface with strong branding, service cards, pricing, and WhatsApp contact action.',
+            image: '/work%20(4).png',
+            tag: 'Service Booking',
+        },
+        {
+            title: 'Ahalia Fashion Store',
+            description: 'Fashion storefront with hero slider, product cards, wishlist, pricing, and add-to-bag shopping flow.',
+            image: '/work%20(1).png',
+            tag: 'Fashion Store',
+        },
+        {
+            title: 'Travel Package UI',
+            description: 'Travel landing screen with destination search, scenic hero, package CTA, and mobile trip discovery flow.',
+            image: '/work%20(2).png',
+            tag: 'Travel UI',
+        },
+    ]
+
+    const renderServiceCard = (service: (typeof services)[number], variant: 'mobile' | 'grid' = 'grid') => {
+        const isMobile = variant === 'mobile'
+
+        return (
+            <div
+                key={service.title}
+                className={`service-card-fade group rounded-2xl overflow-hidden border border-gray-100 flex flex-col ${
+                    isMobile
+                        ? 'shadow-[0_8px_32px_rgba(0,0,0,0.1)]'
+                        : 'shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(37,99,235,0.2)] transition-all duration-500 hover:-translate-y-2'
+                }`}
+            >
+                <div className={`${isMobile ? 'p-8 h-[160px]' : 'p-6 sm:p-8 h-[140px] sm:h-[160px]'} bg-red-50 flex items-center justify-center`}>
+                    <svg
+                        className={`${
+                            isMobile
+                                ? 'w-20 h-20'
+                                : 'w-16 h-16 sm:w-20 sm:h-20 group-hover:scale-110 transition-transform duration-500'
+                        } text-blue-600`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        {service.icon}
+                    </svg>
+                </div>
+                <div className={`${isMobile ? 'p-6' : 'p-5 sm:p-6'} bg-gradient-to-br from-blue-600 to-blue-700 text-white flex-grow`}>
+                    <h3 className={`${isMobile ? 'text-xl' : 'text-lg sm:text-xl'} font-bold mb-2`}>{service.title}</h3>
+                    <p className={`${isMobile ? 'text-sm' : 'text-xs sm:text-sm'} text-blue-100 leading-relaxed`}>{service.description}</p>
+                </div>
+            </div>
+        )
+    }
+
+    const handleDesktopServiceTransitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
+        if (e.currentTarget !== e.target || e.propertyName !== 'transform' || desktopServiceIndex !== 0) return
+
+        setIsDesktopServiceTransitioning(false)
+        setDesktopServiceIndex(2)
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => setIsDesktopServiceTransitioning(true))
+        })
+    }
 
     // Carousel for hero section descriptions
     const [currentTextIndex, setCurrentTextIndex] = useState<number>(0)
@@ -218,11 +364,14 @@ function App() {
         }
     }, [])
 
-    // Auto-slide for mobile service cards (3 slides of 2 cards each)
+    // Auto-slide service cards. Desktop moves the card track to the right.
     useEffect(() => {
-        const totalSlides = 3
+        const mobileSlideCount = 3
+        const portfolioSlideCount = portfolioItems.length
         const interval = setInterval(() => {
-            setMobileServiceIndex(prev => (prev + 1) % totalSlides)
+            setMobileServiceIndex(prev => (prev + 1) % mobileSlideCount)
+            setDesktopServiceIndex(prev => prev <= 0 ? 2 : prev - 1)
+            setMobilePortfolioIndex(prev => (prev + 1) % portfolioSlideCount)
         }, 3000)
         return () => clearInterval(interval)
     }, [])
@@ -416,8 +565,8 @@ function App() {
         <>
             <div className="min-h-screen bg-black text-gray-300 scroll-snap-container">
 
-                {/* Desktop Header / Navbar - Centered */}
-                <header className="hidden md:flex fixed top-0 left-0 w-full z-[999] justify-center items-center px-6 py-3">
+                {/* Desktop Header / Navbar - Home section only */}
+                <header className="hidden md:flex absolute top-0 left-0 w-full z-[999] justify-center items-center px-6 py-3">
                     {/* Nav links pill - centered */}
                     <nav className="
           mx-auto h-[50px] md:h-[54px]
@@ -505,7 +654,7 @@ function App() {
                 <section
                     ref={heroRef}
                     id="hero"
-                    className="scroll-snap-section relative w-full h-[100vh] flex justify-center items-center overflow-hidden bg-gradient-to-b from-sky-400 to-white"
+                    className="scroll-snap-section relative w-full h-[100vh] flex justify-center items-center overflow-hidden bg-gradient-to-b from-white via-white to-sky-200"
                 >
                     {/* Logo - only in hero section */}
                     <div className="absolute -top-14 -left-20 md:-top-[4.5rem] md:-left-[3.75rem] z-[50]">
@@ -513,46 +662,33 @@ function App() {
                     </div>
                     {/* Main Content Container */}
                     <div className="w-full h-full px-4 sm:px-6 md:px-16 lg:px-24 flex items-start pt-32 sm:pt-40 md:pt-0 md:items-center">
-                        <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-16 items-center">
+                        <div className="w-full max-w-[1500px] mx-auto grid grid-cols-1 md:grid-cols-[1.25fr_0.75fr] gap-6 sm:gap-8 md:gap-12 items-center">
 
-                            {/* Left Side - Banner Slider */}
-                            <div className="relative w-full aspect-[16/10] md:aspect-[16/9] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/20 bg-white/10">
-                                <style>{`
-                                @keyframes slideBannerLoop {
-                                    0%, 25%   { transform: translateX(0); }
-                                    30%, 55%  { transform: translateX(-33.333%); }
-                                    60%, 85%  { transform: translateX(-66.666%); }
-                                    90%, 100% { transform: translateX(0); }
-                                }
-                                .animate-slide-loop {
-                                    animation: slideBannerLoop 15s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-                                }
-                            `}</style>
-                                <div className="flex w-[300%] h-full animate-slide-loop">
-                                    <div className="w-1/3 h-full shrink-0 flex items-center justify-center">
-                                        <img src="/portfolio.png" alt="Banner 1" className="w-full h-full object-contain" />
-                                    </div>
-                                    <div className="w-1/3 h-full shrink-0 flex items-center justify-center">
-                                        <img src="/portfolio1.png" alt="Banner 2" className="w-full h-full object-contain" />
-                                    </div>
-                                    <div className="w-1/3 h-full shrink-0 flex items-center justify-center">
-                                        <img src="/portfolio2.png" alt="Banner 3" className="w-full h-full object-contain" />
-                                    </div>
-                                </div>
+                            {/* Left Side - Hero Video */}
+                            <div className="relative w-full md:w-[108%] aspect-[16/10] md:aspect-[16/9] overflow-hidden bg-transparent">
+                                <video
+                                    src="/hero.mp4"
+                                    className="w-full h-full object-contain mix-blend-multiply"
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    preload="metadata"
+                                />
                             </div>
 
                             {/* Right Side - Tagline & Description Carousel */}
-                            <div className="relative flex flex-col justify-center space-y-4 sm:space-y-6 mt-6 sm:mt-8 md:mt-0">
+                            <div className="relative flex flex-col justify-center space-y-4 sm:space-y-6 mt-6 sm:mt-8 md:mt-0 md:translate-x-6 lg:translate-x-10">
                                 {/* Small Tagline */}
                                 <div key={`tagline-${currentTextIndex}`} className="hero-tagline-fade">
-                                    <p className="text-[10px] sm:text-xs md:text-sm text-gray-500 uppercase tracking-widest font-medium mb-2">
+                                    <p className="text-[10px] sm:text-xs md:text-[13px] lg:text-sm text-gray-500 uppercase tracking-widest font-medium mb-2">
                                         {heroDescriptions[currentTextIndex].tagline}
                                     </p>
                                 </div>
 
                                 {/* Main Description */}
                                 <div key={`description-${currentTextIndex}`} className="hero-description-fade">
-                                    <h2 className="text-lg sm:text-xl md:text-4xl lg:text-5xl xl:text-6xl font-normal text-gray-800 leading-tight tracking-tight pr-0 md:pr-16">
+                                    <h2 className="text-lg sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl font-normal text-gray-800 leading-tight tracking-tight pr-0 md:pr-16">
                                         {heroDescriptions[currentTextIndex].title}
                                     </h2>
                                 </div>
@@ -565,7 +701,7 @@ function App() {
                     </div>
 
                     {/* Contact Button - Bottom Centered */}
-                    <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-30">
+                    <div className="absolute bottom-20 md:bottom-14 left-1/2 transform -translate-x-1/2 z-30">
                         <button
                             onClick={() => {
                                 if (window.innerWidth < 768) {
@@ -602,7 +738,7 @@ function App() {
 
 
                 {/* Services Section */}
-                <section ref={servicesRef} id="services" className={`scroll-snap-section min-h-[100dvh] md:min-h-0 ${RESPONSIVE_CLASSES.sectionPadding} pt-20 sm:pt-24 md:pt-12 pb-12 md:pb-16 flex items-start md:items-center justify-center bg-white relative`}>
+                <section ref={servicesRef} id="services" className={`scroll-snap-section min-h-[100dvh] md:min-h-0 ${RESPONSIVE_CLASSES.sectionPadding} pt-20 sm:pt-24 md:pt-12 pb-12 md:pb-16 flex items-start md:items-center justify-center bg-gradient-to-b from-white to-blue-950 relative`}>
                     <div className="container px-4 md:px-0">
                         <div key={`services-heading-${servicesAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-0">
                             <h2 className="text-4xl sm:text-5xl md:text-[3rem] font-normal text-center mb-3 sm:mb-4 text-gray-900 tracking-[0.25em]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
@@ -625,7 +761,7 @@ function App() {
                                     <div className="w-full shrink-0 px-4">
                                         <div className="flex flex-col gap-6 w-full mx-auto">
                                             <div className="rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-gray-100 flex flex-col">
-                                                <div className="bg-white p-8 flex items-center justify-center h-[160px]">
+                                                <div className="bg-red-50 p-8 flex items-center justify-center h-[160px]">
                                                     <svg className="w-20 h-20 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                                     </svg>
@@ -636,7 +772,7 @@ function App() {
                                                 </div>
                                             </div>
                                             <div className="rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-gray-100 flex flex-col">
-                                                <div className="bg-white p-8 flex items-center justify-center h-[160px]">
+                                                <div className="bg-red-50 p-8 flex items-center justify-center h-[160px]">
                                                     <svg className="w-20 h-20 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                                     </svg>
@@ -653,7 +789,7 @@ function App() {
                                     <div className="w-full shrink-0 px-4">
                                         <div className="flex flex-col gap-6 w-full mx-auto">
                                             <div className="rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-gray-100 flex flex-col">
-                                                <div className="bg-white p-8 flex items-center justify-center h-[160px]">
+                                                <div className="bg-red-50 p-8 flex items-center justify-center h-[160px]">
                                                     <svg className="w-20 h-20 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" />
                                                     </svg>
@@ -664,7 +800,7 @@ function App() {
                                                 </div>
                                             </div>
                                             <div className="rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-gray-100 flex flex-col">
-                                                <div className="bg-white p-8 flex items-center justify-center h-[160px]">
+                                                <div className="bg-red-50 p-8 flex items-center justify-center h-[160px]">
                                                     <svg className="w-20 h-20 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10V7m0 3h3" />
                                                     </svg>
@@ -681,7 +817,7 @@ function App() {
                                     <div className="w-full shrink-0 px-4">
                                         <div className="flex flex-col gap-6 w-full mx-auto">
                                             <div className="rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-gray-100 flex flex-col">
-                                                <div className="bg-white p-8 flex items-center justify-center h-[160px]">
+                                                <div className="bg-red-50 p-8 flex items-center justify-center h-[160px]">
                                                     <svg className="w-20 h-20 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                                                     </svg>
@@ -692,7 +828,7 @@ function App() {
                                                 </div>
                                             </div>
                                             <div className="rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-gray-100 flex flex-col">
-                                                <div className="bg-white p-8 flex items-center justify-center h-[160px]">
+                                                <div className="bg-red-50 p-8 flex items-center justify-center h-[160px]">
                                                     <svg className="w-20 h-20 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -708,9 +844,11 @@ function App() {
                                 </div>
                                 {/* Dot indicators - 3 slides */}
                                 <div className="flex justify-center gap-2 mt-8">
-                                    {[0, 1, 2].map(i => (
+                                    {mobileServiceSlides.map((_, i) => (
                                         <button
                                             key={i}
+                                            type="button"
+                                            aria-label={`Show mobile service set ${i + 1}`}
                                             onClick={() => setMobileServiceIndex(i)}
                                             className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                                                 mobileServiceIndex === i
@@ -722,12 +860,12 @@ function App() {
                                 </div>
                             </div>
 
-                            {/* Desktop/Tablet Grid */}
-                            <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 max-w-5xl mx-auto">
+                            {/* Tablet Grid */}
+                            <div className="hidden sm:grid lg:hidden sm:grid-cols-2 gap-5 md:gap-6 max-w-5xl mx-auto">
 
                                 {/* Web Design Card */}
                                 <div className="service-card-fade group rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(37,99,235,0.2)] transition-all duration-500 hover:-translate-y-2 border border-gray-100">
-                                    <div className="bg-white p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
+                                    <div className="bg-red-50 p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
                                         <svg className="w-16 h-16 sm:w-20 sm:h-20 text-blue-600 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                         </svg>
@@ -740,7 +878,7 @@ function App() {
 
                                 {/* App Development Card */}
                                 <div className="service-card-fade group rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(37,99,235,0.2)] transition-all duration-500 hover:-translate-y-2 border border-gray-100">
-                                    <div className="bg-white p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
+                                    <div className="bg-red-50 p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
                                         <svg className="w-16 h-16 sm:w-20 sm:h-20 text-blue-600 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                         </svg>
@@ -753,7 +891,7 @@ function App() {
 
                                 {/* E-Commerce Card */}
                                 <div className="service-card-fade group rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(37,99,235,0.2)] transition-all duration-500 hover:-translate-y-2 border border-gray-100">
-                                    <div className="bg-white p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
+                                    <div className="bg-red-50 p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
                                         <svg className="w-16 h-16 sm:w-20 sm:h-20 text-blue-600 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" />
                                         </svg>
@@ -766,7 +904,7 @@ function App() {
 
                                 {/* SEO Optimization Card */}
                                 <div className="service-card-fade group rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(37,99,235,0.2)] transition-all duration-500 hover:-translate-y-2 border border-gray-100">
-                                    <div className="bg-white p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
+                                    <div className="bg-red-50 p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
                                         <svg className="w-16 h-16 sm:w-20 sm:h-20 text-blue-600 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10V7m0 3h3" />
                                         </svg>
@@ -779,7 +917,7 @@ function App() {
 
                                 {/* UI/UX Design Card */}
                                 <div className="service-card-fade group rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(37,99,235,0.2)] transition-all duration-500 hover:-translate-y-2 border border-gray-100">
-                                    <div className="bg-white p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
+                                    <div className="bg-red-50 p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
                                         <svg className="w-16 h-16 sm:w-20 sm:h-20 text-blue-600 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                                         </svg>
@@ -792,7 +930,7 @@ function App() {
 
                                 {/* Maintenance Card */}
                                 <div className="service-card-fade group rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(37,99,235,0.2)] transition-all duration-500 hover:-translate-y-2 border border-gray-100">
-                                    <div className="bg-white p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
+                                    <div className="bg-red-50 p-6 sm:p-8 flex items-center justify-center h-[140px] sm:h-[160px]">
                                         <svg className="w-16 h-16 sm:w-20 sm:h-20 text-blue-600 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -805,25 +943,122 @@ function App() {
                                 </div>
 
                             </div>
+
+                            {/* Desktop Carousel - 3 cards per slide, auto-slide */}
+                            <div className="hidden lg:block max-w-5xl mx-auto overflow-hidden px-1">
+                                <div
+                                    className={`flex ${
+                                        isDesktopServiceTransitioning
+                                            ? 'transition-transform duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)]'
+                                            : ''
+                                    }`}
+                                    style={{ transform: `translateX(-${desktopServiceIndex * 100}%)` }}
+                                    onTransitionEnd={handleDesktopServiceTransitionEnd}
+                                >
+                                    {desktopServiceTrackSlides.map((slide, slideIndex) => (
+                                        <div key={`desktop-service-slide-${slideIndex}`} className="w-full shrink-0 grid grid-cols-3 gap-6">
+                                            {slide.map(service => renderServiceCard(service))}
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="flex justify-center gap-2 mt-8">
+                                    {desktopServiceSlides.map((_, i) => (
+                                        <button
+                                            key={i}
+                                            type="button"
+                                            aria-label={`Show service set ${i + 1}`}
+                                            onClick={() => setDesktopServiceIndex(i === 0 ? 1 : 2)}
+                                            className={`h-2.5 rounded-full transition-all duration-300 ${
+                                                desktopServiceActiveIndex === i
+                                                    ? 'w-8 bg-blue-600'
+                                                    : 'w-2.5 bg-gray-300'
+                                            }`}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
 
                 {/* Portfolio Section */}
-                <section ref={portfolioRef} id="portfolio" className="scroll-snap-section min-h-[100dvh] md:min-h-0 pt-24 sm:pt-28 md:pt-24 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center bg-gradient-to-b from-stone-50 to-black relative">
+                <section ref={portfolioRef} id="portfolio" className={`scroll-snap-section min-h-[100dvh] md:min-h-0 ${RESPONSIVE_CLASSES.sectionPadding} pt-20 sm:pt-24 md:pt-12 pb-12 md:pb-16 flex items-start md:items-center justify-center bg-gradient-to-b from-blue-950 to-white relative`}>
                     <div className="container relative px-4 md:px-0">
                         <div key={`portfolio-heading-${portfolioAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-0">
-                            <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-center mb-6 sm:mb-8 text-gray-800">
-                                OUR PORTFOLIO
+                            <h2 className="text-4xl sm:text-5xl md:text-[3rem] font-normal text-center mb-3 sm:mb-4 text-white tracking-[0.25em]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                                PROJECTS WE DONE
                             </h2>
-                            <p className="text-center text-gray-600 mb-8 text-sm md:text-base">
+                            <p className="text-center text-blue-100 mb-8 text-sm md:text-base">
                                 Showcasing our latest digital innovations and successful projects
                             </p>
                         </div>
 
                         <div key={`portfolio-content-${portfolioAnimationKey}`} className="section-content-stagger">
+                            <div className="md:hidden overflow-hidden px-1 pb-4">
+                                <div
+                                    className="flex transition-transform duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
+                                    style={{ transform: `translateX(-${mobilePortfolioIndex * 100}%)` }}
+                                >
+                                    {portfolioItems.map((project) => (
+                                        <article key={project.title} className="w-full shrink-0 px-1">
+                                            <div className="portfolio-card-fade overflow-hidden rounded-lg bg-white shadow-[0_12px_35px_rgba(0,0,0,0.22)] border border-white/70">
+                                                <div className="h-[clamp(18rem,52vh,28rem)] bg-slate-100 overflow-hidden">
+                                                    <img
+                                                        src={project.image}
+                                                        alt={`${project.title} screenshot`}
+                                                        className="h-full w-full object-cover object-top"
+                                                    />
+                                                </div>
+                                                <div className="p-4 bg-white">
+                                                    <div className="text-[10px] font-bold uppercase tracking-[0.22em] text-blue-700 mb-2">{project.tag}</div>
+                                                    <h3 className="text-xl font-bold text-gray-950 mb-2">{project.title}</h3>
+                                                    <p className="text-sm leading-relaxed text-gray-600">{project.description}</p>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    ))}
+                                </div>
+                                <div className="flex justify-center gap-2 mt-5">
+                                    {portfolioItems.map((_, i) => (
+                                        <button
+                                            key={i}
+                                            type="button"
+                                            aria-label={`Show project ${i + 1}`}
+                                            onClick={() => setMobilePortfolioIndex(i)}
+                                            className={`h-2.5 rounded-full transition-all duration-300 ${
+                                                mobilePortfolioIndex === i
+                                                    ? 'w-8 bg-white'
+                                                    : 'w-2.5 bg-white/40'
+                                            }`}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5 max-w-6xl mx-auto px-4 md:px-0 pb-4">
+                                {portfolioItems.map((project) => (
+                                    <article
+                                        key={project.title}
+                                        className="portfolio-card-fade group overflow-hidden rounded-lg bg-white shadow-[0_8px_26px_rgba(0,0,0,0.18)] border border-white/70 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_16px_40px_rgba(15,23,42,0.25)]"
+                                    >
+                                        <div className="h-[230px] lg:h-[280px] bg-slate-100 overflow-hidden">
+                                            <img
+                                                src={project.image}
+                                                alt={`${project.title} screenshot`}
+                                                className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                                            />
+                                        </div>
+                                        <div className="p-3 bg-gradient-to-b from-gray-950 to-blue-950 min-h-[132px] flex flex-col">
+                                            <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-blue-200 mb-2">{project.tag}</div>
+                                            <h3 className="text-sm font-bold text-white mb-2 leading-snug">{project.title}</h3>
+                                            <p className="text-[11px] leading-relaxed text-blue-100 line-clamp-3">{project.description}</p>
+                                        </div>
+                                    </article>
+                                ))}
+                            </div>
+
                             {/* All Cards - Vertical on Mobile, Horizontal Centered on Desktop */}
-                            <div className="md:flex md:justify-center pb-4 px-4 md:px-0">
+                            <div className="hidden">
                                 <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
                                     {/* ZCafe - Completed */}
                                     <div className="
@@ -933,11 +1168,11 @@ function App() {
                 </section>
 
                 {/* About Section - Three Stage Animation */}
-                <section ref={aboutRef} id="about" className="scroll-snap-section pt-20 sm:pt-24 md:pt-24 pb-12 sm:pb-14 md:py-20 flex items-start md:items-center justify-center bg-gradient-to-b from-white to-blue-950 relative overflow-hidden min-h-[100dvh] md:min-h-screen">
+                <section ref={aboutRef} id="about" className={`scroll-snap-section min-h-[100dvh] md:min-h-0 ${RESPONSIVE_CLASSES.sectionPadding} pt-20 sm:pt-24 md:pt-12 pb-12 md:pb-16 flex items-start md:items-center justify-center bg-gradient-to-b from-white to-blue-950 relative overflow-hidden`}>
                     <div className="container px-3 sm:px-4 md:px-0 relative flex flex-col items-center justify-start md:justify-center">
                         {/* About Heading - Fades in first */}
-                        <div key={`about-heading-${aboutAnimationKey}`} className="about-heading-fade mt-8 sm:mt-12 md:mt-0 mb-6 sm:mb-8">
-                            <h2 className="text-3xl sm:text-4xl md:text-[2.4rem] font-bold text-blue-950 text-center">ABOUT</h2>
+                        <div key={`about-heading-${aboutAnimationKey}`} className="section-heading-fade mt-0 sm:mt-4 md:mt-0 mb-6 sm:mb-8">
+                            <h2 className="text-4xl sm:text-5xl md:text-[3rem] font-normal text-center text-blue-950 tracking-[0.25em]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>ABOUT</h2>
                         </div>
 
                         {/* Stage 1 & 2: Falling and Organizing Letters */}
