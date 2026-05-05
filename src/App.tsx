@@ -324,17 +324,27 @@ function App() {
     useEffect(() => {
         if (aboutAnimationKey > 0) {
             setCounts({ projects: 0, clients: 0 })
-            let start = 0
-            const end = 2
-            const timer = setInterval(() => {
-                start += 1
-                setCounts({
-                    projects: start,
-                    clients: start
-                })
-                if (start >= end) clearInterval(timer)
-            }, 300)
-            return () => clearInterval(timer)
+            const targetCounts = { projects: 6, clients: 10 }
+            const end = Math.max(targetCounts.projects, targetCounts.clients)
+
+            const revealDelay = 2500
+            let timer: number | undefined
+            const countDelay = window.setTimeout(() => {
+                let start = 0
+                timer = window.setInterval(() => {
+                    start += 1
+                    setCounts({
+                        projects: Math.min(start, targetCounts.projects),
+                        clients: Math.min(start, targetCounts.clients)
+                    })
+                    if (start >= end && timer !== undefined) window.clearInterval(timer)
+                }, 120)
+            }, revealDelay)
+
+            return () => {
+                window.clearTimeout(countDelay)
+                if (timer !== undefined) window.clearInterval(timer)
+            }
         }
     }, [aboutAnimationKey])
 
@@ -602,14 +612,15 @@ function App() {
                 {/* Toggle Button (Visible only on Mobile) */}
                 <button
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    className="md:hidden fixed top-6 right-6 z-[1002] w-12 h-12 flex flex-col justify-center items-center gap-[6px] bg-transparent"
+                    className={`md:hidden fixed top-6 right-6 z-[1002] w-12 h-12 flex flex-col justify-center items-center gap-[6px] bg-transparent ${isMobileMenuOpen ? 'text-white' : 'text-black'}`}
                     aria-label="Toggle Menu"
+                    aria-expanded={isMobileMenuOpen}
                 >
                     <span
-                        className={`block w-6 h-[2px] bg-white transition-all duration-300 ease-in-out transform origin-center ${isMobileMenuOpen ? 'rotate-45 translate-y-[8px]' : ''}`}
+                        className={`block w-6 h-[2px] bg-current transition-all duration-300 ease-in-out transform origin-center ${isMobileMenuOpen ? 'rotate-45 translate-y-[8px]' : ''}`}
                     ></span>
                     <span
-                        className={`block w-6 h-[2px] bg-white transition-all duration-300 ease-in-out transform origin-center ${isMobileMenuOpen ? '-rotate-45 -translate-y-[8px]' : ''}`} // Fixed magic number for perfect X
+                        className={`block w-6 h-[2px] bg-current transition-all duration-300 ease-in-out transform origin-center ${isMobileMenuOpen ? '-rotate-45 -translate-y-[8px]' : ''}`} // Fixed magic number for perfect X
                         style={{ transform: isMobileMenuOpen ? 'rotate(-45deg) translateY(-1px)' : 'none' }} // Fine tuning with style since class overlap might happen
                     ></span>
                     {/* Re-doing the span logic to be cleaner without inline style overrides confusion */}
@@ -624,11 +635,10 @@ function App() {
                     ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
                 `}
                 >
+                    <div className="absolute top-6 left-6 -ml-20 -mt-20">
+                        <img src="/mylogo.png" alt="WebCods" className="h-[15rem] w-auto opacity-80" />
+                    </div>
                     <div className="flex flex-col h-full justify-center px-8 sm:px-12">
-                        <div className="mb-12">
-                            <img src="/mylogo.png" alt="WebCods" className="h-12 w-auto opacity-80" />
-                        </div>
-
                         <nav className="flex flex-col gap-6">
                             {navLinks.map((link, index) => (
                                 <a
@@ -643,7 +653,7 @@ function App() {
                             ))}
                         </nav>
 
-                        <div className="mt-12 pt-8 border-t border-white/10">
+                        <div className="hidden">
                             <p className="text-white/40 text-sm">Ã¢â€Â¬Ã¢Å’Â 2025 WebCods</p>
                         </div>
                     </div>
@@ -1209,14 +1219,15 @@ function App() {
                                 Founded in 2025, WebCods has been at the forefront of web development and app development innovation. We are passionate about creating exceptional digital experiences that empower businesses to thrive in the modern landscape. Our team combines cutting-edge technology with creative excellence to deliver solutions that exceed expectations.
                             </p>
 
-                            <div className="flex flex-row justify-between gap-6 sm:gap-8 md:gap-0 mt-6 sm:mt-8 text-left px-0 md:px-32">
-                                <div>
+                            <div className="flex flex-row items-center justify-between gap-6 sm:gap-10 mt-6 sm:mt-8 mx-auto w-full max-w-2xl bg-black rounded-xl px-5 sm:px-8 md:px-12 py-4 sm:py-5 shadow-[0_12px_36px_rgba(0,0,0,0.28)]">
+                                <div className="flex-1 text-center">
                                     <h3 className="text-3xl sm:text-4xl md:text-[2.2rem] text-white font-bold">{counts.projects}+</h3>
-                                    <p className="text-white text-xs sm:text-sm md:text-base">Projects Completed</p>
+                                    <p className="text-white text-xs sm:text-sm md:text-base">Projects Done</p>
                                 </div>
-                                <div>
+                                <div className="h-12 sm:h-14 w-px bg-white/20"></div>
+                                <div className="flex-1 text-center">
                                     <h3 className="text-3xl sm:text-4xl md:text-[2.2rem] text-white font-bold">{counts.clients}+</h3>
-                                    <p className="text-white text-xs sm:text-sm md:text-base">Happy Clients</p>
+                                    <p className="text-white text-xs sm:text-sm md:text-base">Clients Needed</p>
                                 </div>
                             </div>
                         </div>
@@ -1435,8 +1446,99 @@ function App() {
 
 
 
+                <footer className="scroll-snap-section relative min-h-[100dvh] bg-black text-white px-5 sm:px-8 md:px-16 lg:px-24 py-12 sm:py-14 md:py-16 border-t border-white/10 flex items-center">
+                    <div className="max-w-6xl mx-auto w-full">
+                        <div className="grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr_0.8fr_1fr] gap-10 md:gap-8">
+                            <div>
+                                <img src="/mylogo.png" alt="WebCods" className="h-[15rem] w-auto -ml-20 -mt-20 mb-0" />
+                                <p className="text-sm md:text-base text-gray-400 leading-relaxed max-w-sm">
+                                    Building websites, apps, and digital experiences for modern businesses.
+                                </p>
+                                <div className="flex items-center gap-4 mt-6">
+                                    <div className="social-button">
+                                        <a href="https://www.instagram.com/webcods_technologies/?__pwa=1" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="relative w-12 h-12 rounded-full group block">
+                                            <div className="floater w-full h-full absolute top-0 left-0 bg-gradient-to-tr from-[#FEDA75] via-[#D62976] to-[#4F5BD5] rounded-full duration-300 group-hover:-top-8 group-hover:shadow-2xl"></div>
+                                            <div className="icon relative z-10 w-full h-full flex items-center justify-center border-2 border-[#D62976] rounded-full">
+                                                <svg fill="none" viewBox="0 0 22 22" height="22" width="22" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M21.94 6.46809C21.8884 5.2991 21.6994 4.49551 21.4285 3.79911C21.1492 3.05994 20.7194 2.39818 20.1564 1.84802C19.6062 1.28932 18.9401 0.855163 18.2094 0.580194C17.5091 0.309437 16.7096 0.120336 15.5407 0.0688497C14.363 0.0128932 13.9891 0 11.0022 0C8.01527 0 7.64141 0.0128932 6.46808 0.064466C5.29914 0.116039 4.49551 0.305225 3.79932 0.57581C3.05994 0.855163 2.39818 1.28494 1.84802 1.84802C1.28932 2.39813 0.855377 3.06428 0.580193 3.7949C0.309437 4.49551 0.120379 5.2948 0.0688496 6.4637C0.0129362 7.64141 0 8.01527 0 11.0022C0 13.9891 0.0129362 14.363 0.0644659 15.5363C0.116039 16.7053 0.305225 17.5089 0.576025 18.2053C0.855377 18.9444 1.28932 19.6062 1.84802 20.1564C2.39818 20.7151 3.06432 21.1492 3.79494 21.4242C4.49547 21.6949 5.29476 21.884 6.46391 21.9355C7.63702 21.9873 8.0111 22 10.998 22C13.9849 22 14.3588 21.9873 15.5321 21.9355C16.7011 21.884 17.5047 21.695 18.2009 21.4242C18.9321 21.1415 19.5961 20.7091 20.1505 20.1548C20.7048 19.6005 21.1373 18.9365 21.42 18.2053C21.6906 17.5047 21.8798 16.7052 21.9314 15.5363C21.9829 14.363 21.9958 13.9891 21.9958 11.0022C21.9958 8.01527 21.9914 7.64137 21.94 6.46809ZM19.9588 15.4503C19.9114 16.5248 19.731 17.105 19.5805 17.4918C19.2109 18.4502 18.4502 19.2109 17.4918 19.5805C17.105 19.731 16.5206 19.9114 15.4503 19.9586C14.29 20.0103 13.942 20.023 11.0066 20.023C8.07118 20.023 7.71881 20.0103 6.56259 19.9586C5.48816 19.9114 4.90796 19.731 4.52117 19.5805C4.04425 19.4043 3.61014 19.1249 3.25772 18.7596C2.89242 18.4029 2.61306 17.9731 2.43677 17.4961C2.28635 17.1094 2.10589 16.5248 2.05874 15.4547C2.007 14.2943 1.99428 13.9461 1.99428 11.0107C1.99428 8.07535 2.007 7.72298 2.05874 6.56698C2.10589 5.49254 2.28635 4.91235 2.43677 4.52555C2.61306 4.04842 2.89241 3.61439 3.26211 3.26189C3.61865 2.89658 4.04842 2.61723 4.52555 2.44115C4.91235 2.29073 5.49692 2.11023 6.56697 2.06291C7.72736 2.01134 8.07556 1.99844 11.0107 1.99844C13.9505 1.99844 14.2985 2.01134 15.4547 2.06291C16.5292 2.11027 17.1093 2.29069 17.4961 2.44111C17.9731 2.61723 18.4072 2.89658 18.7596 3.26189C19.1249 3.61865 19.4042 4.04842 19.5805 4.52555C19.731 4.91235 19.9114 5.49671 19.9587 6.56698C20.0103 7.72736 20.0232 8.07535 20.0232 11.0107C20.0232 13.9461 20.0104 14.29 19.9588 15.4503Z" className="group-hover:fill-[#171543] fill-white duration-300"></path>
+                                                    <path d="M11.0026 5.35054C7.88252 5.35054 5.35107 7.88182 5.35107 11.0021C5.35107 14.1223 7.88252 16.6536 11.0026 16.6536C14.1227 16.6536 16.6541 14.1223 16.6541 11.0021C16.6541 7.88182 14.1227 5.35054 11.0026 5.35054ZM11.0026 14.668C8.97844 14.668 7.33654 13.0264 7.33654 11.0021C7.33654 8.97774 8.97844 7.33609 11.0025 7.33609C13.0269 7.33609 14.6685 8.97774 14.6685 11.0021C14.6685 13.0264 13.0268 14.668 11.0026 14.668ZM18.1971 5.12706C18.1971 5.85569 17.6063 6.44646 16.8775 6.44646C16.1489 6.44646 15.5581 5.85569 15.5581 5.12706C15.5581 4.39833 16.1489 3.80774 16.8775 3.80774C17.6063 3.80774 18.1971 4.39829 18.1971 5.12706Z" className="group-hover:fill-[#171543] fill-white duration-300"></path>
+                                                </svg>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div className="social-button">
+                                        <a href="#" aria-label="Facebook" onClick={(e) => e.preventDefault()} className="relative w-12 h-12 rounded-full group block">
+                                            <div className="floater w-full h-full absolute top-0 left-0 bg-blue-500 rounded-full duration-300 group-hover:-top-8 group-hover:shadow-2xl"></div>
+                                            <div className="icon relative z-10 w-full h-full flex items-center justify-center border-2 border-blue-500 rounded-full">
+                                                <svg fill="none" viewBox="0 0 13 22" height="22" width="13" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M7.71289 22H4.1898C3.60134 22 3.12262 21.5213 3.12262 20.9328V12.9863H1.06717C0.478672 12.9863 0 12.5074 0 11.9191V8.514C0 7.9255 0.478672 7.44683 1.06717 7.44683H3.12262V5.74166C3.12262 4.05092 3.6535 2.6125 4.65773 1.58207C5.6665 0.546992 7.07627 0 8.7346 0L11.4214 0.00438281C12.0089 0.00537109 12.4868 0.484086 12.4868 1.07151V4.23311C12.4868 4.82157 12.0083 5.30028 11.4199 5.30028L9.61091 5.30093C9.05919 5.30093 8.91868 5.41153 8.88864 5.44543C8.83914 5.50172 8.78023 5.66062 8.78023 6.09954V7.4467H11.284C11.4725 7.4467 11.6551 7.49319 11.812 7.58076C12.1506 7.76995 12.3611 8.12762 12.3611 8.51417L12.3597 11.9193C12.3597 12.5074 11.881 12.9861 11.2926 12.9861H8.78019V20.9328C8.78023 21.5213 8.30139 22 7.71289 22ZM4.41233 20.7103H7.49031V12.4089C7.49031 12.016 7.81009 11.6964 8.20282 11.6964H11.07L11.0712 8.73662H8.20265C7.80991 8.73662 7.49031 8.41706 7.49031 8.02411V6.09959C7.49031 5.59573 7.54153 5.0227 7.92185 4.59198C8.38144 4.07133 9.10568 4.01126 9.61056 4.01126L11.1971 4.01057V1.29375L8.73357 1.28975C6.06848 1.28975 4.41238 2.99574 4.41238 5.7417V8.02407C4.41238 8.4168 4.09277 8.73658 3.7 8.73658H1.28975V11.6964H3.7C4.09277 11.6964 4.41238 12.016 4.41238 12.4089L4.41233 20.7103Z" className="group-hover:fill-[#171543] fill-white duration-300"></path>
+                                                </svg>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div className="social-button">
+                                        <a href="https://wa.me/919400525063" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="relative w-12 h-12 rounded-full group block">
+                                            <div className="floater w-full h-full absolute top-0 left-0 bg-[#25D366] rounded-full duration-300 group-hover:-top-8 group-hover:shadow-2xl"></div>
+                                            <div className="icon relative z-10 w-full h-full flex items-center justify-center border-2 border-[#25D366] rounded-full">
+                                                <svg fill="currentColor" viewBox="0 0 448 512" height="24" width="24" xmlns="http://www.w3.org/2000/svg" className="text-white group-hover:text-[#171543] duration-300">
+                                                    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
+                                                </svg>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-300 mb-4">Links</h3>
+                                <nav className="flex flex-col gap-2">
+                                    {navLinks.map((link) => (
+                                        <a
+                                            key={`footer-${link.href}`}
+                                            href={link.href}
+                                            className="text-sm text-gray-400 hover:text-white transition-colors duration-300"
+                                        >
+                                            {link.label}
+                                        </a>
+                                    ))}
+                                </nav>
+                            </div>
+
+                            <div>
+                                <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-300 mb-4">Services</h3>
+                                <div className="flex flex-col gap-2 text-sm text-gray-400">
+                                    <span>Web Design</span>
+                                    <span>App Development</span>
+                                    <span>E-Commerce</span>
+                                    <span>SEO Optimization</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-300 mb-4">Contact</h3>
+                                <div className="flex flex-col gap-2 text-sm text-gray-400">
+                                    <a href="mailto:webcods1@gmail.com" className="hover:text-white transition-colors duration-300">
+                                        webcods1@gmail.com
+                                    </a>
+                                    <a href="tel:9074789784" className="hover:text-white transition-colors duration-300">
+                                        +91 90747 89784
+                                    </a>
+                                    <a href="https://wa.me/919400525063" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-300">
+                                        WhatsApp
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-gray-500">
+                            <p>2025 WebCods. All Rights Reserved.</p>
+                            <p>Designed and developed by WebCods.</p>
+                        </div>
+                    </div>
+                </footer>
+
                 {/* Footer */}
-                < footer className="text-center py-6 bg-gray-100 mt-8" >
+                < footer className="hidden" >
                     <p className="text-gray-800 text-xs sm:text-sm md:text-base px-4">Ã¢â€ Â¬Ã¢Å’Â  2025 WebCods. All Rights Reserved.</p>
                 </footer >
             </div>
